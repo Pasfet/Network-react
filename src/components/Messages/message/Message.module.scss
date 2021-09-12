@@ -1,0 +1,46 @@
+.bubbleWrapper {
+  padding: 10px 10px;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  align-self: flex-end;
+  color: #fff;
+}
+
+.inlineContainer {
+  display: inline-flex;
+}
+.inlineContainer.me {
+  flex-direction: row-reverse;
+}
+.otherBubble {
+  min-width: 60px;
+  max-width: 700px;
+  padding: 14px 18px;
+  margin: 6px 8px;
+  background-color: #6c8ea4;
+  border-radius: 16px 16px 16px 0;
+  border: 1px solid #54788e;
+}
+
+.meBubble {
+  min-width: 60px;
+  max-width: 700px;
+  padding: 14px 18px;
+  margin: 6px 8px;
+  background-color: #5b5377;
+  border-radius: 16px 16px 0 16px;
+  border: 1px solid #443f56;
+}
+
+.other {
+  align-self: flex-start;
+}
+.me {
+  align-self: flex-end;
+}
+span.me,
+span.other {
+  font-size: 14px;
+  color: grey;
+}
