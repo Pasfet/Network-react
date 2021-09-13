@@ -1,6 +1,6 @@
 import style from './App.module.scss';
 import { useState, useEffect } from 'react';
-import Message from './components/Messages/Messages';
+import Messages from './components/Messages/Messages';
 import Button from "./components/Button/Button";
 
 const App = () => {
@@ -34,7 +34,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <Message messagesList={messageslist} />
+      <Messages messagesList={messageslist} />
       <div className={style.actions}>
         <textarea className={style.textarea} value={value} onChange={handleChange}></textarea>
         <Button onClick={sendMassage} />

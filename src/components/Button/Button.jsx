@@ -1,8 +1,8 @@
 import style from './Button.module.scss';
 
-const Button = (props) => {
+const Button = ({ onClick }) => {
   return (
-    <button className={style.btn} onClick={props.onClick}>
+    <button className={style.btn} onClick={onClick}>
       Send
     </button>
   );
