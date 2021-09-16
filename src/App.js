@@ -12,22 +12,24 @@ const App = () => {
   };
 
   const sendMassage = () => {
-    setMessageList([...messageslist, {
+    const newMsg = {
       id: messageslist.length + 1,
       text: value,
       author: 'me'
-    }]);
+    }
+    setMessageList(prevState => [...prevState, newMsg]);
     setValue('');
   };
 
   useEffect(() => {
     if (messageslist[messageslist.length - 1]?.author === 'me' && messageslist.length !== 0) {
       setTimeout(() => {
-        setMessageList([...messageslist, {
+        const botMsg = {
           id: messageslist.length + 1,
           text: 'successfully sent',
           author: 'bot'
-        }]);
+        };
+        setMessageList(prevState => [...prevState, botMsg]);
       }, 1000)
     };
   }, [messageslist]);
