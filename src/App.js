@@ -1,17 +1,23 @@
 import style from './App.module.scss';
 import { useState, useEffect } from 'react';
 import Messages from './components/Messages/Messages';
-import Button from "./components/Button/Button";
+import TextFieldInputs from './components/TextField/TextField';
+import Chats from './components/Chats/Chats';
 
 const App = () => {
   const [messageslist, setMessageList] = useState([]);
+  const [chats, setChats] = useState([
+    { id: Date.now(), name: 'Test' },
+    { id: Date.now(), name: 'Mike' },
+  ]);
   const [value, setValue] = useState('');
 
   const handleChange = (e) => {
     setValue(e.target.value);
   };
 
-  const sendMassage = () => {
+  const sendMassage = (e) => {
+    e.preventDefault();
     setMessageList([...messageslist, {
       id: messageslist.length + 1,
       text: value,
@@ -33,12 +39,10 @@ const App = () => {
   }, [messageslist]);
 
   return (
-    <div className="App">
+    <div className={style.App}>
+      <Chats chats={chats} />
       <Messages messagesList={messageslist} />
-      <div className={style.actions}>
-        <textarea className={style.textarea} value={value} onChange={handleChange}></textarea>
-        <Button onClick={sendMassage} />
-      </div>
+      <TextFieldInputs sendMessage={sendMassage} valueInput={value} setValue={handleChange} />
     </div>
   );
 }

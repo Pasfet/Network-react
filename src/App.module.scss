@@ -1,11 +1,4 @@
-.actions {
-  display: flex;
-  align-items: center;
-}
-.textarea {
-  border-radius: 5px;
-  font-family: sans-serif;
-  width: 500px;
-  padding: 5px;
-  margin-right: 10px;
+.App {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
 }

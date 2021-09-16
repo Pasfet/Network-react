@@ -1,4 +1,6 @@
 import style from './Message.module.scss';
+import PropTypes from 'prop-types';
+
 
 const Message = ({message}) => {
   return (
@@ -14,5 +16,9 @@ const Message = ({message}) => {
     </div>
   );
 };
+
+Message.propsTypes = {
+  message: PropTypes.object
+}
 
 export default Message;
