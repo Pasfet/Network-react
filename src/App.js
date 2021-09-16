@@ -13,7 +13,7 @@ const App = () => {
   const [value, setValue] = useState('');
 
   const handleChange = (e) => {
-    setValue(prevState => [...prevState, e.target.value]);
+    setValue(e.target.value);
   };
 
   const sendMassage = (e) => {
