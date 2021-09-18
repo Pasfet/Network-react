@@ -16,6 +16,7 @@ const App = () => {
     setValue(e.target.value);
   };
 
+
   const sendMassage = (e) => {
     e.preventDefault();
     const newMsg = {
