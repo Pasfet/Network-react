@@ -12,7 +12,7 @@ const TextFieldInputs = ({ sendMessage, valueInput, setValue }) => {
         value={valueInput} 
         onChange={setValue} 
         className={style.textarea} 
-        autoFocus
+        inputRef={input => input && input.focus()}
       />
       <Button variant="contained" onClick={sendMessage} className={style.btn}>
         Send
