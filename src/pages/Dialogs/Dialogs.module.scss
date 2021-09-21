@@ -1,0 +1,15 @@
+.dialogsWrap {
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(100px, 300px);
+  grid-template-areas: 
+    'chats messages';
+}
+  
+.chats {
+  grid-area: chats;
+}
+
+.messages {
+  grid-area: messages;
+}

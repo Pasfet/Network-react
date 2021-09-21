@@ -1,53 +1,44 @@
 import style from './App.module.scss';
-import { useState, useEffect } from 'react';
-import Messages from './components/Messages/Messages';
-import TextFieldInputs from './components/TextField/TextField';
-import Chats from './components/Chats/Chats';
+import { Link, Route, Switch } from "react-router-dom";
+import Profile from "./pages/Profile/Profile";
+import Dialogs from './pages/Dialogs/Dialogs';
+import { Box, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
+
+const navbarItem = [
+  { name: 'Profile', href: '/' },
+  { name: 'Messages', href: '/dialogs' }
+]
 
 const App = () => {
-  const [messageslist, setMessageList] = useState([]);
-  const [chats, setChats] = useState([
-    { id: Date.now(), name: 'Test' },
-    { id: Date.now(), name: 'Mike' },
-  ]);
-  const [value, setValue] = useState('');
-
-  const handleChange = (e) => {
-    setValue(e.target.value);
-  };
-
-
-  const sendMassage = (e) => {
-    e.preventDefault();
-    const newMsg = {
-        id: messageslist.length + 1,
-        text: value,
-        author: 'me'
-    };
-    setMessageList(prevState => [...prevState, newMsg]);
-    setValue('');
-  };
-
-  useEffect(() => {
-    if (messageslist[messageslist.length - 1]?.author === 'me' && messageslist.length !== 0) {
-      setTimeout(() => {
-        const botMsg = {
-          id: messageslist.length + 1,
-          text: 'successfully sent',
-          author: 'bot'
-        };
-        setMessageList(prevState => [...prevState, botMsg]);
-      }, 1000)
-    };
-  }, [messageslist]);
-
   return (
     <div className={style.App}>
-      <Chats chats={chats} />
-      <Messages messagesList={messageslist} />
-      <TextFieldInputs sendMessage={sendMassage} valueInput={value} setValue={handleChange} />
+      <Box className={style.navbar}>
+        <nav>
+          <List>
+            {navbarItem.map(item => (
+              <ListItem disablePadding key={item.name} divider sx={{justifyContent: 'center'}}>
+                <Link to={item.href} className={style.link}>
+                  <ListItemButton sx={{textAlign: 'center'}}>
+                    <ListItemText primary={item.name} />
+                  </ListItemButton>
+                </Link>
+              </ListItem>
+            ))}
+          </List>
+        </nav>
+      </Box>
+      <main className={style.main}>
+        <Switch>
+          <Route exact path="/">
+            <Profile />
+          </Route>
+          <Route path="/dialogs">
+            <Dialogs />
+          </Route>
+        </Switch>
+      </main>
     </div>
   );
-}
+};
 
 export default App;

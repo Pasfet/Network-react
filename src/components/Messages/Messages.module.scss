@@ -1,3 +1,11 @@
 .messagesWrapper {
-  grid-column: 2 / 3;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr 100px;
+  grid-template-columns: 1fr;
+}
+
+.messageList {
+  height: 89vh;
+  overflow-y: auto;
 }
