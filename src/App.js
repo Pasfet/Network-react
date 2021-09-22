@@ -4,6 +4,7 @@ import Profile from "./pages/Profile/Profile";
 import Dialogs from './pages/Dialogs/Dialogs';
 import { Box, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 
+
 const navbarItem = [
   { name: 'Profile', href: '/' },
   { name: 'Messages', href: '/dialogs' }
