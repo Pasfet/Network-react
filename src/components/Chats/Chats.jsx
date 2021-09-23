@@ -13,6 +13,8 @@ const Chats = ({ chats, setChats }) => {
   }
 
   const addChat = () => {
+    console.log(!inputValue);
+    if (!inputValue) return;
     const newChat = {
       name: inputValue,
       messages: []
@@ -34,17 +36,6 @@ const Chats = ({ chats, setChats }) => {
     });
   }
 
-  const chat = Object.keys(chats).map(id => (
-    <ListItem divider key={chats[id].name} className={style.chatItemWrap}>
-      <Link to={`/dialogs/${id}`} className={style.link}>
-        <ListItemButton sx={{width: '100%'}}>
-          <ListItemText primary={chats[id].name} />
-        </ListItemButton>
-      </Link>
-      <Button variant="contained" color={'secondary'} onClick={() => deleteChat(id)}>Delete</Button>
-    </ListItem>
-  ));
-
   return (
     <div className={style.chatsWrapper}>
       <h2>
@@ -55,7 +46,18 @@ const Chats = ({ chats, setChats }) => {
         <Button variant="contained" onClick={addChat}>Add chat</Button>
       </div>
       <List>
-        { chat }
+        { 
+        Object.keys(chats)?.map(id => (
+          <ListItem divider key={chats[id].name} className={style.chatItemWrap}>
+            <Link to={`/dialogs/${id}`} className={style.link}>
+              <ListItemButton sx={{width: '100%'}}>
+                <ListItemText primary={chats[id].name} />
+              </ListItemButton>
+            </Link>
+            <Button variant="contained" color={'secondary'} onClick={() => deleteChat(id)}>Delete</Button>
+          </ListItem>
+          )) 
+        }
       </List>
     </div>
   )

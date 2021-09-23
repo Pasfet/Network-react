@@ -15,7 +15,7 @@ const App = () => {
       <Box className={style.navbar}>
         <nav>
           <List>
-            {navbarItem.map(item => (
+            {navbarItem?.map(item => (
               <ListItem disablePadding key={item.name} divider sx={{justifyContent: 'center'}}>
                 <Link to={item.href} className={style.link}>
                   <ListItemButton sx={{textAlign: 'center'}}>

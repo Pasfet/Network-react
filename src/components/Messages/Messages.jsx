@@ -54,14 +54,14 @@ const Messages = ({ chats, setChats }) => {
     return <Redirect to="/dialogs/1/404" />;
   }
 
-  const msg = chats[id].messages.map((message) => 
-    <Message message={message} key={message.id} />
-  );
-
   return (
     <div className={style.messagesWrapper}>
       <div className={style.messageList}>
-        {msg}
+        {
+          chats[id].messages?.map((message) => 
+          <Message message={message} key={message.id} />
+          )
+        }
       </div>
       <TextFieldInputs sendMessage={sendMessage} valueInput={value} setValue={handleChange} />
     </div>
