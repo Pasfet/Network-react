@@ -1,76 +1,69 @@
+import { memo, useEffect, useState, useRef } from 'react';
+import { useParams, Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import style from './Messages.module.scss';
 import Message from './message/Message';
 import TextFieldInputs from '../TextField/TextField';
-import { memo, useEffect, useState } from 'react';
-import { useParams, Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { sendMessageAction } from '../../actions/dialogsAction';
 
-const Messages = ({ chats, setChats }) => {
-  const {id} = useParams();
+const Messages = ({ chats }) => {
+  const { id } = useParams();
   const [value, setValue] = useState('');
+  const dispatch = useDispatch();
+  const messagesListWrapperScroll = useRef(null);
 
-  const handleChange = (e) => {
-    setValue(e.target.value);
+  const sendMessage = e => {
+    e.preventDefault();
+    dispatch(sendMessageAction({ id: id, message: value, author: 'me' }));
+    setValue('');
+    scrollToBottom();
   };
 
-  const sendMessage = (e) => {
-    e.preventDefault();
-    const newMsg = {
-        id: chats[id].messages.length + 1,
-        text: value,
-        author: 'me'
-    };
-    setValue('');
-    setChats(prevState => ({...prevState, [id]: {
-      ...prevState[id],
-      messages: [...prevState[id].messages, newMsg]
-    }}));
+  const scrollToBottom = () => {
+    messagesListWrapperScroll?.current.scrollIntoView({ behavior: 'smooth' });
   };
 
   useEffect(() => {
     if (!chats[id]) {
-      return <Redirect to="/dialogs/1/404" />;
+      return <Redirect to="/dialogs/404" />;
     }
+    scrollToBottom();
 
-    if (chats[id].messages[chats[id].messages.length - 1]?.author === 'me' && chats[id].messages.length !== 0) {
+    if (
+      chats[id].messages[chats[id].messages.length - 1]?.author === 'me' &&
+      chats[id].messages.length !== 0
+    ) {
       setTimeout(() => {
-        const botMsg = {
-          id: chats[id].messages.length + 1,
-          text: 'successfully sent',
-          author: 'bot'
-        };
-        setChats(prevState => ({
-          ...prevState,
-          [id]: {
-            ...prevState[id],
-            messages: [...prevState[id].messages, botMsg]
-          }
-        }));
-      }, 1000)
-    };
-  }, [chats, id, setChats]);
+        dispatch(sendMessageAction({ id: id, message: 'successfully sent', author: 'bot' }));
+        scrollToBottom();
+      }, 1000);
+    }
+  }, [chats, dispatch, id]);
 
   if (!chats[id]) {
-    return <Redirect to="/dialogs/1/404" />;
+    return <Redirect to="/dialogs/404" />;
   }
-
-  const msg = chats[id].messages.map((message) => 
-    <Message message={message} key={message.id} />
-  );
 
   return (
     <div className={style.messagesWrapper}>
       <div className={style.messageList}>
-        {msg}
+        {chats[id].messages?.map(message => (
+          <Message message={message} key={message.id} />
+        ))}
+        <div ref={messagesListWrapperScroll}></div>
       </div>
-      <TextFieldInputs sendMessage={sendMessage} valueInput={value} setValue={handleChange} />
+      <TextFieldInputs
+        sendMessage={sendMessage}
+        valueInput={value}
+        setValue={e => setValue(e.target.value)}
+      />
     </div>
   );
 };
 
 Messages.propsTypes = {
   chats: PropTypes.object.isRequired,
-  setChats: PropTypes.func.isRequired
 };
 
 export default memo(Messages);

@@ -1,8 +1,7 @@
-import { EDIT_PROFILE } from "./types/profileTypes";
-
+import { EDIT_PROFILE } from '../types/profileTypes';
 
 const initialState = {
-  profileEdit: false
+  profileEdit: false,
 };
 
 const profileReducer = (state = initialState, { type, payload }) => {
@@ -10,11 +9,11 @@ const profileReducer = (state = initialState, { type, payload }) => {
     case EDIT_PROFILE:
       return {
         ...state,
-        profileEdit: !state.profileEdit
+        profileEdit: !state.profileEdit,
       };
     default:
       return state;
   }
-}
+};
 
 export default profileReducer;

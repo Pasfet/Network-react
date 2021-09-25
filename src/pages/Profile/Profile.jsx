@@ -1,10 +1,11 @@
 import { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { profileEditAction } from '../../actions/profileEditAction';
+import { getProfile } from '../../store/ProfileReducer/selector';
 import style from './Profile.module.scss';
 
 const Profile = () => {
-  const { profileEdit } = useSelector(state => state);
+  const { profileEdit } = useSelector(getProfile, shallowEqual);
   const dispatch = useDispatch();
   const editProfile = useCallback(() => {
     dispatch(profileEditAction());
@@ -13,15 +14,8 @@ const Profile = () => {
   return (
     <div className={style.profileWrap}>
       Profile
-      <input 
-        type="checkbox"
-        checked={profileEdit}
-        value={profileEdit}
-        onChange={editProfile}
-      />
-      <span>
-        {profileEdit ? 'edit' : 'edit?'}
-      </span>
+      <input type="checkbox" checked={profileEdit} value={profileEdit} onChange={editProfile} />
+      <span>{profileEdit ? 'edit' : 'edit?'}</span>
     </div>
   );
 };

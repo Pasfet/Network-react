@@ -1,5 +1,11 @@
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import ProfileReducer from './Profile';
+import dialogsPage from './DialogsReducer/Dialogs';
+import profilePage from './ProfileReducer/Profile';
 
-export const store = createStore(ProfileReducer, composeWithDevTools());
+const modulesStore = combineReducers({
+  profilePage,
+  dialogsPage,
+});
+
+export const store = createStore(modulesStore, composeWithDevTools());
