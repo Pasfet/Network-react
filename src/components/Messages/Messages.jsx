@@ -9,10 +9,6 @@ const Messages = ({ chats, setChats }) => {
   const {id} = useParams();
   const [value, setValue] = useState('');
 
-  const handleChange = (e) => {
-    setValue(e.target.value);
-  };
-
   const sendMessage = (e) => {
     e.preventDefault();
     const newMsg = {
@@ -63,7 +59,7 @@ const Messages = ({ chats, setChats }) => {
           )
         }
       </div>
-      <TextFieldInputs sendMessage={sendMessage} valueInput={value} setValue={handleChange} />
+      <TextFieldInputs sendMessage={sendMessage} valueInput={value} setValue={e => setValue(e.target.value)} />
     </div>
   );
 };

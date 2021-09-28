@@ -8,12 +8,7 @@ import { useState } from 'react';
 const Chats = ({ chats, setChats }) => {
   const [inputValue, setInputValue] = useState('');
 
-  const handleInput = e => {
-    setInputValue(e.target.value);
-  }
-
   const addChat = () => {
-    console.log(!inputValue);
     if (!inputValue) return;
     const newChat = {
       name: inputValue,
@@ -42,7 +37,7 @@ const Chats = ({ chats, setChats }) => {
         Chats
       </h2>
       <div className={style.addChat}>
-        <TextField id="standard-basic" label="Add chat" variant="standard" sx={{width: '50%'}} value={inputValue} onChange={handleInput} />
+        <TextField id="standard-basic" label="Add chat" variant="standard" sx={{width: '50%'}} value={inputValue} onChange={e => setInputValue(e.target.value)} />
         <Button variant="contained" onClick={addChat}>Add chat</Button>
       </div>
       <List>
