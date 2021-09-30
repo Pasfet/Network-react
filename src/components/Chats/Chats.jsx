@@ -39,18 +39,14 @@ const Chats = ({ chatsList }) => {
         </Button>
       </div>
       <List>
-        {Object.keys(chatsList).map(id => (
+        {Object.keys(chatsList)?.map(id => (
           <ListItem divider key={chatsList[id].name} className={style.chatItemWrap}>
             <Link to={`/dialogs/${id}`} className={style.link}>
               <ListItemButton sx={{ width: '100%' }}>
                 <ListItemText primary={chatsList[id].name} />
               </ListItemButton>
             </Link>
-            <Button
-              variant="contained"
-              color={'secondary'}
-              onClick={() => deleteChat(chatsList[id].id)}
-            >
+            <Button variant="contained" color={'secondary'} onClick={() => deleteChat(id)}>
               Delete
             </Button>
           </ListItem>

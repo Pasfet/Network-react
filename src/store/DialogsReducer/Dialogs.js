@@ -31,9 +31,12 @@ const dialogsReducer = (state = initialState, { type, payload }) => {
       };
 
     case DELETE_CHAT:
-      delete state.chats[`id${payload}`];
+      const chats = Object.fromEntries(Object.entries(state.chats).filter(el => el[0] !== payload));
       return {
         ...state,
+        chats: {
+          ...chats,
+        },
       };
     case SEND_MESSAGES:
       const newMsg = {
