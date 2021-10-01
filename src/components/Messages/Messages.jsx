@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import style from './Messages.module.scss';
 import Message from './message/Message';
 import TextFieldInputs from '../TextField/TextField';
-import { sendMessageAction } from '../../actions/dialogsAction';
+import { botMessage, sendMessageAction } from '../../actions/dialogsAction';
 
 const Messages = ({ chats }) => {
   const { id } = useParams();
@@ -28,17 +28,8 @@ const Messages = ({ chats }) => {
     if (!chats[id]) {
       return <Redirect to="/dialogs/404" />;
     }
+    dispatch(botMessage(id, chats));
     scrollToBottom();
-
-    if (
-      chats[id].messages[chats[id].messages.length - 1]?.author === 'me' &&
-      chats[id].messages.length !== 0
-    ) {
-      setTimeout(() => {
-        dispatch(sendMessageAction({ id: id, message: 'successfully sent', author: 'bot' }));
-        scrollToBottom();
-      }, 1000);
-    }
   }, [chats, dispatch, id]);
 
   if (!chats[id]) {

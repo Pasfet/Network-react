@@ -8,7 +8,7 @@
 }
 
 .inlineContainer {
-  display: inline-flex;
+  display: flex;
 }
 .inlineContainer.me {
   flex-direction: row-reverse;
@@ -16,6 +16,7 @@
 .otherBubble {
   min-width: 60px;
   max-width: 700px;
+  width: max-content;
   padding: 14px 18px;
   margin: 6px 8px;
   background-color: #6c8ea4;
@@ -26,6 +27,7 @@
 .meBubble {
   min-width: 60px;
   max-width: 700px;
+  width: max-content;
   padding: 14px 18px;
   margin: 6px 8px;
   background-color: #5b5377;

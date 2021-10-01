@@ -1,0 +1,17 @@
+.chatItemWrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.link {
+  width: 100%;
+  font-size: 24px;
+  color: #000;
+  &:hover {
+    opacity: 0.8;
+  }
+  &:visited {
+    color: #000;
+  }
+}

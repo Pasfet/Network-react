@@ -1,18 +1,7 @@
 import { ADD_CHAT, DELETE_CHAT, SEND_MESSAGES } from '../types/dialogsTypes';
 
 const initialState = {
-  chats: {
-    id0: {
-      id: 0,
-      name: 'Mike',
-      messages: [],
-    },
-    id1: {
-      id: 1,
-      name: 'Anna',
-      messages: [],
-    },
-  },
+  chats: {},
 };
 
 const dialogsReducer = (state = initialState, { type, payload }) => {
@@ -39,10 +28,11 @@ const dialogsReducer = (state = initialState, { type, payload }) => {
         },
       };
     case SEND_MESSAGES:
+      const { id, message, author } = payload;
       const newMsg = {
-        id: state.chats[payload.id].messages.length + 1,
-        text: payload.message,
-        author: payload.author,
+        id: state.chats[id].messages.length + 1,
+        text: message,
+        author: author,
       };
       return {
         ...state,

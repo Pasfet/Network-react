@@ -1,11 +1,10 @@
-import { List, ListItem, ListItemText } from '@material-ui/core';
-import { Button, ListItemButton, TextField } from '@mui/material';
 import PropTypes from 'prop-types';
 import style from './Chats.module.scss';
-import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addChatAction, deleteChatAction } from '../../actions/dialogsAction';
+import AddChat from './AddChat/AddChat';
+import ChatsList from './ChatsList/ChatsList';
 
 const Chats = ({ chatsList }) => {
   const [inputValue, setInputValue] = useState('');
@@ -24,34 +23,9 @@ const Chats = ({ chatsList }) => {
     <div className={style.chatsWrapper}>
       <h2>Chats</h2>
       <div className={style.addChat}>
-        <TextField
-          id="standard-basic"
-          label="Add chat"
-          variant="standard"
-          sx={{ width: '50%' }}
-          value={inputValue}
-          onChange={e => {
-            setInputValue(e.target.value);
-          }}
-        />
-        <Button variant="contained" onClick={addChat}>
-          Add chat
-        </Button>
+        <AddChat inputValue={inputValue} setInputValue={setInputValue} addChat={addChat} />
       </div>
-      <List>
-        {Object.keys(chatsList)?.map(id => (
-          <ListItem divider key={chatsList[id].name} className={style.chatItemWrap}>
-            <Link to={`/dialogs/${id}`} className={style.link}>
-              <ListItemButton sx={{ width: '100%' }}>
-                <ListItemText primary={chatsList[id].name} />
-              </ListItemButton>
-            </Link>
-            <Button variant="contained" color={'secondary'} onClick={() => deleteChat(id)}>
-              Delete
-            </Button>
-          </ListItem>
-        ))}
-      </List>
+      <ChatsList chatsList={chatsList} deleteChat={deleteChat} />
     </div>
   );
 };
