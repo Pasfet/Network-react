@@ -1,9 +1,12 @@
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-body, html {
+body,
+html {
   margin: 0;
   padding: 0;
 }
@@ -19,7 +22,12 @@ main {
 footer {
   margin-top: auto;
 }
-h1,h2,h3,h4,h5,p {
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
   margin: 0;
   padding: 0;
 }
@@ -34,4 +42,8 @@ a {
 }
 img {
   display: block;
+}
+
+.swiper-wrapper {
+  align-items: center !important;
 }

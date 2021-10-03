@@ -5,15 +5,20 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import dialogsPage from './DialogsReducer/Dialogs';
 import profilePage from './ProfileReducer/Profile';
+import animeReducer from './AnimeReducer/AnimeReducer';
+import spinnerReducer from './SpinnerReducer/spinnerReducer';
 
 const persistConfig = {
   key: 'root',
   storage: storage,
+  blacklist: ['animePage', 'searchTitle'],
 };
 
 const rootReducer = combineReducers({
   profilePage,
   dialogsPage,
+  animePage: animeReducer,
+  spinner: spinnerReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -1,0 +1,96 @@
+$cardWidth: 250px;
+.wrapper {
+  padding: 15px;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  justify-items: center;
+  gap: 15px;
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (min-width: 1440px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.card {
+  width: $cardWidth;
+  border-radius: 5px;
+  box-shadow: 0 1px 2px 3px #e2e2e2;
+}
+
+.bannerWrap {
+  width: $cardWidth;
+  height: 300px;
+  position: relative;
+  &:hover .overlay {
+    opacity: 1;
+    cursor: pointer;
+  }
+}
+
+.cardImg {
+  width: inherit;
+  height: inherit;
+  object-fit: cover;
+}
+
+.overlay {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  transform: opacity 0.3s ease-in-out;
+  a {
+    color: #000;
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 10px;
+    background-color: #fff;
+    transition: transform 0.3s ease-in-out;
+    &:hover {
+      transform: scale(0.98);
+    }
+  }
+}
+
+.cardContent {
+  padding: 10px 5px;
+  overflow: hidden;
+  color: #fff;
+}
+
+.cardTitle {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.genreCard {
+  display: inline-block;
+  border-radius: 15px;
+  background-color: purple;
+  color: #fff;
+  padding: 8px;
+  font-size: 14px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.cardDescription {
+  width: $cardWidth;
+  max-height: 150px;
+  margin: 10px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
