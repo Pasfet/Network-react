@@ -6,7 +6,7 @@ import {
   GET_MESSAGES,
   SET_SEARCH_CHAT,
 } from '../store/types/dialogsTypes';
-import { setError, clearError } from './errorAction';
+import { setError } from './errorAction';
 
 export const getChats = chats => ({
   type: GET_CHATS,
@@ -31,19 +31,18 @@ export const clearChats = () => ({
   type: CLEAR_CHATS,
 });
 
-export const searchUsersChat = text => {
+export const searchUsersChat = (text, uid) => {
   return dispatch => {
-    dispatch(clearError());
-    fetch(`${CURRENT_URL}/dialogs?searchChat=${text}`)
+    fetch(`${CURRENT_URL}/dialogs?uid=${uid}&searchChat=${text}`)
       .then(response => response.json())
       .then(data => {
         if (data.result === 0) {
           dispatch(setSearchChats(data.users));
         } else {
-          dispatch(setError(data.text));
+          dispatch(setError({ message: data.text }));
         }
       })
-      .catch(err => dispatch(setError(err.message)));
+      .catch(err => dispatch(setError({ message: err.message })));
   };
 };
 
@@ -55,10 +54,10 @@ export const getChatsList = uid => {
         if (data.result === 0) {
           dispatch(getChats(data.chats));
         } else {
-          dispatch(setError(data.text));
+          dispatch(setError({ message: data.text }));
         }
       })
-      .catch(err => dispatch(setError(err.message)));
+      .catch(err => dispatch(setError({ message: err.message })));
   };
 };
 
@@ -74,10 +73,10 @@ export const addChatToApi = (uid, user) => {
         if (data.result === 0) {
           dispatch(getChatsList(uid));
         } else {
-          dispatch(setError(data.text));
+          dispatch(setError({ message: data.text }));
         }
       })
-      .catch(err => setError(err.message));
+      .catch(err => setError({ message: err.message }));
   };
 };
 
@@ -92,10 +91,10 @@ export const deleteChatFromApi = (uid, chatId) => dispatch => {
       if (data.result === 0) {
         dispatch(getChatsList(uid));
       } else {
-        dispatch(setError(data.text));
+        dispatch(setError({ message: data.text }));
       }
     })
-    .catch(err => setError(err.message));
+    .catch(err => setError({ message: err.message }));
 };
 
 export const sendMessageToAPI = (uid, chatId, message) => {
@@ -110,9 +109,9 @@ export const sendMessageToAPI = (uid, chatId, message) => {
         if (data.result === 0) {
           dispatch(getChatsList(uid));
         } else {
-          dispatch(setError(data.text));
+          dispatch(setError({ message: data.text }));
         }
       })
-      .catch(err => dispatch(err.message));
+      .catch(err => dispatch({ message: err.message }));
   };
 };

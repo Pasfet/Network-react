@@ -28,6 +28,7 @@ const LogIn = ({ onSubmitHandler, setEmail, emailValue, setPassword, passwordVal
           errorMessages={['Это поле обязательно', 'Email введен не верно']}
         />
         <TextValidator
+          autoComplete="off"
           className={style.loginInput}
           sx={{ marginBottom: '20px' }}
           variant="standard"

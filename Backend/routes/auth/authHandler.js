@@ -1,9 +1,11 @@
 const fs = require('fs');
 const authActions = require('./authActions');
+const {LOG_IN, SIGN_UP} = require('../types/authTypes');
+
 
 const actions = {
-  logIn: authActions.logIn,
-  signUp: authActions.signUp,
+  LOG_IN: authActions.logIn,
+  SIGN_UP: authActions.signUp,
 };
 
 const handler = (req, res, action, file) => {
@@ -12,7 +14,7 @@ const handler = (req, res, action, file) => {
       res.sendStatus(404, JSON.stringify({ result: 1, text: err }));
     } else {
       switch (action) {
-        case 'logIn':
+        case LOG_IN:
           const uid =  actions[action](JSON.parse(data), req);
           if (uid) {
             res.send(JSON.stringify({result: 0, uid: uid}));
@@ -21,7 +23,7 @@ const handler = (req, res, action, file) => {
           }
           break;
         
-        case 'signUp':
+        case SIGN_UP:
           const newRegistredUsersList = actions[action](JSON.parse(data), req);
 
           if (newRegistredUsersList) {

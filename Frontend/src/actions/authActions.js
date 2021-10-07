@@ -24,17 +24,17 @@ export const authorization = ({ email, password }) => {
     })
       .then(response => response.json())
       .then(data => {
-        if (data.result === 2) {
-          dispatch(setError({ message: data.text }));
-        } else {
+        if (data.result === 0) {
           dispatch(setAuth());
           dispatch(setUid(data.uid));
           dispatch(getChatsList(data.uid));
           dispatch(getUser(data.uid));
+        } else {
+          dispatch(setError({ message: data.text }));
         }
       })
       .catch(error => {
-        dispatch(setError(error));
+        dispatch(setError({ message: error.message }));
       })
       .finally(() => dispatch(loadingFalse()));
   };
@@ -51,14 +51,14 @@ export const registration = ({ name, email, password }) => {
     })
       .then(response => response.json())
       .then(data => {
-        if (data.result === 2) {
-          dispatch(setError({ message: data.text }));
-        } else {
+        if (data.result === 0) {
           dispatch(authorization({ email, password }));
+        } else {
+          dispatch(setError({ message: data.text }));
         }
       })
       .catch(error => {
-        dispatch(setError(error));
+        dispatch(setError({ message: error.message }));
       })
       .finally(() => dispatch(loadingFalse()));
   };

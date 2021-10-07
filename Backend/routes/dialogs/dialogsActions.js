@@ -1,11 +1,11 @@
-const {createChats, createMessage} = require('./dialogsHelper');
+const {createChats, createMessage, copyUsersListWithNewChat, copyUsersListWithoutDeletedChat, copyWithNewMessage} = require('./dialogsHelper');
 
 const getUsersName = (usersList, req) => {
   const {users} = usersList;
-  const {searchChat} = req.query;
+  const {searchChat, uid} = req.query;
 
   const regExp = new RegExp(searchChat, 'i');
-  const resultSearch = Object.entries(users).filter(user => regExp.test(user[1].user_name));
+  const resultSearch = Object.entries(users).filter(user => regExp.test(user[1].user_name) && user[0] !== uid);
   
   if (!resultSearch.length) {
     return null;
@@ -30,32 +30,18 @@ const addChat = (usersList, req) => {
   const {users} = usersList;
   const {uid, user} = req.body;
 
-  if (users[uid].user_chats[user.uid]) return null;
+  if (users[uid].user_chats[user.uid] || uid === user.uid) return null;
 
-    const newChatAuthor = createChats(user.uid, user.user_name);
-    const newChatRecipient = createChats(uid, users[uid].user_name);
-    
-    const newUsersList = {
-      users: {
-        ...users,
-        [uid]: {
-          ...users[uid],
-          user_chats: {
-            ...users[uid].user_chats,
-            ...newChatAuthor
-          }
-        },
-        [user.uid]: {
-          ...users[user.uid],
-          user_chats: {
-            ...users[user.uid].user_chats,
-            ...newChatRecipient
-          }
-        }
-      }
-    };
+  const newChatAuthor = createChats(user.uid, user.user_name);
+  const newChatRecipient = createChats(uid, users[uid].user_name);
+  const newUsers = copyUsersListWithNewChat(users, uid, newChatAuthor, user.uid, newChatRecipient);
+  const newUsersList = {
+    users: {
+      ...newUsers
+    }
+  };
 
-    return JSON.stringify(newUsersList, null, 2);
+  return JSON.stringify(newUsersList, null, 2);
 }
 
 const deleteChat = (usersList, req) => {
@@ -63,19 +49,11 @@ const deleteChat = (usersList, req) => {
   const {users} = usersList;
 
   const chatsAuthor = Object.fromEntries(Object.entries(users[uid].user_chats).filter(chat => chat[0] !== chatId));
-  const chatRecipient = Object.fromEntries(Object.entries(users[chatId].user_chats).filter(chat => chat[0] !== `${uid}`));
-
+  const chatsRecipient = Object.fromEntries(Object.entries(users[chatId].user_chats).filter(chat => chat[0] !== `${uid}`));
+  const newChatsList = copyUsersListWithoutDeletedChat(users, uid, chatsAuthor, chatId, chatsRecipient);
   const newUsersList = {
     users: {
-      ...users,
-      [uid]: {
-        ...users[uid],
-        user_chats: chatsAuthor
-      },
-      [chatId]: {
-        ...users[chatId],
-        user_chats: chatRecipient
-      }
+      ...newChatsList
     }
   }
   return JSON.stringify(newUsersList, null, 2);
@@ -98,33 +76,13 @@ const sendMessage = (usersList, req) => {
   const {chatId, message} = req.body;
   const {users} = usersList;
 
-  const lengthMessages = users[uid].user_chats[chatId].messages.length;
+  // const lengthMessages = users[uid].user_chats[chatId].messages.length;
 
-  const newMessage = createMessage(uid, lengthMessages, message, users[uid].user_name);
-
+  const newMessage = createMessage(uid, message, users[uid].user_name);
+  const newUsers = copyWithNewMessage(users, uid, newMessage, chatId);
   const newUsersList = {
     users: {
-      ...users,
-      [uid]: {
-        ...users[uid],
-        user_chats: {
-          ...users[uid].user_chats,
-          [chatId]: {
-           ...users[uid].user_chats[chatId],
-           messages: [...users[uid].user_chats[chatId].messages, newMessage] 
-          }
-        }
-      },
-      [chatId]: {
-        ...users[chatId],
-        user_chats: {
-          ...users[chatId].user_chats,
-          [uid]: {
-            ...users[chatId].user_chats[uid],
-            messages: [...users[chatId].user_chats[uid].messages, newMessage]
-          }
-        }
-      }
+      ...newUsers
     }
   }
 

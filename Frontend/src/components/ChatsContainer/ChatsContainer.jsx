@@ -1,8 +1,9 @@
-import PropTypes from 'prop-types';
-import style from './Chats.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+import style from './Chats.module.scss';
 import {
   addChatToApi,
   clearSearchChats,
@@ -13,19 +14,21 @@ import {
 import AddChat from './AddChat/AddChat';
 import ChatsList from './ChatsList/ChatsList';
 import useDebounce from '../../hooks/debounce/debounce';
-import { useEffect } from 'react';
 import { getSearchChats } from '../../store/dialogsReducer/dialogsSelector';
+import { getError } from '../../store/errorReducer/errorSelector';
 import { getUid } from '../../store/profileReducer/profileSelector';
+import { clearError } from '../../actions/errorAction';
 
-const Chats = ({ chatsList }) => {
+const ChatsContainer = ({ chatsList }) => {
   const history = useHistory();
   const searchChatsList = useSelector(getSearchChats);
+  const error = useSelector(getError);
   const uid = useSelector(getUid);
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState('');
   const [open, setOpen] = useState(false);
   const debounce = useDebounce(inputValue, 1000);
-  const loading = open && searchChatsList.length === 0;
+  const [loading, setLoading] = useState(false);
 
   const addChat = user => {
     dispatch(addChatToApi(uid, user));
@@ -40,11 +43,24 @@ const Chats = ({ chatsList }) => {
   useEffect(() => {
     dispatch(clearSearchChats());
     dispatch(getChatsList(uid));
-    if (debounce) {
-      dispatch(searchUsersChat(debounce));
+    if (open) {
+      setLoading(true);
+      if (debounce) {
+        dispatch(searchUsersChat(debounce, uid));
+        if (error) {
+          setLoading(false);
+        }
+      }
+    } else {
+      setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debounce]);
+  }, [debounce, open, error]);
+
+  useEffect(() => {
+    return () => dispatch(clearError());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={style.chatsWrapper}>
@@ -59,6 +75,7 @@ const Chats = ({ chatsList }) => {
           onOpenField={setOpen}
           onCloseField={setOpen}
           options={searchChatsList}
+          error={error}
         />
       </div>
       <ChatsList chatsList={chatsList} deleteChat={deleteChat} uid={uid} />
@@ -66,8 +83,8 @@ const Chats = ({ chatsList }) => {
   );
 };
 
-Chats.propsTypes = {
+ChatsContainer.propsTypes = {
   chatsList: PropTypes.array.isRequired,
 };
 
-export default Chats;
+export default ChatsContainer;

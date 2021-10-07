@@ -14,6 +14,7 @@ const AddChat = ({
   onCloseField,
   options,
   loading,
+  error,
 }) => {
   return (
     <div className={style.addChatWrapper}>
@@ -25,6 +26,7 @@ const AddChat = ({
         options={options}
         loading={loading}
         loadingText="Поиск..."
+        openText="Введите имя пользователя"
         onChange={(e, value, reason) => {
           if (reason !== 'clear') {
             addChat(value);
@@ -33,6 +35,7 @@ const AddChat = ({
         }}
         isOptionEqualToValue={(option, value) => option.user_name === value.user_name}
         getOptionLabel={option => option.user_name}
+        noOptionsText={error}
         renderInput={params => (
           <TextField
             {...params}
@@ -65,6 +68,7 @@ AddChat.propsTypes = {
   onCloseField: PropTypes.func.isRequired,
   options: PropTypes.array.isRequired,
   loading: PropTypes.bool,
+  error: PropTypes.string,
 };
 
 export default AddChat;

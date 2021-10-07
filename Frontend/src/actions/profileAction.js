@@ -40,9 +40,9 @@ export const getUser = uid => dispatch => {
       if (data.result === 0) {
         dispatch(setUser(data.user));
       } else {
-        dispatch(setError(data.text));
+        dispatch(setError({ message: data.text }));
       }
     })
-    .catch(err => dispatch(setError(err.message)))
+    .catch(err => dispatch(setError({ message: err.message })))
     .finally(() => dispatch(loadingFalse()));
 };

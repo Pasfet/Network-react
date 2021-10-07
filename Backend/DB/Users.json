@@ -6,7 +6,104 @@
       "password": "123456789",
       "user_name": "James",
       "user_friends": [],
-      "user_chats": {}
+      "user_chats": {
+        "e6b6ee7": {
+          "chat_id": "e6b6ee7",
+          "chat_name": "Anna",
+          "messages": [
+            {
+              "id": "e560e26-27bc316",
+              "text": "Hello",
+              "authorId": "817b113",
+              "authorName": "James"
+            },
+            {
+              "id": "3fd4c6e-deb6e50",
+              "text": ">",
+              "authorId": "817b113",
+              "authorName": "James"
+            },
+            {
+              "id": "7ef8db8-c16a225",
+              "text": "asdasd",
+              "authorId": "817b113",
+              "authorName": "James"
+            },
+            {
+              "id": "94d178d-8e8ddcf",
+              "text": "sadasda",
+              "authorId": "817b113",
+              "authorName": "James"
+            },
+            {
+              "id": "1c5e4c0-1c055f1",
+              "text": "asW",
+              "authorId": "817b113",
+              "authorName": "James"
+            },
+            {
+              "id": "5b48805-f4d26a9",
+              "text": "asdaasd",
+              "authorId": "817b113",
+              "authorName": "James"
+            },
+            {
+              "id": "75c24fa-cc9a9a6",
+              "text": "cxxzc",
+              "authorId": "817b113",
+              "authorName": "James"
+            },
+            {
+              "id": "f03d89c-bd5bed1",
+              "text": "wdasd",
+              "authorId": "817b113",
+              "authorName": "James"
+            },
+            {
+              "id": "99be3c9-0c5efee",
+              "text": "wdasdad",
+              "authorId": "817b113",
+              "authorName": "James"
+            },
+            {
+              "id": "960300a-1645d1e",
+              "text": "adsadasd",
+              "authorId": "817b113",
+              "authorName": "James"
+            },
+            {
+              "id": "18ed263-5284b12",
+              "text": "asd",
+              "authorId": "817b113",
+              "authorName": "James"
+            },
+            {
+              "id": "99601c0-a29b331",
+              "text": "asd",
+              "authorId": "817b113",
+              "authorName": "James"
+            },
+            {
+              "id": "e956141-8f2f433",
+              "text": "asd",
+              "authorId": "817b113",
+              "authorName": "James"
+            },
+            {
+              "id": "e872418-519aaba",
+              "text": "asd",
+              "authorId": "817b113",
+              "authorName": "James"
+            },
+            {
+              "id": "0736366-6f6d121",
+              "text": "asd",
+              "authorId": "817b113",
+              "authorName": "James"
+            }
+          ]
+        }
+      }
     },
     "e6b6ee7": {
       "uid": "e6b6ee7",
@@ -14,13 +111,118 @@
       "password": "qwertyui",
       "user_name": "Anna",
       "user_friends": [],
-      "user_chats": {}
+      "user_chats": {
+        "817b113": {
+          "chat_id": "817b113",
+          "chat_name": "James",
+          "messages": [
+            {
+              "id": "e560e26-27bc316",
+              "text": "Hello",
+              "authorId": "817b113",
+              "authorName": "James"
+            },
+            {
+              "id": "3fd4c6e-deb6e50",
+              "text": ">",
+              "authorId": "817b113",
+              "authorName": "James"
+            },
+            {
+              "id": "7ef8db8-c16a225",
+              "text": "asdasd",
+              "authorId": "817b113",
+              "authorName": "James"
+            },
+            {
+              "id": "94d178d-8e8ddcf",
+              "text": "sadasda",
+              "authorId": "817b113",
+              "authorName": "James"
+            },
+            {
+              "id": "1c5e4c0-1c055f1",
+              "text": "asW",
+              "authorId": "817b113",
+              "authorName": "James"
+            },
+            {
+              "id": "5b48805-f4d26a9",
+              "text": "asdaasd",
+              "authorId": "817b113",
+              "authorName": "James"
+            },
+            {
+              "id": "75c24fa-cc9a9a6",
+              "text": "cxxzc",
+              "authorId": "817b113",
+              "authorName": "James"
+            },
+            {
+              "id": "f03d89c-bd5bed1",
+              "text": "wdasd",
+              "authorId": "817b113",
+              "authorName": "James"
+            },
+            {
+              "id": "99be3c9-0c5efee",
+              "text": "wdasdad",
+              "authorId": "817b113",
+              "authorName": "James"
+            },
+            {
+              "id": "960300a-1645d1e",
+              "text": "adsadasd",
+              "authorId": "817b113",
+              "authorName": "James"
+            },
+            {
+              "id": "18ed263-5284b12",
+              "text": "asd",
+              "authorId": "817b113",
+              "authorName": "James"
+            },
+            {
+              "id": "99601c0-a29b331",
+              "text": "asd",
+              "authorId": "817b113",
+              "authorName": "James"
+            },
+            {
+              "id": "e956141-8f2f433",
+              "text": "asd",
+              "authorId": "817b113",
+              "authorName": "James"
+            },
+            {
+              "id": "e872418-519aaba",
+              "text": "asd",
+              "authorId": "817b113",
+              "authorName": "James"
+            },
+            {
+              "id": "0736366-6f6d121",
+              "text": "asd",
+              "authorId": "817b113",
+              "authorName": "James"
+            }
+          ]
+        }
+      }
     },
     "dc5db8b": {
       "uid": "dc5db8b",
       "user_email": "Mon@ca.com",
       "password": "qweasdzxc",
       "user_name": "Monica",
+      "user_friends": [],
+      "user_chats": {}
+    },
+    "0b805a3": {
+      "uid": "0b805a3",
+      "user_email": "poul@gmaill.com",
+      "password": "MyPassword",
+      "user_name": "Poul",
       "user_friends": [],
       "user_chats": {}
     }

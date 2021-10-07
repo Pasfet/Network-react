@@ -64,6 +64,7 @@ const SignUp = ({
         />
         <TextValidator
           className={style.signupInput}
+          autoComplete="off"
           sx={{ marginBottom: '20px' }}
           variant="standard"
           label="Введите пароль"
@@ -76,6 +77,7 @@ const SignUp = ({
         />
         <TextValidator
           className={style.signupInput}
+          autoComplete="off"
           sx={{ marginBottom: '20px' }}
           variant="standard"
           label="Повторите пароль"

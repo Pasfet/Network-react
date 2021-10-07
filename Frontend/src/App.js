@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import style from './App.module.scss';
 import { getAuth } from './store/auth/authSelector';
 import { loadingFalse, loadingTrue } from './actions/spinnerAction';

@@ -14,7 +14,7 @@ const Profile = ({ user, error }) => {
 
 Profile.propTypes = {
   user: PropTypes.object.isRequired,
-  error: PropTypes.string.isRequired,
+  error: PropTypes.string,
 };
 
 export default Profile;
