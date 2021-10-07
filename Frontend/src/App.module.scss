@@ -1,0 +1,23 @@
+.App {
+  display: grid;
+  grid-template-columns: 200px 2fr;
+  grid-template-areas: 'navbar main';
+  min-height: 100vh;
+}
+
+.main {
+  grid-area: main;
+}
+
+.list {
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid #e2e2e2;
+  width: 100%;
+}
+
+.listItem {
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #e2e2e2;
+}

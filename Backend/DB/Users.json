@@ -1,0 +1,28 @@
+{
+  "users": {
+    "817b113": {
+      "uid": "817b113",
+      "user_email": "q@q.ro",
+      "password": "123456789",
+      "user_name": "James",
+      "user_friends": [],
+      "user_chats": {}
+    },
+    "e6b6ee7": {
+      "uid": "e6b6ee7",
+      "user_email": "anna@anna.ru",
+      "password": "qwertyui",
+      "user_name": "Anna",
+      "user_friends": [],
+      "user_chats": {}
+    },
+    "dc5db8b": {
+      "uid": "dc5db8b",
+      "user_email": "Mon@ca.com",
+      "password": "qweasdzxc",
+      "user_name": "Monica",
+      "user_friends": [],
+      "user_chats": {}
+    }
+  }
+}
