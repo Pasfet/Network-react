@@ -82,7 +82,7 @@ export const addChatToApi = (uid, user) => {
 
 export const deleteChatFromApi = (uid, chatId) => dispatch => {
   fetch(`${CURRENT_URL}/dialogs`, {
-    method: 'PATCH',
+    method: 'DELETE',
     headers: { 'Content-Type': 'application/json;charset=utf-8' },
     body: JSON.stringify({ uid, chatId }),
   })
@@ -112,6 +112,6 @@ export const sendMessageToAPI = (uid, chatId, message) => {
           dispatch(setError({ message: data.text }));
         }
       })
-      .catch(err => dispatch({ message: err.message }));
+      .catch(err => dispatch(setError({ message: err.message })));
   };
 };

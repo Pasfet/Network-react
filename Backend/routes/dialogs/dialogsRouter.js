@@ -4,28 +4,28 @@ const router = Router();
 const dialogsHandler = require('./dialogsHandler');
 
 router.get('/dialogs', (req, res) => {
-  dialogsHandler(req, res, SEARCH_CHAT, 'DB/Users.json');
+  dialogsHandler(req, res, SEARCH_CHAT, 'DB/Messages.json', 'DB/Users.json');
 });
 
 router.get('/dialogs/:uid', (req, res) => {
-  dialogsHandler(req, res, GET_CHATS, 'DB/Users.json');
+  dialogsHandler(req, res, GET_CHATS, 'DB/Messages.json');
 });
 
 
 router.post('/dialogs', (req, res) => {
-  dialogsHandler(req, res, ADD_CHAT, 'DB/Users.json');
+  dialogsHandler(req, res, ADD_CHAT, 'DB/Messages.json', 'DB/Users.json');
 });
 
-router.patch('/dialogs', (req, res) => {
-  dialogsHandler(req, res, DELETE_CHAT, 'DB/Users.json');
+router.delete('/dialogs', (req, res) => {
+  dialogsHandler(req, res, DELETE_CHAT, 'DB/Messages.json');
 });
 
 router.get('/dialogs/:uid/:chatId', (req, res) => {
-  dialogsHandler(req, res, GET_MESSAGES, 'DB/Users.json');
+  dialogsHandler(req, res, GET_MESSAGES, 'DB/Messages.json');
 });
 
 router.post('/dialogs/:uid', (req, res) => {
-  dialogsHandler(req, res, SEND_MESSAGE, 'DB/Users.json');
+  dialogsHandler(req, res, SEND_MESSAGE, 'DB/Messages.json', 'DB/Users.json');
 });
 
 module.exports = router;

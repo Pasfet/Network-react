@@ -1,0 +1,44 @@
+{
+  "messages": {
+    "f1175d3": {
+      "a301bfc": {
+        "chat_id": "a301bfc",
+        "chat_name": "test",
+        "messages": [
+          {
+            "id": "3154908-6a2c52f",
+            "text": "hi",
+            "authorId": "a301bfc",
+            "authorName": "test"
+          },
+          {
+            "id": "42271cb-417500d",
+            "text": "?>",
+            "authorId": "f1175d3",
+            "authorName": "anna"
+          }
+        ]
+      }
+    },
+    "a301bfc": {
+      "f1175d3": {
+        "chat_id": "f1175d3",
+        "chat_name": "anna",
+        "messages": [
+          {
+            "id": "3154908-6a2c52f",
+            "text": "hi",
+            "authorId": "a301bfc",
+            "authorName": "test"
+          },
+          {
+            "id": "42271cb-417500d",
+            "text": "?>",
+            "authorId": "f1175d3",
+            "authorName": "anna"
+          }
+        ]
+      }
+    }
+  }
+}

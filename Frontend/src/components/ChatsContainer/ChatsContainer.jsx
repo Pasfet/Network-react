@@ -49,13 +49,14 @@ const ChatsContainer = ({ chatsList }) => {
         dispatch(searchUsersChat(debounce, uid));
         if (error) {
           setLoading(false);
+          return;
         }
       }
     } else {
       setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debounce, open, error]);
+  }, [debounce, open]);
 
   useEffect(() => {
     return () => dispatch(clearError());
@@ -78,7 +79,7 @@ const ChatsContainer = ({ chatsList }) => {
           error={error}
         />
       </div>
-      <ChatsList chatsList={chatsList} deleteChat={deleteChat} uid={uid} />
+      <ChatsList chatsList={chatsList} deleteChat={deleteChat} uid={uid} error={error} />
     </div>
   );
 };

@@ -10,19 +10,8 @@ const createUser = (id, email, password, name) => {
       password,
       user_name: name,
       user_friends: [],
-      user_chats: {}
     }
   }
- // const newUser = {
-  //   [`user${usersKeys.length + 1}`]: {
-  //     uid: usersKeys.length + 1,
-  //     user_email: email,
-  //     user_name: name,
-  //     password: password,
-  //     user_friends: [],
-  //     user_chats: {},    
-  //   }
-  // }
 }
 
 module.exports = {

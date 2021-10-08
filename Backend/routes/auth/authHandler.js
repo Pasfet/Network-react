@@ -33,7 +33,7 @@ const handler = (req, res, action, file) => {
               } else {
                 res.send(JSON.stringify({ result: 0, text: 'Успешно!' }))
               }
-            });    
+            });
           } else {
             res.send(JSON.stringify({ result: 2, text: 'Такой пользователь уже существует'}))
           }
