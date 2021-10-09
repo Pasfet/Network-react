@@ -31,18 +31,20 @@ export const clearUser = () => ({
   type: CLEAR_USER,
 });
 
-export const getUser = uid => dispatch => {
-  dispatch(clearError());
-  dispatch(loadingTrue());
-  fetch(`${CURRENT_URL}/profile/${uid}`)
-    .then(response => response.json())
-    .then(data => {
-      if (data.result === 0) {
-        dispatch(setUser(data.user));
-      } else {
-        dispatch(setError({ message: data.text }));
-      }
-    })
-    .catch(err => dispatch(setError({ message: err.message })))
-    .finally(() => dispatch(loadingFalse()));
+export const getUser = uid => {
+  return dispatch => {
+    dispatch(clearError());
+    dispatch(loadingTrue());
+    fetch(`${CURRENT_URL}/profile/${uid}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.result === 0) {
+          dispatch(setUser(data.user));
+        } else {
+          dispatch(setError({ message: data.text, type: data.type }));
+        }
+      })
+      .catch(err => dispatch(setError({ message: err.message, type: 'error' })))
+      .finally(() => dispatch(loadingFalse()));
+  };
 };

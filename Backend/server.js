@@ -1,7 +1,8 @@
 const express = require('express');
-const app = express();
 const morgan = require('morgan');
-var cors = require('cors')
+const cors = require('cors');
+const app = express();
+
 const auth = require('./routes/auth/authRouter');
 const profile = require('./routes/profile/profileRouter');
 const dialogs = require('./routes/dialogs/dialogsRouter');
@@ -12,6 +13,7 @@ app.use(morgan('dev'));
 app.use(auth);
 app.use(profile);
 app.use(dialogs);
+
 
 module.exports = app;
 

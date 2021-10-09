@@ -22,7 +22,10 @@ const AddChat = ({
         className={style.addChatForm}
         open={openField}
         onOpen={() => onOpenField(true)}
-        onClose={() => onCloseField(false)}
+        onClose={() => {
+          onCloseField(false);
+        }}
+        limitTags={0}
         options={options}
         loading={loading}
         loadingText="Поиск..."
@@ -30,7 +33,6 @@ const AddChat = ({
         onChange={(e, value, reason) => {
           if (reason !== 'clear') {
             addChat(value);
-            setInputValue('');
           }
         }}
         isOptionEqualToValue={(option, value) => option.user_name === value.user_name}

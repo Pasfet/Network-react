@@ -12,12 +12,6 @@ import authReducer from './auth/authReducer';
 import errorReducer from './errorReducer/errorReducer';
 import navbarReducer from './navbarReducer/navbarReducer';
 
-const persistConfig = {
-  key: 'social',
-  storage: storage,
-  blacklist: ['animePage', 'searchTitle', 'spinner', 'navbar', 'dialogsPage'],
-};
-
 const rootReducer = combineReducers({
   profilePage: profileReducer,
   dialogsPage: dialogsReducer,
@@ -27,6 +21,12 @@ const rootReducer = combineReducers({
   error: errorReducer,
   navbar: navbarReducer,
 });
+
+const persistConfig = {
+  key: 'social',
+  storage: storage,
+  blacklist: ['animePage', 'searchTitle', 'spinner', 'navbar', 'dialogsPage'],
+};
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

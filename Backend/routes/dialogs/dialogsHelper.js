@@ -15,9 +15,9 @@ const createChats = (uid, name) => {
   }
 }
 
-const createMessage = (uid, message, authorName) => {
+const createMessage = (uid, message, authorName, messageId) => {
   return {
-    id: generateRandomMessageId(),
+    id: messageId,
     text: message,
     authorId: uid,
     authorName: authorName
@@ -75,5 +75,6 @@ module.exports = {
   createMessage,
   copyMessagesListWithNewChat,
   copyMessagesListWithoutDeletedChat,
-  copyMessagesListWithNewMessage
+  copyMessagesListWithNewMessage,
+  generateRandomMessageId
 }

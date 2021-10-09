@@ -30,11 +30,11 @@ export const authorization = ({ email, password }) => {
           dispatch(getChatsList(data.uid));
           dispatch(getUser(data.uid));
         } else {
-          dispatch(setError({ message: data.text }));
+          dispatch(setError({ message: data.text, type: data.type }));
         }
       })
       .catch(error => {
-        dispatch(setError({ message: error.message }));
+        dispatch(setError({ message: error.message, type: 'error' }));
       })
       .finally(() => dispatch(loadingFalse()));
   };
@@ -54,11 +54,11 @@ export const registration = ({ name, email, password }) => {
         if (data.result === 0) {
           dispatch(authorization({ email, password }));
         } else {
-          dispatch(setError({ message: data.text }));
+          dispatch(setError({ message: data.text, type: data.type }));
         }
       })
       .catch(error => {
-        dispatch(setError({ message: error.message }));
+        dispatch(setError({ message: error.message, type: 'error' }));
       })
       .finally(() => dispatch(loadingFalse()));
   };

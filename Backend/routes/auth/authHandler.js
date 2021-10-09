@@ -19,7 +19,7 @@ const handler = (req, res, action, file) => {
           if (uid) {
             res.send(JSON.stringify({result: 0, uid: uid}));
           } else {
-            res.send(JSON.stringify({result: 2, text: 'Неверный логин или пароль'}))
+            res.send(JSON.stringify({result: 2, text: 'Неверный логин или пароль', type: 'login'}))
           }
           break;
         
@@ -35,12 +35,11 @@ const handler = (req, res, action, file) => {
               }
             });
           } else {
-            res.send(JSON.stringify({ result: 2, text: 'Такой пользователь уже существует'}))
+            res.send(JSON.stringify({ result: 2, text: 'Такой пользователь уже существует', type: 'signup'}))
           }
 
           break;      
         default:
-          res.send(JSON.stringify({ result: 0, text: 'ничего' }));
           break;
       }
     }

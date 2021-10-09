@@ -13,6 +13,20 @@
       "password": "qwertyui",
       "user_name": "anna",
       "user_friends": []
+    },
+    "ff9eccc": {
+      "uid": "ff9eccc",
+      "user_email": "roman@mail.com",
+      "password": "zxcvbnm,",
+      "user_name": "roman",
+      "user_friends": []
+    },
+    "26ed639": {
+      "uid": "26ed639",
+      "user_email": "name@mail.com",
+      "password": "namename",
+      "user_name": "name",
+      "user_friends": []
     }
   }
 }

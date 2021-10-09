@@ -1,5 +1,6 @@
 import style from './Message.module.scss';
 import PropTypes from 'prop-types';
+import { memo } from 'react';
 
 const Message = ({ message, uid }) => {
   return (
@@ -30,4 +31,4 @@ Message.propsTypes = {
   uid: PropTypes.number.isRequired,
 };
 
-export default Message;
+export default memo(Message);

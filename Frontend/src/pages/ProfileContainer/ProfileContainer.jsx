@@ -5,16 +5,19 @@ import { getError } from '../../store/errorReducer/errorSelector';
 import { getUser } from '../../actions/profileAction';
 import { getUserPage } from '../../store/profileReducer/profileSelector';
 import Profile from './Profile/Profile';
+import { clearError } from '../../actions/errorAction';
 
 const ProfileContainer = () => {
   const dispatch = useDispatch();
   const user = useSelector(getUserPage);
   const error = useSelector(getError);
   const { uid } = useParams();
+
   useEffect(() => {
     dispatch(getUser(uid));
-  }, [dispatch, uid]);
-  return <Profile user={user} error={error} />;
+    return () => dispatch(clearError());
+  }, [uid]);
+  return <Profile user={user} error={error?.type === 'profile' ? error.message : ''} />;
 };
 
 export default ProfileContainer;

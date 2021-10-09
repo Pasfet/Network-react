@@ -4,38 +4,51 @@
       "a301bfc": {
         "chat_id": "a301bfc",
         "chat_name": "test",
-        "messages": [
-          {
-            "id": "3154908-6a2c52f",
-            "text": "hi",
-            "authorId": "a301bfc",
-            "authorName": "test"
-          },
-          {
-            "id": "42271cb-417500d",
-            "text": "?>",
-            "authorId": "f1175d3",
-            "authorName": "anna"
-          }
-        ]
+        "messages": []
       }
     },
     "a301bfc": {
+      "26ed639": {
+        "chat_id": "26ed639",
+        "chat_name": "name",
+        "messages": [
+          {
+            "id": "b0d9b34-7cd5d28",
+            "text": "?",
+            "authorId": "26ed639",
+            "authorName": "name"
+          },
+          {
+            "id": "267af5a-0a39e28",
+            "text": "sd",
+            "authorId": "a301bfc",
+            "authorName": "test"
+          }
+        ]
+      },
       "f1175d3": {
         "chat_id": "f1175d3",
         "chat_name": "anna",
+        "messages": []
+      }
+    },
+    "ff9eccc": {},
+    "26ed639": {
+      "a301bfc": {
+        "chat_id": "a301bfc",
+        "chat_name": "test",
         "messages": [
           {
-            "id": "3154908-6a2c52f",
-            "text": "hi",
-            "authorId": "a301bfc",
-            "authorName": "test"
+            "id": "b0d9b34-7cd5d28",
+            "text": "?",
+            "authorId": "26ed639",
+            "authorName": "name"
           },
           {
-            "id": "42271cb-417500d",
-            "text": "?>",
-            "authorId": "f1175d3",
-            "authorName": "anna"
+            "id": "267af5a-0a39e28",
+            "text": "sd",
+            "authorId": "a301bfc",
+            "authorName": "test"
           }
         ]
       }

@@ -28,7 +28,7 @@ const handler = (req, res, action, file) => {
           if (user) {
             res.send(JSON.stringify({result: 0, user: user}));
           } else {
-            res.send(JSON.stringify({result: 2, text: 'Такой пользователь не найден'}))
+            res.send(JSON.stringify({result: 2, text: 'Такой пользователь не найден', type: 'profile'}))
           }
         }
       });

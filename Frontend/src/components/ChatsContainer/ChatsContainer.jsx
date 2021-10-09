@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import style from './Chats.module.scss';
 import {
   addChatToApi,
-  clearSearchChats,
   deleteChatFromApi,
   getChatsList,
   searchUsersChat,
@@ -14,55 +13,65 @@ import {
 import AddChat from './AddChat/AddChat';
 import ChatsList from './ChatsList/ChatsList';
 import useDebounce from '../../hooks/debounce/debounce';
-import { getSearchChats } from '../../store/dialogsReducer/dialogsSelector';
+import {
+  getChats,
+  getSearchChats,
+  getIsEmptyChats,
+} from '../../store/dialogsReducer/dialogsSelector';
 import { getError } from '../../store/errorReducer/errorSelector';
 import { getUid } from '../../store/profileReducer/profileSelector';
 import { clearError } from '../../actions/errorAction';
 
 const ChatsContainer = ({ chatsList }) => {
+  const dispatch = useDispatch();
   const history = useHistory();
+
+  const isEmptyChats = useSelector(getIsEmptyChats);
   const searchChatsList = useSelector(getSearchChats);
   const error = useSelector(getError);
   const uid = useSelector(getUid);
-  const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState('');
   const [open, setOpen] = useState(false);
-  const debounce = useDebounce(inputValue, 1000);
   const [loading, setLoading] = useState(false);
+  const debounce = useDebounce(inputValue, 1000);
 
-  const addChat = user => {
-    dispatch(addChatToApi(uid, user));
-    setInputValue('');
-  };
+  const addChat = useCallback(
+    user => {
+      dispatch(addChatToApi(uid, user));
+      setInputValue('');
+    },
+    [dispatch, uid],
+  );
 
-  const deleteChat = (uid, chatId) => {
-    dispatch(deleteChatFromApi(uid, chatId));
-    history.push('/dialogs');
-  };
+  const deleteChat = useCallback(
+    (uid, chatId) => {
+      dispatch(deleteChatFromApi(uid, chatId));
+      // history.push(`/dialogs/${uid}`);
+    },
+    [dispatch],
+  );
 
   useEffect(() => {
-    dispatch(clearSearchChats());
-    dispatch(getChatsList(uid));
+    if (error?.code === 2) {
+      setLoading(false);
+      return;
+    }
+    if (!isEmptyChats?.isEmpty) {
+      dispatch(getChatsList(uid));
+    }
     if (open) {
       setLoading(true);
-      if (debounce) {
+      if (debounce && error?.code !== 2) {
+        console.log('tut');
         dispatch(searchUsersChat(debounce, uid));
-        if (error) {
-          setLoading(false);
-          return;
-        }
+        setLoading(false);
+        return;
       }
     } else {
       setLoading(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debounce, open]);
-
-  useEffect(() => {
     return () => dispatch(clearError());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  }, [debounce, open, error, isEmptyChats, dispatch, uid]);
   return (
     <div className={style.chatsWrapper}>
       <h2>Chats</h2>
@@ -76,10 +85,16 @@ const ChatsContainer = ({ chatsList }) => {
           onOpenField={setOpen}
           onCloseField={setOpen}
           options={searchChatsList}
-          error={error}
+          error={error?.code === 2 && error.message}
         />
       </div>
-      <ChatsList chatsList={chatsList} deleteChat={deleteChat} uid={uid} error={error} />
+      <ChatsList
+        chatsList={chatsList}
+        deleteChat={deleteChat}
+        uid={uid}
+        error={error?.type === 'chats' && error.message}
+        isEmpty={isEmptyChats?.isEmpty && isEmptyChats.message}
+      />
     </div>
   );
 };

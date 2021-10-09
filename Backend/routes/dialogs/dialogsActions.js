@@ -18,10 +18,10 @@ const getChats = (messagesList, req) => {
   const {uid} = req.params;
   const result = messagesList.messages[uid];
 
-  if (result) {
-    return result;
+  if (!Object.keys(result).length) {
+    return null;
   }
-  return null;
+  return result;
 }
 
 const addChat = (usersList, messagesList, req) => {
@@ -63,9 +63,7 @@ const getMessages = (messagesJson, req) => {
   const {uid, chatId} = req.params;
   const {messages} = messagesJson;
 
-  const messagesList = messages[uid][chatId];
-
-  const messagesRes = messagesList[uid][chatId]?.messages;
+  const messagesRes = messages[uid][chatId].messages.slice(-50);
   if (!Object.entries(messagesRes).length) {
     return null;
   } else {
@@ -73,13 +71,12 @@ const getMessages = (messagesJson, req) => {
   }
 }
 
-const sendMessage = (usersList, messagesList, req) => {
-  const {uid} = req.params;
-  const {chatId, message} = req.body;
+const sendMessage = (usersList, messagesList, messageFromClient, messageId) => {
   const {messages} = messagesList;
   const {users} = usersList;
+  const {uid, chatId, text} = messageFromClient;
 
-  const newMessage = createMessage(uid, message, users[uid].user_name);
+  const newMessage = createMessage(uid, text, users[uid].user_name, messageId);
   const MessagesListCopy = copyMessagesListWithNewMessage(messages, uid, newMessage, chatId);
   const newMessagesList = {
     messages: {

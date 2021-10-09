@@ -26,7 +26,7 @@ fs.readFile(file, (err, data) => {
             if (resultSearch) {
               res.send(JSON.stringify({result: 0, users: resultSearch}))
             } else {
-              res.send(JSON.stringify({result: 2, text: 'Ничего не найдено'}))
+              res.send(JSON.stringify({result: 2, text: 'Ничего не найдено', type: 'search-chats', code: 2}))
             }
           }
         });
@@ -36,7 +36,7 @@ fs.readFile(file, (err, data) => {
         if (chats) {
           res.send(JSON.stringify({result: 0, chats}));
         } else {
-          res.send(JSON.stringify({result: 2, text: 'Пока нет чатов'}))
+          res.send(JSON.stringify({result: 2, type: 'chats', text: 'Пока нет чатов', code: 3}))
         }
       break;
       case ADD_CHAT:
@@ -50,11 +50,11 @@ fs.readFile(file, (err, data) => {
                 if (err) {
                   res.sendStatus(404, JSON.stringify({result: 1, text: err}))
                 } else {
-                  res.send(JSON.stringify({result: 0, text: 'Успешно!'}))
+                  res.send(JSON.stringify({result: 0, text: 'Успешно!', type: 'chats'}))
                 }
               })
             } else {
-              res.send(JSON.stringify({result: 2, text: 'Уже добавлено'}))
+              res.send(JSON.stringify({result: 2, text: 'Уже добавлено', type: 'chats'}))
             }
           }
         })
@@ -65,16 +65,16 @@ fs.readFile(file, (err, data) => {
           if (err) {
             res.sendStatus(404, JSON.stringify({result: 1, text: err}));
           } else {
-            res.send(JSON.stringify({result: 0, text: 'Успешно'}))
+            res.send(JSON.stringify({result: 0, text: 'Успешно', type: 'chats'}))
           }
         });
       break;
       case GET_MESSAGES:
         const messagesList = actions[action](JSON.parse(data), req);
         if (messagesList) {
-          res.send(JSON.stringify({result: 0, messagesList}));
+          res.send(JSON.stringify({result: 0, payload: messagesList}));
         } else {
-          res.send(JSON.stringify({result: 0, text: 'Пусто'}));
+          res.send(JSON.stringify({result: 2, type: 'messages', text: 'Пока нет сообщений', code: 3}));
         }
         break;
       case SEND_MESSAGE:

@@ -1,8 +1,8 @@
 import { CLEAR_ERROR, SET_ERROR } from '../store/types/animePageTypes';
 
-export const setError = ({ message }) => ({
+export const setError = error => ({
   type: SET_ERROR,
-  payload: message,
+  payload: error,
 });
 
 export const clearError = () => ({
