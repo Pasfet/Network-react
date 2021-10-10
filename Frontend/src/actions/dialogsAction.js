@@ -96,6 +96,7 @@ export const getChatsList = uid => {
           dispatch(clearIsEmptyChatsState());
         } else if (data.code === 3) {
           dispatch(setIsEmptyChatsState({ message: data.text, isEmpty: true }));
+          dispatch(clearChats());
         } else {
           dispatch(setError({ message: data.text, type: data.type, code: data.code }));
         }

@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import MessagesList from './MessagesList/MessagesList';
 import {
+  getChats,
   getIsEmptyMessagesState,
   getMessagesFromStore,
 } from '../../store/dialogsReducer/dialogsSelector';
@@ -11,6 +12,7 @@ import {
 import { getUserName } from '../../store/profileReducer/profileSelector';
 // import { clearError } from '../../actions/errorAction';
 import { getError } from '../../store/errorReducer/errorSelector';
+// import { clearMessages } from '../../actions/dialogsAction';
 
 // const URL = 'ws://localhost:8999/';
 
@@ -18,6 +20,7 @@ const MessagesContainer = () => {
   // const dispatch = useDispatch();
   const messages = useSelector(getMessagesFromStore);
   const userName = useSelector(getUserName);
+  const chats = useSelector(getChats);
   const error = useSelector(getError);
   const isEmptyMessages = useSelector(getIsEmptyMessagesState);
   const { uid, chatId } = useParams();
@@ -63,16 +66,19 @@ const MessagesContainer = () => {
   // }, []);
 
   return (
-    <MessagesList
-      uid={uid}
-      messages={messages}
-      inputValue={inputValue}
-      setInputValue={setInputValue}
-      userName={userName}
-      error={error}
-      chatId={chatId}
-      isEmptyMessages={isEmptyMessages && isEmptyMessages.message}
-    />
+    <>
+      <MessagesList
+        uid={uid}
+        messages={messages}
+        inputValue={inputValue}
+        setInputValue={setInputValue}
+        userName={userName}
+        error={error}
+        chatId={chatId}
+        roomId={chats[chatId]?.roomId}
+        isEmptyMessages={isEmptyMessages && isEmptyMessages.message}
+      />
+    </>
   );
 };
 

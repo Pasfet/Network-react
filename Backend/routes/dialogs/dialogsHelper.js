@@ -5,9 +5,14 @@ const generateRandomMessageId = () => {
   return messageId() + '-' + messageId();
 }
 
-const createChats = (uid, name) => {
+const generateRoomId = () => {
+  return (Math.floor((1 + Math.random()) * 0x1000000).toString(16)).substring(1);
+}
+
+const createChats = (uid, name, roomId) => {
   return {
     [uid]: {
+      roomId: roomId,
       chat_id: uid,
       chat_name: name,
       messages: []
@@ -76,5 +81,6 @@ module.exports = {
   copyMessagesListWithNewChat,
   copyMessagesListWithoutDeletedChat,
   copyMessagesListWithNewMessage,
-  generateRandomMessageId
+  generateRandomMessageId,
+  generateRoomId
 }

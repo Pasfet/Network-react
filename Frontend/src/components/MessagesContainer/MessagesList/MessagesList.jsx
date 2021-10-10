@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import { Alert } from '@mui/material';
 import PropTypes from 'prop-types';
 
@@ -25,15 +25,15 @@ const MessagesList = ({
   chatId,
   error,
   isEmpty,
+  roomId,
 }) => {
   const dispatch = useDispatch();
 
+  const socket = useRef();
   const messagesListWrapperScroll = useRef(null);
   const scrollToBottom = () => {
     messagesListWrapperScroll?.current.scrollIntoView({ behavior: 'smooth' });
   };
-
-  const [ws, setWs] = useState(new WebSocket(URL));
 
   const sendMessage = e => {
     e.preventDefault();
@@ -46,32 +46,46 @@ const MessagesList = ({
         authorName: userName,
         text: inputValue,
       },
+      uidRoom: roomId,
     };
-    ws.send(JSON.stringify(message));
+    socket.current.send(JSON.stringify(message));
     setInputValue('');
   };
 
   useEffect(() => {
-    ws.onopen = () => {
-      console.log('Я ОТКРЫЛСЯ');
+    socket.current = new WebSocket(URL);
+
+    socket.current.onopen = () => {
+      console.log('Я клиент подключился');
+      const connect = {
+        event: 'connection',
+        payload: null,
+        uidRoom: roomId,
+      };
+
+      socket.current.send(JSON.stringify(connect));
+
       if (!messages.length) {
+        console.log('ПОЛУЧАЕМ СООБЩЕНИЯ');
         dispatch(getMessagesFromAPI(uid, chatId));
       }
     };
 
-    ws.onmessage = e => {
-      console.log('pff');
+    socket.current.onmessage = e => {
       dispatch(sendSessionMessage(JSON.parse(e.data)));
     };
 
+    socket.current.onerror = () => {
+      console.log('Ошибка');
+    };
+
     return () => {
-      ws.onclose = () => {
-        console.log('закрыли');
+      socket.current.onclose = () => {
+        console.log('Клиент закрылся');
         dispatch(clearMessages());
+        dispatch(clearError());
       };
-      setWs(new WebSocket(URL));
-      dispatch(clearError());
-      // ws.close();
+      socket.current.onclose();
     };
   }, [chatId]);
 
@@ -102,6 +116,7 @@ MessagesList.propsTypes = {
   sendMessage: PropTypes.func.isRequired,
   error: PropTypes.string,
   isEmpty: PropTypes.string,
+  roomId: PropTypes.string,
 };
 
-export default MessagesList;
+export default memo(MessagesList);

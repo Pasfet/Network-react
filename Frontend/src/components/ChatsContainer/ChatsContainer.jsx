@@ -1,7 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import style from './Chats.module.scss';
 import {
@@ -22,10 +20,9 @@ import { getError } from '../../store/errorReducer/errorSelector';
 import { getUid } from '../../store/profileReducer/profileSelector';
 import { clearError } from '../../actions/errorAction';
 
-const ChatsContainer = ({ chatsList }) => {
+const ChatsContainer = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
-
+  const chats = useSelector(getChats);
   const isEmptyChats = useSelector(getIsEmptyChats);
   const searchChatsList = useSelector(getSearchChats);
   const error = useSelector(getError);
@@ -43,13 +40,17 @@ const ChatsContainer = ({ chatsList }) => {
     [dispatch, uid],
   );
 
-  const deleteChat = useCallback(
-    (uid, chatId) => {
-      dispatch(deleteChatFromApi(uid, chatId));
-      // history.push(`/dialogs/${uid}`);
-    },
-    [dispatch],
-  );
+  // const deleteChat = useCallback(
+  //   (uid, chatId) => {
+  //     dispatch(deleteChatFromApi(uid, chatId));
+  //     // history.push(`/dialogs/${uid}`);
+  //   },
+  //   [dispatch],
+  // );
+
+  const deleteChat = (uid, chatId) => {
+    dispatch(deleteChatFromApi(uid, chatId));
+  };
 
   useEffect(() => {
     if (error?.code === 2) {
@@ -89,7 +90,7 @@ const ChatsContainer = ({ chatsList }) => {
         />
       </div>
       <ChatsList
-        chatsList={chatsList}
+        chatsList={chats}
         deleteChat={deleteChat}
         uid={uid}
         error={error?.type === 'chats' && error.message}
@@ -97,10 +98,6 @@ const ChatsContainer = ({ chatsList }) => {
       />
     </div>
   );
-};
-
-ChatsContainer.propsTypes = {
-  chatsList: PropTypes.array.isRequired,
 };
 
 export default ChatsContainer;

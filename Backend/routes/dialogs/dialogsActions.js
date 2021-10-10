@@ -1,4 +1,4 @@
-const {createChats, createMessage, copyMessagesListWithNewChat, copyMessagesListWithoutDeletedChat, copyMessagesListWithNewMessage} = require('./dialogsHelper');
+const {createChats, createMessage, copyMessagesListWithNewChat, copyMessagesListWithoutDeletedChat, copyMessagesListWithNewMessage, generateRoomId} = require('./dialogsHelper');
 
 const getUsersName = (usersList, req) => {
   const {users} = usersList;
@@ -31,8 +31,10 @@ const addChat = (usersList, messagesList, req) => {
 
   if (messages?.uid?.user.uid || uid === user.uid) return null;
 
-  const newChatAuthor = createChats(user.uid, user.user_name);
-  const newChatRecipient = createChats(uid, users[uid].user_name);
+  const roomId = generateRoomId();
+
+  const newChatAuthor = createChats(user.uid, user.user_name, roomId);
+  const newChatRecipient = createChats(uid, users[uid].user_name, roomId);
   const newMessagesList = copyMessagesListWithNewChat(messages, uid, newChatAuthor, user.uid, newChatRecipient);
 
   const newMsg = {
