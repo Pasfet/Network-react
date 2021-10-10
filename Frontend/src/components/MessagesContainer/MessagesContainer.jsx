@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import MessagesList from './MessagesList/MessagesList';
@@ -8,16 +8,16 @@ import {
   getIsEmptyMessagesState,
   getMessagesFromStore,
 } from '../../store/dialogsReducer/dialogsSelector';
-// import { clearMessages, getMessagesFromAPI, sendSessionMessage } from '../../actions/dialogsAction';
 import { getUserName } from '../../store/profileReducer/profileSelector';
-// import { clearError } from '../../actions/errorAction';
 import { getError } from '../../store/errorReducer/errorSelector';
-// import { clearMessages } from '../../actions/dialogsAction';
+import { clearMessages, getMessagesFromAPI } from '../../actions/dialogsAction';
+import { clearError } from '../../actions/errorAction';
 
-// const URL = 'ws://localhost:8999/';
+const URL = 'ws://localhost:8999/';
 
 const MessagesContainer = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const socket = useRef();
   const messages = useSelector(getMessagesFromStore);
   const userName = useSelector(getUserName);
   const chats = useSelector(getChats);
@@ -26,59 +26,74 @@ const MessagesContainer = () => {
   const { uid, chatId } = useParams();
   const [inputValue, setInputValue] = useState('');
 
-  // const [ws, setWs] = useState(new WebSocket(URL));
+  const sendMessage = useCallback(
+    e => {
+      e.preventDefault();
+      const message = {
+        event: 'chat-message',
+        payload: {
+          uid,
+          authorId: uid,
+          chatId,
+          authorName: userName,
+          text: inputValue,
+        },
+        uidRoom: chats[chatId]?.roomId,
+      };
+      socket.current.send(JSON.stringify(message));
+      setInputValue('');
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [inputValue],
+  );
 
-  // const sendMessage = e => {
-  //   e.preventDefault();
-  //   const message = {
-  //     event: 'chat-message',
-  //     payload: {
-  //       uid,
-  //       authorId: uid,
-  //       chatId,
-  //       authorName: userName,
-  //       text: inputValue,
-  //     },
-  //   };
-  //   ws.send(JSON.stringify(message));
-  //   setInputValue('');
-  // };
+  useEffect(() => {
+    socket.current = new WebSocket(URL);
 
-  // useEffect(() => {
-  //   ws.onopen = () => {
-  //     if (!messages.length) {
-  //       dispatch(getMessagesFromAPI(uid, chatId));
-  //     }
-  //   };
+    socket.current.onopen = () => {
+      console.log('Я клиент подключился');
+      const connect = {
+        event: 'connection',
+        payload: null,
+        uidRoom: chats[chatId]?.roomId,
+      };
+      socket.current.send(JSON.stringify(connect));
 
-  //   ws.onmessage = e => {
-  //     dispatch(sendSessionMessage(JSON.parse(e.data)));
-  //   };
+      if (!messages.length) {
+        console.log('ПОЛУЧАЕМ СООБЩЕНИЯ');
+        dispatch(getMessagesFromAPI(uid, chatId));
+      }
+    };
 
-  //   return () => {
-  //     ws.onclose = () => {
-  //       console.log('закрыли');
-  //       dispatch(clearMessages());
-  //     };
-  //     dispatch(clearError());
-  //     ws.close();
-  //   };
-  // }, []);
+    socket.current.onmessage = e => {
+      dispatch(getMessagesFromAPI(uid, chatId));
+    };
+
+    socket.current.onerror = () => {
+      console.log('Ошибка');
+    };
+
+    return () => {
+      socket.current.onclose = () => {
+        console.log('Клиент закрылся');
+      };
+      socket.current.onclose();
+      dispatch(clearMessages());
+      dispatch(clearError());
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chatId]);
 
   return (
-    <>
-      <MessagesList
-        uid={uid}
-        messages={messages}
-        inputValue={inputValue}
-        setInputValue={setInputValue}
-        userName={userName}
-        error={error}
-        chatId={chatId}
-        roomId={chats[chatId]?.roomId}
-        isEmptyMessages={isEmptyMessages && isEmptyMessages.message}
-      />
-    </>
+    <MessagesList
+      uid={uid}
+      messages={messages}
+      inputValue={inputValue}
+      setInputValue={setInputValue}
+      error={error}
+      sendMessage={sendMessage}
+      isEmpty={isEmptyMessages && isEmptyMessages.message}
+    />
   );
 };
 

@@ -16,6 +16,7 @@ const ProfileContainer = () => {
   useEffect(() => {
     dispatch(getUser(uid));
     return () => dispatch(clearError());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uid]);
   return <Profile user={user} error={error?.type === 'profile' ? error.message : ''} />;
 };
