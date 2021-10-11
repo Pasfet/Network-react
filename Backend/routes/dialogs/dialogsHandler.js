@@ -78,26 +78,6 @@ fs.readFile(file, (err, data) => {
           res.send(JSON.stringify({result: 2, type: 'messages', text: 'Пока нет сообщений', code: 3}));
         }
         break;
-      case SEND_MESSAGE:
-        fs.readFile(fileUsers, (err, users) => {
-          if (err) {
-            res.sendStatus(404, JSON.stringify({result: 1, text: err}))
-          } else {
-            const newMessagesList = actions[action](JSON.parse(users), JSON.parse(data), req);
-            if (newMessagesList) {
-              fs.writeFile(file, newMessagesList, (err) => {
-                if (err) {
-                  res.sendStatus(404, JSON.stringify({result: 1, text: err}));
-                } else {
-                  res.send(JSON.stringify({result: 0, text: 'Успешно'}))
-                }
-              })
-            } else {
-              res.send(JSON.stringify({result: 2, text: 'Что-то не так'}))
-            }
-          }
-        });
-      break;
       default:
         break;
     }

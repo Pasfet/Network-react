@@ -3,11 +3,9 @@ import {
   CLEAR_CHATS,
   CLEAR_SEARCH_CHAT,
   GET_CHATS,
-  GET_MESSAGES,
   SET_SEARCH_CHAT,
   SET_MESSAGES,
   CLEAR_MESSAGES,
-  SEND_SESSION_MESSAGES,
   SET_IS_EMPTY_CHATS_STATE,
   CLEAR_IS_EMPTY_CHATS_STATE,
   IS_EMPTY_MESSAGES,
@@ -29,11 +27,6 @@ export const clearSearchChats = () => ({
   type: CLEAR_SEARCH_CHAT,
 });
 
-export const getMessagesFromApi = messages => ({
-  type: GET_MESSAGES,
-  payload: messages,
-});
-
 export const clearChats = () => ({
   type: CLEAR_CHATS,
 });
@@ -45,11 +38,6 @@ export const setMessagesFromApi = messages => ({
 
 export const clearMessages = () => ({
   type: CLEAR_MESSAGES,
-});
-
-export const sendSessionMessage = message => ({
-  type: SEND_SESSION_MESSAGES,
-  payload: message,
 });
 
 export const setIsEmptyChatsState = message => ({
@@ -124,7 +112,7 @@ export const addChatToApi = (uid, user) => {
   };
 };
 
-export const deleteChatFromApi = (uid, chatId) => {
+export const deleteChatFromAPI = (uid, chatId) => {
   return dispatch => {
     fetch(`${CURRENT_URL}/dialogs`, {
       method: 'DELETE',

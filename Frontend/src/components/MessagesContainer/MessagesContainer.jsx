@@ -11,7 +11,7 @@ import {
 import { getUserName } from '../../store/profileReducer/profileSelector';
 import { getError } from '../../store/errorReducer/errorSelector';
 import { clearMessages, getMessagesFromAPI } from '../../actions/dialogsAction';
-import { clearError } from '../../actions/errorAction';
+import { clearError, setError } from '../../actions/errorAction';
 
 const URL = 'ws://localhost:8999/';
 
@@ -69,8 +69,8 @@ const MessagesContainer = () => {
       dispatch(getMessagesFromAPI(uid, chatId));
     };
 
-    socket.current.onerror = () => {
-      console.log('Ошибка');
+    socket.current.onerror = e => {
+      dispatch(setError({ message: e.message, type: 'chats-ws' }));
     };
 
     return () => {

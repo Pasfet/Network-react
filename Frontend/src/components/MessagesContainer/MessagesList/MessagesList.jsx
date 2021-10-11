@@ -24,6 +24,7 @@ const MessagesList = ({
   useEffect(() => {
     scrollToBottom();
   });
+
   return (
     <div className={style.messagesWrapper}>
       <div className={style.messageList}>

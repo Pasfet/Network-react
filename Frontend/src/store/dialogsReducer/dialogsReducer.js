@@ -72,11 +72,6 @@ const dialogsReducer = (state = initialState, { type, payload }) => {
         ...state,
         messages: [],
       };
-    case SEND_SESSION_MESSAGES:
-      return {
-        ...state,
-        messages: [...state.messages, payload],
-      };
     default:
       return state;
   }

@@ -24,8 +24,4 @@ router.get('/dialogs/:uid/:chatId', (req, res) => {
   dialogsHandler(req, res, GET_MESSAGES, 'DB/Messages.json');
 });
 
-router.post('/dialogs/:uid', (req, res) => {
-  dialogsHandler(req, res, SEND_MESSAGE, 'DB/Messages.json', 'DB/Users.json');
-});
-
 module.exports = router;

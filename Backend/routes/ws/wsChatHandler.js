@@ -7,7 +7,6 @@ const {generateRandomMessageId} = require('../dialogs/dialogsHelper');
 const actions = {
   SEND_MESSAGE: dialogsAction.sendMessage,
 }
-// ПРИЧИНА ГДЕ-ТО ТУТ НАЙДИ !!!!!!!!!!
 const handler = (messageFromClient, fileMessage, fileUsers) => {
   const messageID = generateRandomMessageId();
   fs.readFile(fileMessage, (err, messages) => {

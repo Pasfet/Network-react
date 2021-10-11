@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import style from './Chats.module.scss';
 import {
   addChatToApi,
-  deleteChatFromApi,
+  deleteChatFromAPI,
   getChatsList,
   searchUsersChat,
 } from '../../actions/dialogsAction';
@@ -40,17 +40,12 @@ const ChatsContainer = () => {
     [dispatch, uid],
   );
 
-  // const deleteChat = useCallback(
-  //   (uid, chatId) => {
-  //     dispatch(deleteChatFromApi(uid, chatId));
-  //     // history.push(`/dialogs/${uid}`);
-  //   },
-  //   [dispatch],
-  // );
-
-  const deleteChat = (uid, chatId) => {
-    dispatch(deleteChatFromApi(uid, chatId));
-  };
+  const deleteChat = useCallback(
+    (uid, chatId) => {
+      dispatch(deleteChatFromAPI(uid, chatId));
+    },
+    [dispatch],
+  );
 
   useEffect(() => {
     if (error?.code === 2) {
@@ -63,7 +58,6 @@ const ChatsContainer = () => {
     if (open) {
       setLoading(true);
       if (debounce && error?.code !== 2) {
-        console.log('tut');
         dispatch(searchUsersChat(debounce, uid));
         setLoading(false);
         return;
@@ -73,6 +67,7 @@ const ChatsContainer = () => {
     }
     return () => dispatch(clearError());
   }, [debounce, open, error, isEmptyChats, dispatch, uid]);
+
   return (
     <div className={style.chatsWrapper}>
       <h2>Chats</h2>
