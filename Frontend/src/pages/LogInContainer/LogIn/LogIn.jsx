@@ -8,7 +8,7 @@ import style from './Login.module.scss';
 const LogIn = ({ onSubmitHandler, setEmail, emailValue, setPassword, passwordValue, error }) => {
   return (
     <div className={style.loginWrapper}>
-      <ValidatorForm onSubmit={onSubmitHandler} className={style.loginForm}>
+      <ValidatorForm onSubmit={onSubmitHandler} className={style.loginForm} data-testid="loginForm">
         <h2>LOG IN</h2>
         {error && (
           <Alert severity="error" className={style.error}>
@@ -26,6 +26,7 @@ const LogIn = ({ onSubmitHandler, setEmail, emailValue, setPassword, passwordVal
           value={emailValue}
           validators={['required', 'isEmail']}
           errorMessages={['Это поле обязательно', 'Email введен не верно']}
+          inputProps={{ 'data-testid': 'emailInput' }}
         />
         <TextValidator
           autoComplete="off"
@@ -39,6 +40,7 @@ const LogIn = ({ onSubmitHandler, setEmail, emailValue, setPassword, passwordVal
           value={passwordValue}
           validators={['required']}
           errorMessages={['Это поле обязательно', 'Пароль введен не верно']}
+          inputProps={{ 'data-testid': 'passwordInput' }}
         />
         <List className={style.loginActions}>
           <ListItem className={style.loginActionsLink}>
@@ -50,7 +52,7 @@ const LogIn = ({ onSubmitHandler, setEmail, emailValue, setPassword, passwordVal
           </ListItem>
           <ListItem className={style.loginButton} sx={{ justifyContent: 'flex-end' }}>
             <Button type="submit" variant="contained">
-              Login
+              Log in
             </Button>
           </ListItem>
         </List>

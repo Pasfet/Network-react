@@ -17,7 +17,7 @@ export const authorization = ({ email, password }) => {
   return dispatch => {
     dispatch(loadingTrue());
 
-    fetch(`${CURRENT_URL}/login`, {
+    return fetch(`${CURRENT_URL}/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json;charset=utf-8' },
       body: JSON.stringify({ email, password }),
@@ -44,7 +44,7 @@ export const registration = ({ name, email, password }) => {
   return dispatch => {
     dispatch(loadingTrue());
 
-    fetch(`${CURRENT_URL}/signup`, {
+    return fetch(`${CURRENT_URL}/signup`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json;charset=utf-8' },
       body: JSON.stringify({ email, password, name }),
@@ -65,15 +65,15 @@ export const registration = ({ name, email, password }) => {
 };
 
 export const logOut = () => {
-  return async dispatch => {
-    await dispatch(loadingTrue());
-    await dispatch(clearAuth());
-    await dispatch(clearUid());
-    await dispatch(clearUser());
-    await dispatch(clearChats());
-    await dispatch(clearSearchTitle());
-    await dispatch(clearError());
-    await dispatch(clearAnimeList());
+  return dispatch => {
+    dispatch(loadingTrue());
+    dispatch(clearAuth());
+    dispatch(clearUid());
+    dispatch(clearUser());
+    dispatch(clearChats());
+    dispatch(clearSearchTitle());
+    dispatch(clearError());
+    dispatch(clearAnimeList());
     dispatch(loadingFalse());
   };
 };

@@ -48,7 +48,8 @@ const SignUp = ({
           type="text"
           value={nameValue}
           validators={['required', 'isString', 'trim']}
-          errorMessages={['Это поле обязательно', 'Имя должно быть строкой']}
+          errorMessages={['Это поле обязательно']}
+          inputProps={{ 'data-testid': 'nameInput' }}
         />
         <TextValidator
           className={style.signupInput}
@@ -61,6 +62,7 @@ const SignUp = ({
           value={emailValue}
           validators={['required', 'isEmail', 'trim']}
           errorMessages={['Это поле обязательно', 'Email введен не верно']}
+          inputProps={{ 'data-testid': 'emailInput' }}
         />
         <TextValidator
           className={style.signupInput}
@@ -74,6 +76,7 @@ const SignUp = ({
           value={passwordValue}
           validators={['required', 'minStringLength:8', 'trim']}
           errorMessages={['Это поле обязательно', 'Пароль должен содержать минимум 8 символов']}
+          inputProps={{ 'data-testid': 'passwordInput' }}
         />
         <TextValidator
           className={style.signupInput}
@@ -87,6 +90,7 @@ const SignUp = ({
           value={repeatPasswordValue}
           validators={['required', 'isPasswordMatch', 'trim']}
           errorMessages={['Это поле обязательно', 'Пароль должен совпадать']}
+          inputProps={{ 'data-testid': 'repeatPasswordInput' }}
         />
         <List className={style.signupActions}>
           <ListItem className={style.signupActionsLink}>
