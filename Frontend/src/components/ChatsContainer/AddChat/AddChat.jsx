@@ -29,7 +29,6 @@ const AddChat = ({
         options={options}
         loading={loading}
         loadingText="Поиск..."
-        openText="Введите имя пользователя"
         onChange={(e, value, reason) => {
           if (reason !== 'clear') {
             addChat(value);

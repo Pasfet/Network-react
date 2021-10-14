@@ -11,7 +11,7 @@ import {
   IS_EMPTY_MESSAGES,
   IS_NOT_EMPTY_MESSAGES,
 } from '../store/types/dialogsTypes';
-import { clearError, setError } from './errorAction';
+import { clearError, setError, setSnack } from './errorAction';
 
 export const getChats = chats => ({
   type: GET_CHATS,
@@ -104,8 +104,10 @@ export const addChatToApi = (uid, user) => {
       .then(data => {
         if (data.result === 0) {
           dispatch(getChatsList(uid));
+          dispatch(setSnack({ text: data.text, result: data.result }));
         } else {
           dispatch(setError({ message: data.text, type: data.type }));
+          dispatch(setSnack({ text: data.text, result: data.result }));
         }
       })
       .catch(err => setError({ message: err.message, type: 'error' }));
@@ -123,6 +125,7 @@ export const deleteChatFromAPI = (uid, chatId) => {
       .then(data => {
         if (data.result === 0) {
           dispatch(getChatsList(uid));
+          dispatch(setSnack({ text: data.text, result: data.result }));
         } else {
           dispatch(setError({ message: data.text, type: data.type }));
         }

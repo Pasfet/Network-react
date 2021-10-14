@@ -3,7 +3,6 @@ import { clearError, setError } from './errorAction';
 import { loadingFalse, loadingTrue } from './spinnerAction';
 import { clearUid, clearUser, getUser, setUid } from './profileAction';
 import { clearChats, getChatsList } from './dialogsAction';
-import { clearAnimeList, clearSearchTitle } from './animePageAction';
 
 export const setAuth = () => ({
   type: SET_AUTH,
@@ -71,9 +70,7 @@ export const logOut = () => {
     dispatch(clearUid());
     dispatch(clearUser());
     dispatch(clearChats());
-    dispatch(clearSearchTitle());
     dispatch(clearError());
-    dispatch(clearAnimeList());
     dispatch(loadingFalse());
   };
 };

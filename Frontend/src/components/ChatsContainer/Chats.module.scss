@@ -1,6 +1,11 @@
 .chatsWrapper {
   padding: 10px;
-  border-right: 1px solid #e2e2e2;
+  border-radius: 10px;
+  width: 20%;
+  height: 100%;
+  margin-right: auto;
+  box-shadow: 5px 0px 5px 3px #f1f1f1;
+  z-index: 1;
 }
 
 .addChat {

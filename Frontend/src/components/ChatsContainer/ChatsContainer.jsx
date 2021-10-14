@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import style from './Chats.module.scss';
+
 import {
   addChatToApi,
   deleteChatFromAPI,
@@ -18,7 +19,7 @@ import {
 } from '../../store/dialogsReducer/dialogsSelector';
 import { getError } from '../../store/errorReducer/errorSelector';
 import { getUid } from '../../store/profileReducer/profileSelector';
-import { clearError } from '../../actions/errorAction';
+import { clearError, clearSnack } from '../../actions/errorAction';
 
 const ChatsContainer = () => {
   const dispatch = useDispatch();
@@ -40,12 +41,10 @@ const ChatsContainer = () => {
     [dispatch, uid],
   );
 
-  const deleteChat = useCallback(
-    (uid, chatId) => {
-      dispatch(deleteChatFromAPI(uid, chatId));
-    },
-    [dispatch],
-  );
+  const deleteChat = useCallback((uid, chatId) => {
+    dispatch(deleteChatFromAPI(uid, chatId));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (error?.code === 2) {
@@ -65,8 +64,12 @@ const ChatsContainer = () => {
     } else {
       setLoading(false);
     }
-    return () => dispatch(clearError());
-  }, [debounce, open, error, isEmptyChats, dispatch, uid]);
+    return () => {
+      dispatch(clearError());
+      dispatch(clearSnack());
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debounce, open, error, isEmptyChats, uid]);
 
   return (
     <div className={style.chatsWrapper}>

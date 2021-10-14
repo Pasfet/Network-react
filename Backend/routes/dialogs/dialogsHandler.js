@@ -61,7 +61,6 @@ fs.readFile(file, (err, data) => {
       break;
       case DELETE_CHAT:
         const newMessagesList = actions[action](JSON.parse(data), req);
-        console.log(newMessagesList, 'DELETE')
         fs.writeFile(file, newMessagesList, (err) => {
           if (err) {
             res.sendStatus(404, JSON.stringify({result: 1, text: err}));

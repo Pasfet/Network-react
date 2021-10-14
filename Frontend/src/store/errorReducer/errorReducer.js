@@ -1,7 +1,8 @@
-import { CLEAR_ERROR, SET_ERROR } from '../types/animePageTypes';
+import { SET_ERROR, SET_SNACK, CLEAR_ERROR, CLEAR_SNACK } from '../types/errorTypes';
 
 const initialState = {
   error: null,
+  snackMessage: null,
 };
 
 const errorReducer = (state = initialState, { type, payload }) => {
@@ -15,6 +16,16 @@ const errorReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         error: null,
+      };
+    case SET_SNACK:
+      return {
+        ...state,
+        snackMessage: payload,
+      };
+    case CLEAR_SNACK:
+      return {
+        ...state,
+        snackMessage: null,
       };
     default:
       return state;

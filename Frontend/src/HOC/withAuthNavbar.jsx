@@ -1,10 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../actions/authActions';
-import Navbar from '../components/Navbar/Navbar';
-import { getUid } from '../store/profileReducer/profileSelector';
+import NavbarContainer from '../components/NavbarContainer/NavbarContainer';
+import { getUid, getUserName } from '../store/profileReducer/profileSelector';
 
 const NavbarHOC = ({ authenticated, ...props }) => {
   const uid = useSelector(getUid);
+  const userName = useSelector(getUserName);
+
   const dispatch = useDispatch();
   const logOutHandler = () => {
     dispatch(logOut());
@@ -23,9 +25,15 @@ const NavbarHOC = ({ authenticated, ...props }) => {
   }
 
   return authenticated ? (
-    <Navbar auth={authenticated} uid={uid} {...props} logOut={logOutHandler} />
+    <NavbarContainer
+      auth={authenticated}
+      uid={uid}
+      logOut={logOutHandler}
+      userName={userName}
+      {...props}
+    />
   ) : (
-    <Navbar {...props} />
+    <NavbarContainer auth={authenticated} {...props} />
   );
 };
 

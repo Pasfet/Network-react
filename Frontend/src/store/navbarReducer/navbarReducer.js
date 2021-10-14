@@ -1,9 +1,10 @@
 const initialState = {
   navbarList: [
-    { name: 'Login', href: '/login', requiredAuth: false },
-    { name: 'Profile', href: '/profile', requiredAuth: true, dynamic: true },
-    { name: 'Messages', href: '/dialogs', requiredAuth: true, dynamic: true },
-    { name: 'Anime', href: '/', requiredAuth: false, public: true },
+    { name: 'Войти', href: '/login', requiredAuth: false, icon: 'login' },
+    { name: 'Регистрация', href: '/signup', requiredAuth: false, icon: 'signup' },
+    { name: 'Профиль', href: '/profile', requiredAuth: true, dynamic: true, icon: 'profile' },
+    { name: 'Сообщения', href: '/dialogs', requiredAuth: true, dynamic: true, icon: 'messages' },
+    { name: 'Аниме', href: '/', requiredAuth: false, public: true, icon: 'movie' },
   ],
 };
 

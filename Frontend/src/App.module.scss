@@ -1,11 +1,13 @@
 .App {
   display: grid;
-  grid-template-columns: 200px 2fr;
+  grid-template-columns: 1fr 100%;
   grid-template-areas: 'navbar main';
   min-height: 100vh;
 }
 
 .main {
+  margin-top: 70px;
+  max-width: 80%;
   grid-area: main;
 }
 

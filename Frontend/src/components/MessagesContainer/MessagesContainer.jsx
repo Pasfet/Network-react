@@ -12,6 +12,7 @@ import { getUserName } from '../../store/profileReducer/profileSelector';
 import { getError } from '../../store/errorReducer/errorSelector';
 import { clearMessages, getMessagesFromAPI } from '../../actions/dialogsAction';
 import { clearError, setError } from '../../actions/errorAction';
+import MessageBar from './MessageBar/MessageBar';
 
 const URL = 'ws://localhost:8999/';
 
@@ -51,7 +52,6 @@ const MessagesContainer = () => {
     socket.current = new WebSocket(URL);
 
     socket.current.onopen = () => {
-      console.log('Я клиент подключился');
       const connect = {
         event: 'connection',
         payload: null,
@@ -60,7 +60,6 @@ const MessagesContainer = () => {
       socket.current.send(JSON.stringify(connect));
 
       if (!messages.length) {
-        console.log('ПОЛУЧАЕМ СООБЩЕНИЯ');
         dispatch(getMessagesFromAPI(uid, chatId));
       }
     };
@@ -75,7 +74,8 @@ const MessagesContainer = () => {
 
     return () => {
       socket.current.onclose = () => {
-        console.log('Клиент закрылся');
+        dispatch(clearMessages());
+        dispatch(clearError());
       };
       socket.current.onclose();
       dispatch(clearMessages());
@@ -85,15 +85,18 @@ const MessagesContainer = () => {
   }, [chatId]);
 
   return (
-    <MessagesList
-      uid={uid}
-      messages={messages}
-      inputValue={inputValue}
-      setInputValue={setInputValue}
-      error={error}
-      sendMessage={sendMessage}
-      isEmpty={isEmptyMessages && isEmptyMessages.message}
-    />
+    <>
+      <MessageBar chats={chats} chatId={chatId} />
+      <MessagesList
+        uid={uid}
+        messages={messages}
+        inputValue={inputValue}
+        setInputValue={setInputValue}
+        error={error}
+        sendMessage={sendMessage}
+        isEmpty={isEmptyMessages && isEmptyMessages.message}
+      />
+    </>
   );
 };
 
