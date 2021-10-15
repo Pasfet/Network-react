@@ -65,7 +65,7 @@ fs.readFile(file, (err, data) => {
           if (err) {
             res.sendStatus(404, JSON.stringify({result: 1, text: err}));
           } else {
-            res.send(JSON.stringify({result: 0, text: 'Успешно', type: 'chats'}))
+            res.send(JSON.stringify({result: 0, text: 'Удалено', type: 'chats'}))
           }
         });
       break;

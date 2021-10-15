@@ -29,7 +29,7 @@ const LogInContainer = () => {
       emailValue={email}
       setPassword={setPassword}
       passwordValue={password}
-      error={error?.type === 'login' && error.message}
+      error={error?.type === 'login' || (error?.type === 'error' && error.message)}
     />
   );
 };

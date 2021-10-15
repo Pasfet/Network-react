@@ -1,23 +1,23 @@
-import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
-import { Alert, Button, List, ListItem } from '@mui/material';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-
-import style from './Login.module.scss';
+import {
+  ButtonStyled,
+  ErrorStyled,
+  ListItemStyled,
+  ListStyled,
+  LoginInputStyled,
+  LoginWrapper,
+  ValidatorFormStyled,
+} from './LoginStyle';
 
 const LogIn = ({ onSubmitHandler, setEmail, emailValue, setPassword, passwordValue, error }) => {
+  const history = useHistory();
   return (
-    <div className={style.loginWrapper}>
-      <ValidatorForm onSubmit={onSubmitHandler} className={style.loginForm} data-testid="loginForm">
+    <LoginWrapper>
+      <ValidatorFormStyled onSubmit={onSubmitHandler} data-testid="loginForm">
         <h2>LOG IN</h2>
-        {error && (
-          <Alert severity="error" className={style.error}>
-            {error}
-          </Alert>
-        )}
-        <TextValidator
-          className={style.loginInput}
-          sx={{ margin: '20px 0' }}
+        {error && <ErrorStyled severity="error">{error}</ErrorStyled>}
+        <LoginInputStyled
           variant="standard"
           label="Email"
           onChange={e => setEmail(e.target.value)}
@@ -28,10 +28,8 @@ const LogIn = ({ onSubmitHandler, setEmail, emailValue, setPassword, passwordVal
           errorMessages={['Это поле обязательно', 'Email введен не верно']}
           inputProps={{ 'data-testid': 'emailInput' }}
         />
-        <TextValidator
+        <LoginInputStyled
           autoComplete="off"
-          className={style.loginInput}
-          sx={{ marginBottom: '20px' }}
           variant="standard"
           label="Password"
           onChange={e => setPassword(e.target.value)}
@@ -42,22 +40,24 @@ const LogIn = ({ onSubmitHandler, setEmail, emailValue, setPassword, passwordVal
           errorMessages={['Это поле обязательно', 'Пароль введен не верно']}
           inputProps={{ 'data-testid': 'passwordInput' }}
         />
-        <List className={style.loginActions}>
-          <ListItem className={style.loginActionsLink}>
-            <Link to="/signup">
-              <Button variant="contained" color="secondary">
-                Sign Up
-              </Button>
-            </Link>
-          </ListItem>
-          <ListItem className={style.loginButton} sx={{ justifyContent: 'flex-end' }}>
-            <Button type="submit" variant="contained">
+        <ListStyled>
+          <ListItemStyled>
+            <ButtonStyled
+              variant="contained"
+              color="secondary"
+              onClick={() => history.push('/signup')}
+            >
+              Sign Up
+            </ButtonStyled>
+          </ListItemStyled>
+          <ListItemStyled>
+            <ButtonStyled type="submit" variant="contained">
               Log in
-            </Button>
-          </ListItem>
-        </List>
-      </ValidatorForm>
-    </div>
+            </ButtonStyled>
+          </ListItemStyled>
+        </ListStyled>
+      </ValidatorFormStyled>
+    </LoginWrapper>
   );
 };
 

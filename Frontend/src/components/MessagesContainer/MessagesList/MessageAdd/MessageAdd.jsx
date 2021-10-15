@@ -1,20 +1,41 @@
 import { Button, TextField } from '@mui/material';
 import PropTypes from 'prop-types';
-import style from './MessageAdd.module.scss';
+
+import { styled } from '@material-ui/styles';
+
+const MessageAddWrapper = styled('form')({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-around',
+  marginTop: '30px',
+});
+
+const MessageFieldInput = styled(TextField)({
+  width: '60%',
+  marginLeft: '10px',
+});
+
+const ButtonStyled = styled(Button)({
+  padding: '8px 15px',
+  borderRadius: '5px',
+  fontSize: '14px',
+  '&:hover': {
+    color: '#fff',
+  },
+});
 
 const MessageAdd = ({ inputValue, setInputValue, sendMessage }) => {
   return (
-    <form className={style.messageAddWrapper} onSubmit={sendMessage}>
-      <TextField
-        className={style.messageAddInput}
+    <MessageAddWrapper onSubmit={sendMessage}>
+      <MessageFieldInput
         label="Сообщение"
         value={inputValue}
         onChange={e => setInputValue(e.target.value)}
       />
-      <Button variant="contained" type="submit">
+      <ButtonStyled variant="contained" type="submit">
         Send
-      </Button>
-    </form>
+      </ButtonStyled>
+    </MessageAddWrapper>
   );
 };
 

@@ -5,7 +5,19 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PropTypes from 'prop-types';
 
-import style from './ChatsList.module.scss';
+import { styled } from '@material-ui/styles';
+
+const ChatItemWrap = styled(ListItem)({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+});
+
+const LinkStyled = styled(Link)({
+  width: '100%',
+  fontSize: '24px',
+  color: '#000',
+});
 
 const ChatsList = ({ chatsList, deleteChat, uid, error, isEmpty }) => {
   return (
@@ -15,16 +27,21 @@ const ChatsList = ({ chatsList, deleteChat, uid, error, isEmpty }) => {
         {isEmpty && <Alert severity="info"> {isEmpty} </Alert>}
         {chatsList &&
           Object.keys(chatsList)?.map(id => (
-            <ListItem divider key={chatsList[id].chat_id} className={style.chatItemWrap}>
-              <Link to={`/dialogs/${uid}/${chatsList[id].chat_id}`} className={style.link}>
+            <ChatItemWrap divider key={chatsList[id].chat_id}>
+              <LinkStyled to={`/dialogs/${uid}/${chatsList[id].chat_id}`}>
                 <ListItemButton sx={{ width: '100%' }}>
                   <ListItemText primary={chatsList[id].chat_name} />
                 </ListItemButton>
-              </Link>
-              <IconButton aria-label="delete" size="large" onClick={() => deleteChat(uid, id)}>
+              </LinkStyled>
+              <IconButton
+                aria-label="delete"
+                size="large"
+                onClick={() => deleteChat(uid, id)}
+                data-testid="deleteChatButton"
+              >
                 <DeleteIcon fontSize="inherit" />
               </IconButton>
-            </ListItem>
+            </ChatItemWrap>
           ))}
       </List>
     </>

@@ -2,10 +2,28 @@ import { memo, useEffect, useRef } from 'react';
 import { Alert } from '@mui/material';
 import PropTypes from 'prop-types';
 
-import style from './MessagesList.module.scss';
+import { styled } from '@material-ui/styles';
 
 import Message from '../Message/Message';
 import MessageAdd from './MessageAdd/MessageAdd';
+
+const MessagesListWrapper = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  borderRadius: '20px',
+  padding: '20px',
+  boxShadow: '0px 0px 8px 3px #e9e9e9',
+  maxHeight: '700px',
+  maxWidth: '500px',
+  width: '100%',
+  height: '100%',
+});
+
+const MessageListStyled = styled('div')({
+  overflowY: 'auto',
+  width: '100%',
+  height: '100%',
+});
 
 const MessagesList = ({
   messages,
@@ -26,17 +44,17 @@ const MessagesList = ({
   });
 
   return (
-    <div className={style.messagesWrapper}>
-      <div className={style.messageList}>
+    <MessagesListWrapper>
+      <MessageListStyled>
         {messages?.map(message => (
           <Message key={message.id} message={message} uid={uid} />
         ))}
         {error?.type === 'messages' && <Alert severity="error"> {error.message} </Alert>}
         {isEmpty && <Alert severity="info"> {isEmpty} </Alert>}
         <div ref={messagesListWrapperScroll}></div>
-      </div>
+      </MessageListStyled>
       <MessageAdd inputValue={inputValue} setInputValue={setInputValue} sendMessage={sendMessage} />
-    </div>
+    </MessagesListWrapper>
   );
 };
 

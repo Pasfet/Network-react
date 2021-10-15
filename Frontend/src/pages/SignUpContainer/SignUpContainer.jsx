@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { registration } from '../../actions/authActions';
 import { clearError } from '../../actions/errorAction';
@@ -19,10 +19,15 @@ const SignUpContainer = () => {
     dispatch(registration({ name, email, password }));
   };
 
+  useEffect(() => {
+    return () => dispatch(clearError());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <SignUp
       onSubmitHandler={onSubmitHandler}
-      error={error}
+      error={error?.type === 'error' && error.message}
       nameValue={name}
       setNameValue={setName}
       emailValue={email}

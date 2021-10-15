@@ -1,14 +1,11 @@
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
-import * as redux from 'react-redux';
 import { Provider } from 'react-redux';
 
 import LogInContainer from './LogInContainer';
-import { authorization } from '../../actions/authActions';
-import { loadingTrue } from '../../actions/spinnerAction';
 
 describe('<LogInContainer />', () => {
   const middlewares = [thunk];

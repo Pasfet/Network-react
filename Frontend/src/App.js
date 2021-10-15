@@ -1,16 +1,26 @@
 import { useEffect, useState } from 'react';
+import { styled } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import style from './App.module.scss';
 import { getAuth } from './store/auth/authSelector';
 import { loadingFalse, loadingTrue } from './actions/spinnerAction';
 import { getNavbarList } from './store/navbarReducer/navbarSelector';
 import Spinner from './components/Spinner/Spinner';
 import NavbarHOC from './HOC/withAuthNavbar';
 import Routes from './components/Routes/Routes';
-import NavbarContainer from './components/NavbarContainer/NavbarContainer';
 import SnackbarAlert from './components/SnackbarAlert/SnackbarAlert';
 import { getSnackMessage } from './store/errorReducer/errorSelector';
+
+const AppStyled = styled('div')({
+  display: 'grid',
+  gridTemplateColumns: '1fr 100%',
+  minHeight: '100vh',
+});
+
+const Main = styled('main')({
+  marginTop: '70px',
+  maxWidth: '80%',
+});
 
 const App = () => {
   const auth = useSelector(getAuth);
@@ -33,16 +43,14 @@ const App = () => {
   }, [auth]);
 
   return (
-    <div className={style.App}>
-      <NavbarHOC authenticated={authed} navbarList={navbarList}>
-        <NavbarContainer />
-      </NavbarHOC>
-      <main className={style.main}>
+    <AppStyled>
+      <NavbarHOC authenticated={authed} navbarList={navbarList} />
+      <Main>
         <Routes authed={auth} />
-      </main>
+      </Main>
       <Spinner fullPage />
       <SnackbarAlert snackMessage={snackMessage} />
-    </div>
+    </AppStyled>
   );
 };
 

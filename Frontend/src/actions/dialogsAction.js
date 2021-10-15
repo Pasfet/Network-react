@@ -61,7 +61,7 @@ export const isNotEmptyMessages = () => ({
 export const searchUsersChat = (text, uid) => {
   return dispatch => {
     dispatch(clearError());
-    fetch(`${CURRENT_URL}/dialogs?uid=${uid}&searchChat=${text}`)
+    return fetch(`${CURRENT_URL}/dialogs?uid=${uid}&searchChat=${text}`)
       .then(response => response.json())
       .then(data => {
         if (data.result === 0) {
@@ -76,7 +76,7 @@ export const searchUsersChat = (text, uid) => {
 
 export const getChatsList = uid => {
   return dispatch => {
-    fetch(`${CURRENT_URL}/dialogs/${uid}`)
+    return fetch(`${CURRENT_URL}/dialogs/${uid}`)
       .then(response => response.json())
       .then(data => {
         if (data.result === 0) {
@@ -95,7 +95,7 @@ export const getChatsList = uid => {
 
 export const addChatToApi = (uid, user) => {
   return dispatch => {
-    fetch(`${CURRENT_URL}/dialogs`, {
+    return fetch(`${CURRENT_URL}/dialogs`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json;charset=utf-8' },
       body: JSON.stringify({ uid, user }),
@@ -110,13 +110,13 @@ export const addChatToApi = (uid, user) => {
           dispatch(setSnack({ text: data.text, result: data.result }));
         }
       })
-      .catch(err => setError({ message: err.message, type: 'error' }));
+      .catch(err => dispatch(setError({ message: err.message, type: 'error' })));
   };
 };
 
 export const deleteChatFromAPI = (uid, chatId) => {
   return dispatch => {
-    fetch(`${CURRENT_URL}/dialogs`, {
+    return fetch(`${CURRENT_URL}/dialogs`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json;charset=utf-8' },
       body: JSON.stringify({ uid, chatId }),
@@ -130,14 +130,14 @@ export const deleteChatFromAPI = (uid, chatId) => {
           dispatch(setError({ message: data.text, type: data.type }));
         }
       })
-      .catch(err => setError({ message: err.message, type: 'error' }));
+      .catch(err => dispatch(setError({ message: err.message, type: 'error' })));
   };
 };
 
 export const getMessagesFromAPI = (uid, chatId) => {
   return dispatch => {
     dispatch(isNotEmptyMessages());
-    fetch(`${CURRENT_URL}/dialogs/${uid}/${chatId}`)
+    return fetch(`${CURRENT_URL}/dialogs/${uid}/${chatId}`)
       .then(response => response.json())
       .then(data => {
         if (data.result === 0) {
@@ -148,6 +148,6 @@ export const getMessagesFromAPI = (uid, chatId) => {
           dispatch(setError({ message: data.text, type: data.type }));
         }
       })
-      .catch(err => setError({ message: err.message, type: 'error' }));
+      .catch(err => dispatch(setError({ message: err.message, type: 'error' })));
   };
 };

@@ -1,5 +1,5 @@
 import { CLEAR_AUTH, CURRENT_URL, SET_AUTH } from '../store/types/authTypes';
-import { clearError, setError } from './errorAction';
+import { clearError, setError, setSnack } from './errorAction';
 import { loadingFalse, loadingTrue } from './spinnerAction';
 import { clearUid, clearUser, getUser, setUid } from './profileAction';
 import { clearChats, getChatsList } from './dialogsAction';
@@ -28,8 +28,10 @@ export const authorization = ({ email, password }) => {
           dispatch(setUid(data.uid));
           dispatch(getChatsList(data.uid));
           dispatch(getUser(data.uid));
+          dispatch(setSnack({ text: data.text, result: data.result }));
         } else {
           dispatch(setError({ message: data.text, type: data.type }));
+          dispatch(setSnack({ text: data.text, result: data.result }));
         }
       })
       .catch(error => {
@@ -52,8 +54,10 @@ export const registration = ({ name, email, password }) => {
       .then(data => {
         if (data.result === 0) {
           dispatch(authorization({ email, password }));
+          dispatch(setSnack({ text: data.text, result: data.result }));
         } else {
           dispatch(setError({ message: data.text, type: data.type }));
+          dispatch(setSnack({ text: data.text, result: data.result }));
         }
       })
       .catch(error => {
@@ -72,5 +76,6 @@ export const logOut = () => {
     dispatch(clearChats());
     dispatch(clearError());
     dispatch(loadingFalse());
+    dispatch(setSnack({ text: 'Вы вышли', result: 0 }));
   };
 };

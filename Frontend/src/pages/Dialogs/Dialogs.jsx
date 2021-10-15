@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 
-import style from './Dialogs.module.scss';
+import { styled } from '@material-ui/styles';
 
 import PrivateRoute from '../../HOC/PrivateRoute';
 import ChatsContainer from '../../components/ChatsContainer/ChatsContainer';
@@ -8,23 +8,28 @@ import ChatsContainer from '../../components/ChatsContainer/ChatsContainer';
 import MessagesContainer from '../../components/MessagesContainer/MessagesContainer';
 import { getAuth } from '../../store/auth/authSelector';
 
+const DialogsWrap = styled('div')({
+  width: '100%',
+  height: '90vh',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: '15px',
+});
+
 const Dialogs = () => {
   const auth = useSelector(getAuth);
   return (
-    <div className={style.dialogsWrap}>
-      <PrivateRoute authenticated={auth} exact path="/dialogs/:uid/" className={style.chats}>
+    <DialogsWrap>
+      <PrivateRoute authenticated={auth} exact path="/dialogs/:uid/">
         <ChatsContainer />
       </PrivateRoute>
 
-      <PrivateRoute
-        authenticated={auth}
-        exact
-        path="/dialogs/:uid/:chatId"
-        className={style.messages}
-      >
+      <PrivateRoute authenticated={auth} exact path="/dialogs/:uid/:chatId">
         <MessagesContainer />
       </PrivateRoute>
-    </div>
+    </DialogsWrap>
   );
 };
 

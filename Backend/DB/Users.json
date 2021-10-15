@@ -27,6 +27,13 @@
       "password": "namename",
       "user_name": "name",
       "user_friends": []
+    },
+    "1b45259": {
+      "uid": "1b45259",
+      "user_email": "sd@sad.r",
+      "password": "testtest",
+      "user_name": "Павел Константинов",
+      "user_friends": []
     }
   }
 }

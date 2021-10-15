@@ -16,9 +16,10 @@ const getUsersName = (usersList, req) => {
 
 const getChats = (messagesList, req) => {
   const {uid} = req.params;
-  const result = messagesList.messages[uid];
-
-  if (!Object.keys(result).length) {
+  const {messages} = messagesList;
+  const result = messages[uid];
+  
+  if (!result || !Object.keys(result).length) {
     return null;
   }
   return result;

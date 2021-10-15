@@ -17,7 +17,7 @@ const handler = (req, res, action, file) => {
         case LOG_IN:
           const uid =  actions[action](JSON.parse(data), req);
           if (uid) {
-            res.send(JSON.stringify({result: 0, uid: uid}));
+            res.send(JSON.stringify({result: 0, uid: uid, text: 'Вы вошли'}));
           } else {
             res.send(JSON.stringify({result: 2, text: 'Неверный логин или пароль', type: 'login'}))
           }
@@ -31,7 +31,7 @@ const handler = (req, res, action, file) => {
               if (err) {
                 res.sendStatus(404, JSON.stringify({ result: 0, text: err }))
               } else {
-                res.send(JSON.stringify({ result: 0, text: 'Успешно!' }))
+                res.send(JSON.stringify({ result: 0, text: 'Регистрация успешна!' }))
               }
             });
           } else {

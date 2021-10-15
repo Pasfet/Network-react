@@ -1,9 +1,16 @@
+import { styled } from '@material-ui/styles';
 import { TextField } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
 import PropTypes from 'prop-types';
 
-import style from './AddChat.module.scss';
+const AddChatWrapper = styled('div')({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  width: '100%',
+  marginTop: '20px',
+});
 
 const AddChat = ({
   inputValue,
@@ -17,9 +24,8 @@ const AddChat = ({
   error,
 }) => {
   return (
-    <div className={style.addChatWrapper}>
+    <AddChatWrapper>
       <Autocomplete
-        className={style.addChatForm}
         open={openField}
         onOpen={() => onOpenField(true)}
         onClose={() => {
@@ -37,6 +43,10 @@ const AddChat = ({
         isOptionEqualToValue={(option, value) => option.user_name === value.user_name}
         getOptionLabel={option => option.user_name}
         noOptionsText={error}
+        sx={{
+          width: '100%',
+          '& .MuiAutocomplete-endAdornment': { top: 'calc(50% - 20px) ' },
+        }}
         renderInput={params => (
           <TextField
             {...params}
@@ -47,7 +57,9 @@ const AddChat = ({
               ...params.InputProps,
               endAdornment: (
                 <>
-                  {loading && <CircularProgress color="inherit" size={20} />}
+                  {loading && (
+                    <CircularProgress color="inherit" size={20} sx={{ marginRight: '20px' }} />
+                  )}
                   {params.InputProps.endAdornment}
                 </>
               ),
@@ -55,7 +67,7 @@ const AddChat = ({
           />
         )}
       />
-    </div>
+    </AddChatWrapper>
   );
 };
 

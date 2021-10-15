@@ -1,4 +1,4 @@
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import SignUp from './SignUp';
@@ -72,6 +72,7 @@ describe('<SignUp />', () => {
       expect(getByTestId('emailInput').value).toBe(mockInvalidEmail);
       expect(await findByText('Email введен не верно')).toBeInTheDocument();
     });
+
     it('Render error passwordInput: "Это поле обязательно"', async () => {
       const { getByText, getByTestId, findByText } = renderComponent({
         ...mockProps,
@@ -84,6 +85,7 @@ describe('<SignUp />', () => {
       expect(getByTestId('passwordInput').value).toBe('');
       expect(await findByText('Это поле обязательно')).toBeInTheDocument();
     });
+
     it('Render error passwordInput: "Пароль должен содержать минимум 8 символов"', async () => {
       const { getByText, getByTestId, findByText } = renderComponent({
         ...mockProps,
@@ -97,6 +99,7 @@ describe('<SignUp />', () => {
       expect(getByTestId('passwordInput').value).toBe(mockInvalidPassword);
       expect(await findByText('Пароль должен содержать минимум 8 символов')).toBeInTheDocument();
     });
+
     it('Render error repeatPasswordInput: "Это поле обязательно"', async () => {
       const { getByText, getByTestId, findByText } = renderComponent({
         ...mockProps,
@@ -110,6 +113,7 @@ describe('<SignUp />', () => {
       expect(getByTestId('repeatPasswordInput').value).toBe('');
       expect(await findByText('Это поле обязательно')).toBeInTheDocument();
     });
+
     it('Render error repeatPasswordInput: "Пароль должен совпадать"', async () => {
       const { getByText, getByTestId, findByText } = renderComponent({
         ...mockProps,
@@ -135,6 +139,7 @@ describe('<SignUp />', () => {
 
       expect(mockProps.setNameValue).toHaveBeenCalledWith(mockName);
     });
+
     it('Call setEmail', () => {
       const { getByTestId } = renderComponent(mockProps);
 
@@ -143,6 +148,7 @@ describe('<SignUp />', () => {
 
       expect(mockProps.setEmail).toHaveBeenCalledWith(mockValidEmail);
     });
+
     it('Call setPassword', () => {
       const { getByTestId } = renderComponent(mockProps);
 
@@ -151,6 +157,7 @@ describe('<SignUp />', () => {
 
       expect(mockProps.setPassword).toHaveBeenCalledWith(mockValidPassword);
     });
+
     it('Call setRepeatPassword', () => {
       const { getByTestId } = renderComponent(mockProps);
 
@@ -160,6 +167,14 @@ describe('<SignUp />', () => {
       expect(getByTestId('repeatPasswordInput').value).toBe('');
 
       expect(mockProps.setRepeatPassword).toHaveBeenCalledWith(mockValidPassword);
+    });
+
+    it('Redirect to login page when click on "Log in" link', () => {
+      const { getByText } = renderComponent(mockProps);
+
+      fireEvent.click(getByText('Log in'));
+
+      expect(history.push).toHaveBeenCalledWith('/login');
     });
   });
 

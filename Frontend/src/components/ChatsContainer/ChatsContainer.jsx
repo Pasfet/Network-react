@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
-import style from './Chats.module.scss';
+import { styled } from '@material-ui/styles';
 
 import {
   addChatToApi,
@@ -20,6 +19,21 @@ import {
 import { getError } from '../../store/errorReducer/errorSelector';
 import { getUid } from '../../store/profileReducer/profileSelector';
 import { clearError, clearSnack } from '../../actions/errorAction';
+
+const ChatsWrapper = styled('div')({
+  padding: '10px',
+  borderRadius: '10px',
+  width: '20%',
+  height: '100%',
+  marginRight: 'auto',
+  boxShadow: '5px 0px 5px 3px #f1f1f1',
+});
+
+const AddChatWrapper = styled('div')({
+  display: 'flex',
+  alignItems: 'flex-end',
+  justifyContent: 'space-beetwen',
+});
 
 const ChatsContainer = () => {
   const dispatch = useDispatch();
@@ -72,9 +86,9 @@ const ChatsContainer = () => {
   }, [debounce, open, error, isEmptyChats, uid]);
 
   return (
-    <div className={style.chatsWrapper}>
+    <ChatsWrapper>
       <h2>Chats</h2>
-      <div className={style.addChat}>
+      <AddChatWrapper>
         <AddChat
           inputValue={debounce}
           setInputValue={setInputValue}
@@ -86,7 +100,7 @@ const ChatsContainer = () => {
           options={searchChatsList}
           error={error?.code === 2 && error.message}
         />
-      </div>
+      </AddChatWrapper>
       <ChatsList
         chatsList={chats}
         deleteChat={deleteChat}
@@ -94,7 +108,7 @@ const ChatsContainer = () => {
         error={error?.type === 'chats' && error.message}
         isEmpty={isEmptyChats?.isEmpty && isEmptyChats.message}
       />
-    </div>
+    </ChatsWrapper>
   );
 };
 

@@ -1,15 +1,19 @@
-import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
-import { Alert, Button, List, ListItem } from '@mui/material';
-
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-
-import style from './SignUp.module.scss';
+import { useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
+import { ValidatorForm } from 'react-material-ui-form-validator';
+import { ListItem } from '@mui/material';
+import PropTypes from 'prop-types';
+import {
+  ButtonStyled,
+  ErrorStyled,
+  SignUpForm,
+  SignUpInput,
+  SignUpList,
+  SignUpWrapper,
+} from './SignUpStyle';
 
 const SignUp = ({
   onSubmitHandler,
-  error,
   nameValue,
   setNameValue,
   emailValue,
@@ -18,7 +22,9 @@ const SignUp = ({
   repeatPasswordValue,
   setPassword,
   setRepeatPassword,
+  error,
 }) => {
+  const history = useHistory();
   useEffect(() => {
     ValidatorForm.addValidationRule('isPasswordMatch', value => {
       if (value !== passwordValue) {
@@ -31,16 +37,11 @@ const SignUp = ({
   }, [passwordValue]);
 
   return (
-    <div className={style.signUpWrapper}>
-      <ValidatorForm onSubmit={onSubmitHandler} className={style.signupForm}>
+    <SignUpWrapper>
+      <SignUpForm onSubmit={onSubmitHandler}>
         <h2>SIGN UP</h2>
-        {error && (
-          <Alert severity="error" className={style.error}>
-            {error}
-          </Alert>
-        )}
-        <TextValidator
-          className={style.signupInput}
+        {error && <ErrorStyled severity="error">{error}</ErrorStyled>}
+        <SignUpInput
           variant="standard"
           label="Введите Имя"
           onChange={e => setNameValue(e.target.value)}
@@ -51,9 +52,7 @@ const SignUp = ({
           errorMessages={['Это поле обязательно']}
           inputProps={{ 'data-testid': 'nameInput' }}
         />
-        <TextValidator
-          className={style.signupInput}
-          sx={{ margin: '20px 0' }}
+        <SignUpInput
           variant="standard"
           label="Введите Email"
           onChange={e => setEmail(e.target.value)}
@@ -64,10 +63,8 @@ const SignUp = ({
           errorMessages={['Это поле обязательно', 'Email введен не верно']}
           inputProps={{ 'data-testid': 'emailInput' }}
         />
-        <TextValidator
-          className={style.signupInput}
+        <SignUpInput
           autoComplete="off"
-          sx={{ marginBottom: '20px' }}
           variant="standard"
           label="Введите пароль"
           onChange={e => setPassword(e.target.value)}
@@ -78,10 +75,8 @@ const SignUp = ({
           errorMessages={['Это поле обязательно', 'Пароль должен содержать минимум 8 символов']}
           inputProps={{ 'data-testid': 'passwordInput' }}
         />
-        <TextValidator
-          className={style.signupInput}
+        <SignUpInput
           autoComplete="off"
-          sx={{ marginBottom: '20px' }}
           variant="standard"
           label="Повторите пароль"
           onChange={e => setRepeatPassword(e.target.value)}
@@ -92,28 +87,30 @@ const SignUp = ({
           errorMessages={['Это поле обязательно', 'Пароль должен совпадать']}
           inputProps={{ 'data-testid': 'repeatPasswordInput' }}
         />
-        <List className={style.signupActions}>
-          <ListItem className={style.signupActionsLink}>
-            <Link to="/login">
-              <Button variant="contained" color="secondary">
-                Log in
-              </Button>
-            </Link>
+        <SignUpList>
+          <ListItem>
+            <ButtonStyled
+              variant="contained"
+              color="secondary"
+              onClick={() => history.push('/login')}
+            >
+              Log in
+            </ButtonStyled>
           </ListItem>
-          <ListItem className={style.loginButton} sx={{ justifyContent: 'flex-end' }}>
-            <Button type="submit" variant="contained" color="success">
+          <ListItem>
+            <ButtonStyled type="submit" variant="contained" color="success">
               Sign up
-            </Button>
+            </ButtonStyled>
           </ListItem>
-        </List>
-      </ValidatorForm>
-    </div>
+        </SignUpList>
+      </SignUpForm>
+    </SignUpWrapper>
   );
 };
 
 SignUp.propsTypes = {
   onSubmitHandler: PropTypes.func.isRequired,
-  error: PropTypes.string.isRequired,
+  error: PropTypes.string,
   nameValue: PropTypes.string.isRequired,
   setNameValue: PropTypes.func.isRequired,
   emailValue: PropTypes.string.isRequired,

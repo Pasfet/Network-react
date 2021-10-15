@@ -68,7 +68,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: prop => prop !== 'open' })
 
 const NavbarContainer = ({ auth, uid, logOut, navbarList, userName }) => {
   const [open, setOpen] = useState(false);
-
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />

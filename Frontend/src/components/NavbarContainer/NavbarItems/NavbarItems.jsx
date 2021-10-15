@@ -1,7 +1,4 @@
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
+import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import LoginIcon from '@mui/icons-material/Login';
 import PersonIcon from '@mui/icons-material/Person';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
@@ -31,7 +28,6 @@ const NavbarItems = ({ uid, navbarList }) => {
         return <InboxIcon />;
     }
   };
-
   return (
     <List>
       {navbarList?.map(item => (
