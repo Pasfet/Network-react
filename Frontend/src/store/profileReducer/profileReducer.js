@@ -1,18 +1,12 @@
-import { CLEAR_UID, CLEAR_USER, EDIT_PROFILE, SET_UID, SET_USER } from '../types/profileTypes';
+import { CLEAR_UID, CLEAR_USER, SET_UID, SET_USER } from '../types/profileTypes';
 
 const initialState = {
-  profileEdit: false,
   uid: null,
   user: null,
 };
 
 const profileReducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    case EDIT_PROFILE:
-      return {
-        ...state,
-        profileEdit: !state.profileEdit,
-      };
     case SET_UID:
       return {
         ...state,

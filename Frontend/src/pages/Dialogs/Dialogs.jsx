@@ -10,12 +10,15 @@ import { getAuth } from '../../store/auth/authSelector';
 
 const DialogsWrap = styled('div')({
   width: '100%',
-  height: '90vh',
+  height: '80vh',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
-  padding: '15px',
+  padding: '45px',
+  '@media(max-width: 430px)': {
+    padding: '15px',
+  },
 });
 
 const Dialogs = () => {

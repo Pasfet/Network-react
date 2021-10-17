@@ -7,7 +7,7 @@ import {
   deleteChatFromAPI,
   getChatsList,
   searchUsersChat,
-} from '../../actions/dialogsAction';
+} from '../../actions/dialogsActions';
 import AddChat from './AddChat/AddChat';
 import ChatsList from './ChatsList/ChatsList';
 import useDebounce from '../../hooks/debounce/debounce';
@@ -18,15 +18,20 @@ import {
 } from '../../store/dialogsReducer/dialogsSelector';
 import { getError } from '../../store/errorReducer/errorSelector';
 import { getUid } from '../../store/profileReducer/profileSelector';
-import { clearError, clearSnack } from '../../actions/errorAction';
+import { clearError, clearSnack } from '../../actions/errorActions';
 
 const ChatsWrapper = styled('div')({
-  padding: '10px',
   borderRadius: '10px',
-  width: '20%',
+  width: '30%',
   height: '100%',
   marginRight: 'auto',
   boxShadow: '5px 0px 5px 3px #f1f1f1',
+  '@media(max-width: 1024px)': {
+    width: '50%',
+  },
+  '@media(max-width: 768px)': {
+    width: '100%',
+  },
 });
 
 const AddChatWrapper = styled('div')({

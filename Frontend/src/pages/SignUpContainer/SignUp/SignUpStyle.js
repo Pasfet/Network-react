@@ -17,6 +17,9 @@ export const SignUpWrapper = styled('div')({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  '@media (max-width: 550px)': {
+    padding: '15px',
+  },
 });
 
 export const SignUpForm = styled(

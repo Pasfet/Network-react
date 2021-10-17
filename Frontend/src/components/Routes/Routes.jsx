@@ -8,6 +8,7 @@ import ProfileContainer from '../../pages/ProfileContainer/ProfileContainer';
 import Dialogs from '../../pages/Dialogs/Dialogs';
 import SignUpContainer from '../../pages/SignUpContainer/SignUpContainer';
 import WithAuthForm from '../../HOC/WithAuthForm';
+import ProfileEdit from '../../pages/ProfileEdit/ProfileEdit';
 
 const Routes = ({ authed }) => {
   return (
@@ -18,11 +19,14 @@ const Routes = ({ authed }) => {
       <WithAuthForm authenticated={authed} exact path="/signup">
         <SignUpContainer />
       </WithAuthForm>
-      <PrivateRoute authenticated={authed} path="/profile/:uid">
+      <PrivateRoute authenticated={authed} exact path="/profile/:uid">
         <ProfileContainer />
       </PrivateRoute>
       <PrivateRoute authenticated={authed} path="/dialogs">
         <Dialogs />
+      </PrivateRoute>
+      <PrivateRoute authenticated={authed} path="/profile/:uid/edit">
+        <ProfileEdit />
       </PrivateRoute>
       <Route path="*">
         <Page404 />

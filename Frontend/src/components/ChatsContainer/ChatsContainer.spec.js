@@ -6,7 +6,7 @@ import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import ChatsContainer from './ChatsContainer';
-import { deleteChatFromAPI } from '../../actions/dialogsAction';
+import { deleteChatFromAPI } from '../../actions/dialogsActions';
 import fetchMock from 'jest-fetch-mock';
 
 fetchMock.enableMocks();

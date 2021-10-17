@@ -1,4 +1,3 @@
-export const EDIT_PROFILE = 'EDIT_PROFILE';
 export const SET_UID = 'SET_UID';
 export const CLEAR_UID = 'CLEAR_UID';
 export const SET_USER = 'SET_USER';

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { authorization } from '../../actions/authActions';
 import { getError } from '../../store/errorReducer/errorSelector';
-import { clearError } from '../../actions/errorAction';
+import { clearError } from '../../actions/errorActions';
 import LogIn from './LogIn/LogIn';
 import { useEffect } from 'react';
 

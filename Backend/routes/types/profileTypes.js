@@ -1,7 +1,11 @@
 const GET_FULL_USERS = 'GET_FULL_USERS';
 const GET_USER = 'GET_USER';
+const SET_STATUS = 'SET_STATUS';
+const SET_ABOUT = 'SET_ABOUT';
 
 module.exports = {
   GET_FULL_USERS,
   GET_USER,
+  SET_STATUS,
+  SET_ABOUT
 }

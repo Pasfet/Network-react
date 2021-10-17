@@ -11,7 +11,7 @@ import {
   getChatsList,
   getMessagesFromAPI,
   searchUsersChat,
-} from '../dialogsAction';
+} from '../dialogsActions';
 
 fetchMock.enableMocks();
 

@@ -7,7 +7,7 @@
 //   SET_ERROR,
 //   SET_SEARCH_TITLE,
 // } from '../store/types/animePageTypes';
-// import { loadingFalse, loadingTrue } from './spinnerAction';
+// import { loadingFalse, loadingTrue } from './spinnerActions';
 // const ANIME_API_BASE_URL = 'https://api.aniapi.com';
 // const GET_ANIME_URL = ANIME_API_BASE_URL + '/v1/anime?per_page=10';
 

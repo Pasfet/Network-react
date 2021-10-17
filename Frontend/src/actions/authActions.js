@@ -1,8 +1,8 @@
 import { CLEAR_AUTH, CURRENT_URL, SET_AUTH } from '../store/types/authTypes';
-import { clearError, setError, setSnack } from './errorAction';
-import { loadingFalse, loadingTrue } from './spinnerAction';
-import { clearUid, clearUser, getUser, setUid } from './profileAction';
-import { clearChats, getChatsList } from './dialogsAction';
+import { clearError, setError, setSnack } from './errorActions';
+import { loadingFalse, loadingTrue } from './spinnerActions';
+import { clearUid, clearUser, getUser, setUid } from './profileActions';
+import { clearChats, getChatsList } from './dialogsActions';
 
 export const setAuth = () => ({
   type: SET_AUTH,

@@ -3,13 +3,14 @@ import { styled } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { getAuth } from './store/auth/authSelector';
-import { loadingFalse, loadingTrue } from './actions/spinnerAction';
+import { loadingFalse, loadingTrue } from './actions/spinnerActions';
 import { getNavbarList } from './store/navbarReducer/navbarSelector';
 import Spinner from './components/Spinner/Spinner';
 import NavbarHOC from './HOC/withAuthNavbar';
 import Routes from './components/Routes/Routes';
 import SnackbarAlert from './components/SnackbarAlert/SnackbarAlert';
 import { getSnackMessage } from './store/errorReducer/errorSelector';
+import { clearError, clearSnack } from './actions/errorActions';
 
 const AppStyled = styled('div')({
   display: 'grid',
@@ -20,6 +21,9 @@ const AppStyled = styled('div')({
 const Main = styled('main')({
   marginTop: '70px',
   maxWidth: '80%',
+  '@media (max-width: 430px)': {
+    marginTop: '100px',
+  },
 });
 
 const App = () => {
@@ -32,6 +36,8 @@ const App = () => {
 
   useEffect(() => {
     dispatch(loadingTrue());
+    dispatch(clearSnack());
+    dispatch(clearError());
     if (auth) {
       setAuthed(auth);
     } else {

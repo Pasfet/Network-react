@@ -1,10 +1,12 @@
 const fs = require('fs');
 const profileActions = require('./profileActions');
-const {GET_USER, GET_FULL_USERS} = require('../types/profileTypes');
+const {GET_USER, GET_FULL_USERS, SET_STATUS, SET_ABOUT} = require('../types/profileTypes');
 
 const actions = {
   GET_USER: profileActions.getUser,
   GET_FULL_USERS: profileActions.getFullUsers,
+  SET_STATUS: profileActions.setStatus,
+  SET_ABOUT: profileActions.setAboutUser
 }
 
 const handler = (req, res, action, file) => {
@@ -33,7 +35,47 @@ const handler = (req, res, action, file) => {
         }
       });
       break;
-    default:
+    case SET_STATUS:
+      fs.readFile(file, (err, data) => {
+        if (err) {
+          res.sendStatus(404, JSON.stringify({result: 1, text: err}))
+        } else {
+          const usersList = actions[action](JSON.parse(data), req);
+          if (usersList) {
+            fs.writeFile(file, usersList, (err, data) => {
+              if (err) {
+                res.sendStatus(404, JSON.stringify({result: 1, text: err}))
+              } else {
+                res.send(JSON.stringify({result: 0, text: 'Статус изменен!'}));
+              }
+            })
+          } else {
+            res.send(JSON.stringify({result: 2, text: 'Ошибка', type: 'profile'}));
+          }
+        }
+      })
+      break;
+    case SET_ABOUT:
+      fs.readFile(file, (err, data) => {
+        if (err) {
+          res.sendStatus(404, JSON.stringify({result: 1, text: err}))
+        } else {
+          const usersList = actions[action](JSON.parse(data), req);
+          if (usersList) {
+            fs.writeFile(file, usersList, (err, data) => {
+              if (err) {
+                res.sendStatus(404, JSON.stringify({result: 1, text: err}))
+              } else {
+                res.send(JSON.stringify({result: 0, text: 'Сохранено!'}));
+              }
+            })
+          } else {
+            res.send(JSON.stringify({result: 2, text: 'Ошибка', type: 'edit-profile'}));
+          }
+        }
+      })
+      break
+      default:
       break;
   }
 }

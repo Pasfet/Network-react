@@ -1,7 +1,7 @@
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 import spinnerReducer from '../../store/SpinnerReducer/spinnerReducer';
-import { loadingFalse, loadingTrue } from '../spinnerAction';
+import { loadingFalse, loadingTrue } from '../spinnerActions';
 import { LOADING_FALSE, LOADING_TRUE } from '../../store/types/spinnerTypes';
 
 describe('Spinner actions', () => {

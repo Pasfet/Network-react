@@ -17,11 +17,24 @@ const getUsersName = (usersList, req) => {
 const getChats = (messagesList, req) => {
   const {uid} = req.params;
   const {messages} = messagesList;
-  const result = messages[uid];
+  const UserChats = messages[uid];
   
-  if (!result || !Object.keys(result).length) {
+  if (!UserChats || !Object.keys(UserChats).length) {
     return null;
   }
+
+  const chats = Object.keys(UserChats).map((chat) => ({
+    [`${chat}`]: {
+      roomId: UserChats[chat].roomId,
+      chat_name: UserChats[chat].chat_name,
+      chat_id: UserChats[chat].chat_id
+    }
+  }));
+
+  let result;
+  chats.forEach(item => {
+    result = {...result, ...item}
+  })
   return result;
 }
 

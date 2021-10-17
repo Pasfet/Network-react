@@ -2,7 +2,7 @@ import Snackbar from '@mui/material/Snackbar';
 import { Alert } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { clearSnack } from '../../actions/errorAction';
+import { clearSnack } from '../../actions/errorActions';
 
 const SnackbarAlert = ({ snackMessage }) => {
   const dispatch = useDispatch();

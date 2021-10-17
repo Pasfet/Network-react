@@ -5,13 +5,14 @@ import { useParams } from 'react-router-dom';
 import MessagesList from './MessagesList/MessagesList';
 import {
   getChats,
+  getIsEmptyChats,
   getIsEmptyMessagesState,
   getMessagesFromStore,
 } from '../../store/dialogsReducer/dialogsSelector';
 import { getUserName } from '../../store/profileReducer/profileSelector';
 import { getError } from '../../store/errorReducer/errorSelector';
-import { clearMessages, getMessagesFromAPI } from '../../actions/dialogsAction';
-import { clearError, setError } from '../../actions/errorAction';
+import { clearMessages, getChatsList, getMessagesFromAPI } from '../../actions/dialogsActions';
+import { clearError, setError } from '../../actions/errorActions';
 import MessageBar from './MessageBar/MessageBar';
 
 const URL = 'ws://localhost:8999/';
@@ -21,6 +22,7 @@ const MessagesContainer = () => {
   const socket = useRef();
   const messages = useSelector(getMessagesFromStore);
   const userName = useSelector(getUserName);
+  const isEmptyChats = useSelector(getIsEmptyChats);
   const chats = useSelector(getChats);
   const error = useSelector(getError);
   const isEmptyMessages = useSelector(getIsEmptyMessagesState);
@@ -83,6 +85,13 @@ const MessagesContainer = () => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatId]);
+
+  useEffect(() => {
+    if (!isEmptyChats?.isEmpty) {
+      dispatch(getChatsList(uid));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEmptyChats]);
 
   return (
     <>

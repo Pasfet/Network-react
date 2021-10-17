@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { registration } from '../../actions/authActions';
-import { clearError } from '../../actions/errorAction';
+import { clearError } from '../../actions/errorActions';
 import { getError } from '../../store/errorReducer/errorSelector';
 import SignUp from './SignUp/SignUp';
 

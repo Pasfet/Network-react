@@ -11,7 +11,7 @@ import {
   IS_EMPTY_MESSAGES,
   IS_NOT_EMPTY_MESSAGES,
 } from '../store/types/dialogsTypes';
-import { clearError, setError, setSnack } from './errorAction';
+import { clearError, setError, setSnack } from './errorActions';
 
 export const getChats = chats => ({
   type: GET_CHATS,
