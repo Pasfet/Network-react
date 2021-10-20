@@ -1,6 +1,5 @@
 import {
   CountFirends,
-  FirendsBlockUserAvatarWrap,
   FreindsBlockTitle,
   FriendBlockHeading,
   FriendBlockList,
@@ -10,31 +9,43 @@ import {
   FriendsBlockUserName,
 } from './FriendsBlockStyled';
 
-const FriendsBlock = () => {
+import PropTypes from 'prop-types';
+import { CURRENT_URL } from '../../store/types/authTypes';
+
+const FriendsBlock = ({ userFriends, uid }) => {
   return (
     <>
       <FriendBlockHeading>
         <FreindsBlockTitle>
           Друзья
-          <CountFirends>6</CountFirends>
+          <CountFirends> {userFriends && userFriends.length} </CountFirends>
         </FreindsBlockTitle>
-        <FriendsBlockLink to="#">Все друзья</FriendsBlockLink>
+        <FriendsBlockLink to={`/profile/${uid}/friends`}>Все друзья</FriendsBlockLink>
       </FriendBlockHeading>
       <FriendBlockList>
-        <FriendsBlockItem>
-          <FirendsBlockUserAvatarWrap>
-            <FriendsBlockUserAvatar
-              src="https://html5css.ru/w3images/avatar2.png"
-              alt="ava"
-              width="50"
-              height="50"
-            />
-          </FirendsBlockUserAvatarWrap>
-          <FriendsBlockUserName>Name</FriendsBlockUserName>
-        </FriendsBlockItem>
+        {userFriends?.length
+          ? userFriends.slice(0, 6)?.map(friend => (
+              <FriendsBlockItem key={friend.uid}>
+                <FriendsBlockUserAvatar
+                  src={`${CURRENT_URL}/images/profile/${friend.uid}/avatar/${friend.avatar}`}
+                  alt="ava"
+                  width="50"
+                  height="50"
+                />
+                <FriendsBlockUserName to={`/profile/${friend.uid}`}>
+                  {friend.user_name}
+                </FriendsBlockUserName>
+              </FriendsBlockItem>
+            ))
+          : 'Нет друзей'}
       </FriendBlockList>
     </>
   );
+};
+
+FriendsBlock.propsTypes = {
+  userFriends: PropTypes.array.isRequired,
+  uid: PropTypes.string.isRequired,
 };
 
 export default FriendsBlock;

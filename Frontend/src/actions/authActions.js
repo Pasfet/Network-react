@@ -1,8 +1,8 @@
 import { CLEAR_AUTH, CURRENT_URL, SET_AUTH } from '../store/types/authTypes';
 import { clearError, setError, setSnack } from './errorActions';
 import { loadingFalse, loadingTrue } from './spinnerActions';
-import { clearUid, clearUser, getUser, setUid } from './profileActions';
-import { clearChats, getChatsList } from './dialogsActions';
+import { clearMyFriends, clearUid, clearUser, setUid } from './profileActions';
+import { clearChats } from './dialogsActions';
 
 export const setAuth = () => ({
   type: SET_AUTH,
@@ -25,9 +25,7 @@ export const authorization = ({ email, password }) => {
       .then(data => {
         if (data.result === 0) {
           dispatch(setAuth());
-          dispatch(setUid(data.uid));
-          dispatch(getChatsList(data.uid));
-          dispatch(getUser(data.uid));
+          dispatch(setUid(data.user));
           dispatch(setSnack({ text: data.text, result: data.result }));
         } else {
           dispatch(setError({ message: data.text, type: data.type }));
@@ -76,6 +74,7 @@ export const logOut = () => {
     dispatch(clearChats());
     dispatch(clearError());
     dispatch(loadingFalse());
+    dispatch(clearMyFriends());
     dispatch(setSnack({ text: 'Вы вышли', result: 0 }));
   };
 };

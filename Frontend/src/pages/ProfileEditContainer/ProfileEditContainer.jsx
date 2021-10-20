@@ -1,23 +1,25 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getError } from '../../store/errorReducer/errorSelector';
-import { getUid, getUserPage } from '../../store/profileReducer/profileSelector';
+import { getMyUid, getUserProfile } from '../../store/profileReducer/profileSelector';
 import ProfileEditTable from '../../components/ProfileEditTable/ProfileEditTable';
-import { setAboutUser } from '../../actions/profileActions';
+import { sendProfileChange } from '../../actions/profileActions';
 
-const ProfileEdit = () => {
-  const { about } = useSelector(getUserPage);
+const ProfileEditContainer = () => {
+  const dispatch = useDispatch();
+
+  const { about } = useSelector(getUserProfile);
+  const error = useSelector(getError);
+  const myUid = useSelector(getMyUid);
+
   const [birthday, setBirthday] = useState(about.birthday?.payload);
   const [city, setCity] = useState(about.city?.payload);
   const [site, setSite] = useState(about.site?.payload);
   const [language, setLanguage] = useState(about.language?.payload);
-  const error = useSelector(getError);
-  const uid = useSelector(getUid);
-  const dispatch = useDispatch();
 
   const sendAbout = () => {
     dispatch(
-      setAboutUser(uid, {
+      sendProfileChange(myUid, {
         about: {
           birthday: { text: 'День рождения', payload: birthday },
           city: { text: 'Город', payload: city },
@@ -43,4 +45,4 @@ const ProfileEdit = () => {
   );
 };
 
-export default ProfileEdit;
+export default ProfileEditContainer;

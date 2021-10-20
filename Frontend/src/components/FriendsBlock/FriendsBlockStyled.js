@@ -1,4 +1,4 @@
-import { List, ListItem } from '@mui/material';
+import { Avatar, List, ListItem } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 
@@ -38,17 +38,12 @@ export const FriendsBlockItem = styled(ListItem)({
   flexDirection: 'column',
 });
 
-export const FirendsBlockUserAvatarWrap = styled('div')({
+export const FriendsBlockUserAvatar = styled(Avatar)({
   width: '50px',
   height: '50px',
-  borderRadius: '50%',
-  overflow: 'hidden',
-  verticalAlign: 'middle',
 });
 
-export const FriendsBlockUserAvatar = styled('img')({
-  width: 'inherit',
-  height: 'inherit',
+export const FriendsBlockUserName = styled(Link)({
+  color: '#000',
+  marginTop: '5px',
 });
-
-export const FriendsBlockUserName = styled('div')({});

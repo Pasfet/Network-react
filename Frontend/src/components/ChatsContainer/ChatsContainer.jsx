@@ -17,8 +17,8 @@ import {
   getIsEmptyChats,
 } from '../../store/dialogsReducer/dialogsSelector';
 import { getError } from '../../store/errorReducer/errorSelector';
-import { getUid } from '../../store/profileReducer/profileSelector';
-import { clearError, clearSnack } from '../../actions/errorActions';
+import { getMyUid } from '../../store/profileReducer/profileSelector';
+import { clearError } from '../../actions/errorActions';
 
 const ChatsWrapper = styled('div')({
   borderRadius: '10px',
@@ -42,11 +42,14 @@ const AddChatWrapper = styled('div')({
 
 const ChatsContainer = () => {
   const dispatch = useDispatch();
+
   const chats = useSelector(getChats);
   const isEmptyChats = useSelector(getIsEmptyChats);
   const searchChatsList = useSelector(getSearchChats);
+
   const error = useSelector(getError);
-  const uid = useSelector(getUid);
+  const uid = useSelector(getMyUid);
+
   const [inputValue, setInputValue] = useState('');
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -85,7 +88,6 @@ const ChatsContainer = () => {
     }
     return () => {
       dispatch(clearError());
-      dispatch(clearSnack());
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debounce, open, error, isEmptyChats, uid]);

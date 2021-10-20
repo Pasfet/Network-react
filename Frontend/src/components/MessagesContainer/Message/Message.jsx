@@ -37,10 +37,12 @@ const AuthorNameSpan = styled('span')(({ me }) => ({
 const Message = ({ message, uid }) => {
   return (
     <BubbleWrapper>
-      <InlineContainer me={message?.authorId !== uid && true}>
-        <Bubble me={message?.authorId !== uid && true}>{message?.text}</Bubble>
+      <InlineContainer me={message?.authorId === uid ? true : false}>
+        <Bubble me={message?.authorId === uid ? true : false}>{message?.text}</Bubble>
       </InlineContainer>
-      <AuthorNameSpan me={message?.authorId !== uid && true}>{message?.authorName}</AuthorNameSpan>
+      <AuthorNameSpan me={message?.authorId === uid ? true : false}>
+        {message?.authorName}
+      </AuthorNameSpan>
     </BubbleWrapper>
   );
 };

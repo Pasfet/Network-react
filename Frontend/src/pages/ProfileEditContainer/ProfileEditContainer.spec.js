@@ -5,9 +5,9 @@ import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import ProfileEdit from './ProfileEdit';
+import ProfileEditContainer from './ProfileEditContainer';
 
-describe('<ProfileEdit />', () => {
+describe('<ProfileEditContainer />', () => {
   const middlewares = [thunk];
   const mockStore = configureStore(middlewares);
 
@@ -17,7 +17,7 @@ describe('<ProfileEdit />', () => {
     return render(
       <Router history={history}>
         <Provider store={store}>
-          <ProfileEdit />
+          <ProfileEditContainer />
         </Provider>
       </Router>,
     );
@@ -26,7 +26,7 @@ describe('<ProfileEdit />', () => {
   it('Render aboutItemLabel', () => {
     const state = mockStore(() => ({
       profilePage: {
-        uid: 'id1',
+        uid: { uid: 'id1' },
         user: {
           about: {
             birthday: { text: 'День рождения', payload: '' },
@@ -52,7 +52,7 @@ describe('<ProfileEdit />', () => {
   it('Render valueInputs', () => {
     const state = mockStore(() => ({
       profilePage: {
-        uid: 'id1',
+        uid: { uid: 'id1' },
         user: {
           about: {
             birthday: { text: 'День рождения', payload: '' },
@@ -77,7 +77,7 @@ describe('<ProfileEdit />', () => {
   it('Change birthdayInput', () => {
     const state = mockStore(() => ({
       profilePage: {
-        uid: 'id1',
+        uid: { uid: 'id1' },
         user: {
           about: {
             birthday: { text: 'День рождения', payload: '' },
@@ -103,7 +103,7 @@ describe('<ProfileEdit />', () => {
   it('Change cityInput', () => {
     const state = mockStore(() => ({
       profilePage: {
-        uid: 'id1',
+        uid: { uid: 'id1' },
         user: {
           about: {
             birthday: { text: 'День рождения', payload: '' },
@@ -129,7 +129,7 @@ describe('<ProfileEdit />', () => {
   it('Change siteInput', () => {
     const state = mockStore(() => ({
       profilePage: {
-        uid: 'id1',
+        uid: { uid: 'id1' },
         user: {
           about: {
             birthday: { text: 'День рождения', payload: '' },
@@ -155,7 +155,7 @@ describe('<ProfileEdit />', () => {
   it('Change langInput', () => {
     const state = mockStore(() => ({
       profilePage: {
-        uid: 'id1',
+        uid: { uid: 'id1' },
         user: {
           about: {
             birthday: { text: 'День рождения', payload: '' },
@@ -181,7 +181,7 @@ describe('<ProfileEdit />', () => {
   it('Render error', () => {
     const state = mockStore(() => ({
       profilePage: {
-        uid: 'id1',
+        uid: { uid: 'id1' },
         user: {
           about: {
             birthday: { text: 'День рождения', payload: '' },

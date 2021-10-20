@@ -7,7 +7,7 @@ const logIn = (usersList, req) => {
 
   for (let i = 0; i < usersKeys.length; i++) {
     if (users[usersKeys[i]].user_email === email && users[usersKeys[i]].password === password) {
-      return users[usersKeys[i]].uid;
+      return {uid: users[usersKeys[i]].uid, name: users[usersKeys[i]].user_name};
     }
   }
   return null;

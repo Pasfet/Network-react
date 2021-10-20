@@ -10,7 +10,10 @@ const createUser = (id, email, password, name) => {
       password,
       user_name: name,
       user_friends: [],
-      status: ""
+      status: "",
+      avatar: null,
+      about: {},
+      friends_requstions: []
     }
   }
 }

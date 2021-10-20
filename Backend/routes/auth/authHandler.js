@@ -15,9 +15,9 @@ const handler = (req, res, action, file) => {
     } else {
       switch (action) {
         case LOG_IN:
-          const uid =  actions[action](JSON.parse(data), req);
-          if (uid) {
-            res.send(JSON.stringify({result: 0, uid: uid, text: 'Вы вошли'}));
+          const user =  actions[action](JSON.parse(data), req);
+          if (user) {
+            res.send(JSON.stringify({result: 0, user, text: 'Вы вошли'}));
           } else {
             res.send(JSON.stringify({result: 2, text: 'Неверный логин или пароль', type: 'login'}))
           }

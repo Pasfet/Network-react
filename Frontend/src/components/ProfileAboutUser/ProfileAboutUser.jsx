@@ -7,14 +7,15 @@ const ProfileAboutUser = ({ about }) => {
     <ProfileAboutContainer>
       <Table aria-label="О себе">
         <TableBody>
-          {Object.keys(about)?.map(item => (
-            <ProfileAboutRow key={item} hover>
-              <TableCell>{about[item].text}</TableCell>
-              <TableCell>
-                {about[item].payload ? about[item].payload : 'Ничего не задано'}
-              </TableCell>
-            </ProfileAboutRow>
-          ))}
+          {about &&
+            Object.keys(about)?.map(item => (
+              <ProfileAboutRow key={item} hover>
+                <TableCell>{about[item].text}</TableCell>
+                <TableCell>
+                  {about[item].payload ? about[item].payload : 'Ничего не задано'}
+                </TableCell>
+              </ProfileAboutRow>
+            ))}
         </TableBody>
       </Table>
     </ProfileAboutContainer>

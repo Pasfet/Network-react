@@ -8,14 +8,51 @@ export const PageActions = styled(List)({});
 export const ListItemPageActions = styled(ListItem)({});
 
 export const PageActionsEdit = styled(ListItemButton)(({ theme }) => ({
-  padding: '8px 40px !important',
-  backgroundColor: `${theme.palette.primary.main} !important`,
-  border: '1px solid transparent !important',
-  color: '#fff !important',
-  '&:hover': {
-    backgroundColor: `${theme.palette.primary.contrastText} !important`,
-    color: `${theme.palette.primary.main} !important`,
-    border: `1px solid ${theme.palette.primary.main} !important`,
+  '&.MuiListItemButton-root': {
+    padding: '8px 40px',
+    backgroundColor: `${theme.palette.primary.main}`,
+    border: '1px solid transparent',
+    color: '#fff',
+    transition: theme.transitions.create(['backgroundColor', 'color', 'border'], {
+      easing: theme.transitions.easing.easeInOut,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    '&:hover': {
+      backgroundColor: `${theme.palette.primary.contrastText}`,
+      color: `${theme.palette.primary.main}`,
+      border: `1px solid ${theme.palette.primary.main}`,
+    },
+  },
+}));
+
+export const PageActionsButton = styled(
+  ListItemButton,
+  {},
+)(({ theme, addbutton, deletebutton }) => ({
+  '&.MuiListItemButton-root': {
+    padding: '8px 20px',
+    border: '1px solid transparent',
+    color: '#fff',
+    transition: theme.transitions.create(['backgroundColor', 'color', 'border'], {
+      easing: theme.transitions.easing.easeInOut,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    ...(deletebutton === 'true' && {
+      backgroundColor: `${theme.palette.grey[400]}`,
+      '&:hover': {
+        backgroundColor: `${theme.palette.grey[500]}`,
+        color: `${theme.palette.primary.contrastText}`,
+        border: `1px solid ${theme.palette.grey[400]}`,
+      },
+    }),
+    ...(addbutton === 'true' && {
+      backgroundColor: `${theme.palette.primary.main}`,
+      '&:hover': {
+        backgroundColor: `${theme.palette.primary.contrastText}`,
+        color: `${theme.palette.primary.main}`,
+        border: `1px solid ${theme.palette.primary.main}`,
+      },
+    }),
   },
 }));
 

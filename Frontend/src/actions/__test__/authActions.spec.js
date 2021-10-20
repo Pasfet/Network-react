@@ -30,11 +30,11 @@ describe('Auth actions', () => {
 
   describe('Authorization action', () => {
     it('Authorization with result === 0', () => {
-      fetchMock.mockResponse(JSON.stringify({ result: 0, uid: 1 }));
+      fetchMock.mockResponse(JSON.stringify({ result: 0, user: { uid: 1, name: 'Myname' } }));
       let initialState = {
         auth: { isAuth: false },
         profilePage: {
-          uid: null,
+          uid: { uid: null, name: null },
         },
         error: { error: null },
       };
@@ -48,7 +48,8 @@ describe('Auth actions', () => {
           initialState = reducerMock(initialState, action);
         });
 
-        expect(initialState.profilePage.uid).toBe(1);
+        expect(initialState.profilePage.uid.uid).toBe(1);
+        expect(initialState.profilePage.uid.name).toBe('Myname');
       });
     });
     it('Authorization with result invalid email or password', () => {
@@ -59,7 +60,7 @@ describe('Auth actions', () => {
       let initialState = {
         auth: { isAuth: false },
         profilePage: {
-          uid: null,
+          uid: { uid: null, name: null },
         },
         error: { error: null },
       };
@@ -78,6 +79,8 @@ describe('Auth actions', () => {
           type: 'login',
         });
         expect(initialState.auth.isAuth).toBe(false);
+        expect(initialState.profilePage.uid.uid).toBeNull();
+        expect(initialState.profilePage.uid.name).toBeNull();
       });
     });
 
@@ -171,7 +174,7 @@ describe('Auth actions', () => {
 
       const store = mockStore(() => initialState);
 
-      return store.dispatch(authorization({ email: mockEmail, password: mockPass })).then(() => {
+      return store.dispatch(registration({ email: mockEmail, password: mockPass })).then(() => {
         const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
 
         actions.forEach(action => {

@@ -8,6 +8,7 @@ import SignUp from './SignUp/SignUp';
 const SignUpContainer = () => {
   const dispatch = useDispatch();
   const error = useSelector(getError);
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

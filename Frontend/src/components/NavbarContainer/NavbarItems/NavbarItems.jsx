@@ -5,6 +5,7 @@ import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import MovieIcon from '@mui/icons-material/Movie';
 import InboxIcon from '@mui/icons-material/Inbox';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import FriendsIcon from '@mui/icons-material/PeopleAlt';
 import { useHistory } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
@@ -24,6 +25,8 @@ const NavbarItems = ({ uid, navbarList }) => {
         return <MovieIcon />;
       case 'signup':
         return <AssignmentIndIcon />;
+      case 'friends':
+        return <FriendsIcon />;
       default:
         return <InboxIcon />;
     }

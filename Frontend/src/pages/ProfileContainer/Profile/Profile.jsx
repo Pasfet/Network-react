@@ -16,30 +16,42 @@ import {
 
 const Profile = ({
   user,
+  myFriends,
   uid,
-  userUid,
+  myUid,
   error,
   openStatus,
   setOpenStatus,
   statusInput,
   setStatusInput,
   sendStatus,
+  addToFriendsList,
+  deleteFriend,
+  rejectFriendRequestHandler,
 }) => {
   return (
     <ProfileWrapper container spacing={2}>
       <ProfileBar item lg={2}>
         <BoxStyled>
-          <ProfilePageActions userUid={userUid} uid={uid} />
+          <ProfilePageActions
+            userAvatar={user?.avatar}
+            myUid={myUid}
+            uid={uid}
+            myFriends={myFriends}
+            addToFriendsList={addToFriendsList}
+            deleteFriend={deleteFriend}
+            rejectFriendRequestHandler={rejectFriendRequestHandler}
+          />
         </BoxStyled>
         <BoxStyled>
-          <FriendsBlock />
+          <FriendsBlock userFriends={user?.user_friends} uid={uid} />
         </BoxStyled>
       </ProfileBar>
       <ProfileMainContainer item lg={8}>
         {error && <ErrorMessage> {error} </ErrorMessage>}
 
         <BoxStyled>
-          <ProfileUserName>{user?.name}</ProfileUserName>
+          <ProfileUserName>{user?.user_name}</ProfileUserName>
           {openStatus ? (
             <ProfileInputStatus
               value={statusInput}
@@ -48,12 +60,12 @@ const Profile = ({
               inputProps={{ 'data-testid': 'inputStatus' }}
             />
           ) : (
-            <ProfileUserStatus onClick={() => uid === userUid && setOpenStatus(true)}>
+            <ProfileUserStatus onClick={() => uid === myUid && setOpenStatus(true)}>
               {statusInput ? statusInput : 'Установить статус'}
             </ProfileUserStatus>
           )}
           <Divider />
-          <ProfileAboutUser about={user.about && user.about} />
+          <ProfileAboutUser about={user?.about && user.about} />
         </BoxStyled>
       </ProfileMainContainer>
     </ProfileWrapper>
@@ -62,14 +74,19 @@ const Profile = ({
 
 Profile.propTypes = {
   user: PropTypes.object.isRequired,
+  myFriends: PropTypes.object,
+  friendsRequests: PropTypes.array,
   error: PropTypes.string,
   uid: PropTypes.string,
-  userUid: PropTypes.string,
+  myUid: PropTypes.string,
   openStatus: PropTypes.bool,
   setOpenStatus: PropTypes.func,
   statusInput: PropTypes.string,
   setStatusInput: PropTypes.func,
   sendStatus: PropTypes.func,
+  addToFriendsList: PropTypes.func.isRequired,
+  deleteFriend: PropTypes.func,
+  rejectFriendRequestHandler: PropTypes.func,
 };
 
 export default Profile;

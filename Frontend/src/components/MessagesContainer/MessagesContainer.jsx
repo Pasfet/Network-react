@@ -9,7 +9,7 @@ import {
   getIsEmptyMessagesState,
   getMessagesFromStore,
 } from '../../store/dialogsReducer/dialogsSelector';
-import { getUserName } from '../../store/profileReducer/profileSelector';
+import { getMyName } from '../../store/profileReducer/profileSelector';
 import { getError } from '../../store/errorReducer/errorSelector';
 import { clearMessages, getChatsList, getMessagesFromAPI } from '../../actions/dialogsActions';
 import { clearError, setError } from '../../actions/errorActions';
@@ -19,13 +19,16 @@ const URL = 'ws://localhost:8999/';
 
 const MessagesContainer = () => {
   const dispatch = useDispatch();
+
   const socket = useRef();
+
   const messages = useSelector(getMessagesFromStore);
-  const userName = useSelector(getUserName);
+  const userName = useSelector(getMyName);
   const isEmptyChats = useSelector(getIsEmptyChats);
   const chats = useSelector(getChats);
   const error = useSelector(getError);
   const isEmptyMessages = useSelector(getIsEmptyMessagesState);
+
   const { uid, chatId } = useParams();
   const [inputValue, setInputValue] = useState('');
 

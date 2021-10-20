@@ -10,6 +10,7 @@ import { deleteChatFromAPI } from '../../actions/dialogsActions';
 import fetchMock from 'jest-fetch-mock';
 
 fetchMock.enableMocks();
+
 describe('<ChatsContainer />', () => {
   const middlewares = [thunk];
   const mockStore = configureStore(middlewares);
@@ -49,7 +50,7 @@ describe('<ChatsContainer />', () => {
         },
         searchChats: [],
       },
-      profilePage: { uid: '1' },
+      profilePage: { uid: { uid: 'id3' } },
     });
     const { getByText } = renderComponent(mockedStore);
 
@@ -70,13 +71,13 @@ describe('<ChatsContainer />', () => {
         },
         searchChats: [],
       },
-      profilePage: { uid: '1' },
+      profilePage: { uid: { uid: 'id2' } },
     });
     const { getByText } = renderComponent(mockedStore);
 
     fireEvent.click(getByText(/TestName/i));
 
-    expect(history.push).toHaveBeenCalledWith('/dialogs/1/id1');
+    expect(history.push).toHaveBeenCalledWith('/dialogs/id2/id1');
   });
 
   it('Delete chat', () => {
@@ -95,7 +96,9 @@ describe('<ChatsContainer />', () => {
         },
         searchChats: [],
       },
-      profilePage: { uid: '1' },
+      profilePage: {
+        uid: { uid: 'id2' },
+      },
     });
 
     const expectedActions = [
@@ -108,7 +111,7 @@ describe('<ChatsContainer />', () => {
 
     fireEvent.click(getByTestId('deleteChatButton'));
 
-    return mockedStore.dispatch(deleteChatFromAPI('1', 'id1')).then(() => {
+    return mockedStore.dispatch(deleteChatFromAPI('id2', 'id1')).then(() => {
       const actions = mockedStore.getActions();
 
       expect(actions).toEqual(expectedActions);
@@ -121,7 +124,7 @@ describe('<ChatsContainer />', () => {
         error: { code: 0, type: 'chats', message: 'Нет чатов!' },
       },
       dialogsPage: { chats: {}, searchChats: [] },
-      profilePage: { uid: '1' },
+      profilePage: { uid: { uid: 'id1' } },
     });
     const { getByText } = renderComponent(mockedStore);
 

@@ -2,49 +2,41 @@ const getUser = (usersList, req) => {
   const {users} = usersList;
   const {uid} = req.params;
 
-  if (users[uid]) {
-    return {
-      name: users[uid]?.user_name,
-      status: users[uid]?.status,
-      about: users[uid]?.about
-    };
-  } else {
-    return null;
+  if (!users[uid]) return null;
+
+  const getUserResponse = {
+    uid: users[uid].uid,
+    user_name: users[uid].user_name,
+    avatar: users[uid].avatar,
+    user_friends: users[uid].user_friends,
+    status: users[uid].status,
+    about: users[uid].about,
   }
+
+  return getUserResponse;
 }
 
-const getFullUsers = usersList => {
-  return JSON.stringify(usersList);
-}
-
-const setStatus = (usersList, req) => {
+const patchUser = (usersList, req) => {
   const {users} = usersList;
   const {uid} = req.params;
-  const {status} = req.body;
+  const {change} = req.body
 
   if (!users[uid]) return null;
 
-  users[uid].status = status;
-  
-  return JSON.stringify(usersList, null, 2);
-}
+  const newUsersList = {
+    users: {
+      ...users,
+      [uid]: {
+        ...users[uid],
+        ...change
+      }
+    }
+  };
 
-const setAboutUser = (usersList, req) => {
-  const {users} = usersList;
-  const {uid} = req.params;
-  const {about} = req.body;
-
-
-  if (!users[uid]) return null;
-
-  users[uid] = {...users[uid],...about};
-  
-  return JSON.stringify(usersList, null, 2);
+  return JSON.stringify(newUsersList, null, 2)
 }
 
 module.exports = {
   getUser,
-  getFullUsers,
-  setStatus,
-  setAboutUser
+  patchUser
 }

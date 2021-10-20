@@ -5,13 +5,22 @@ import errorReducer from '../../store/errorReducer/errorReducer';
 import profileReducer from '../../store/profileReducer/profileReducer';
 
 import fetchMock from 'jest-fetch-mock';
-import { getUser, setAboutUser, setStatus } from '../profileActions';
+import {
+  addToFriendsList,
+  deleteFriendFromFriendsList,
+  getMyFriendsList,
+  getUserProfileFromApi,
+  rejectFriendRequest,
+  sendProfileChange,
+  sendRequestToFriendList,
+} from '../profileActions';
 
 fetchMock.enableMocks();
 
 describe('Profile actions', () => {
   const middlewares = [thunk];
   const mockStore = configureMockStore(middlewares);
+
   const reducerMock = combineReducers({
     profilePage: profileReducer,
     dialogsPage: (state = {}) => state,
@@ -24,22 +33,29 @@ describe('Profile actions', () => {
     fetchMock.resetMocks();
   });
 
-  describe('GetUser action', () => {
-    it('Get user with result === 0', () => {
+  const URL = 'http://localhost:3001';
+
+  describe('GetUserProfileFromApi action', () => {
+    const mockUser = {
+      uid: 'id1',
+      user_name: 'MyName',
+      avatar: null,
+      user_friends: [],
+      status: 'MyStatus',
+      about: { lang: { text: 'lang', payload: 'Eng' } },
+    };
+
+    it('GetUserProfileFromApi with result === 0', () => {
       fetchMock.mockResponse(
         JSON.stringify({
           result: 0,
-          user: {
-            name: 'MyName',
-            status: 'MyStatus',
-            about: { lang: { text: 'lang', payload: 'Eng' } },
-          },
+          user: mockUser,
         }),
       );
       let initialState = {
         profilePage: {
-          profileEdit: false,
-          uid: null,
+          uid: { uid: null, name: null },
+          myFriends: null,
           user: null,
         },
         error: {
@@ -50,33 +66,30 @@ describe('Profile actions', () => {
 
       const store = mockStore(() => initialState);
 
-      return store.dispatch(getUser('id1')).then(() => {
+      return store.dispatch(getUserProfileFromApi('id1')).then(() => {
         const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
 
         actions.forEach(action => {
           initialState = reducerMock(initialState, action);
         });
 
-        expect(initialState.profilePage.user).toEqual({
-          name: 'MyName',
-          status: 'MyStatus',
-          about: { lang: { text: 'lang', payload: 'Eng' } },
-        });
+        expect(initialState.profilePage.user).toEqual(mockUser);
+        expect(initialState.error.error).toBeNull();
       });
     });
 
-    it('Get user with result === 2', () => {
+    it('GetUserProfileFromApi with result === 2', () => {
       fetchMock.mockResponse(
         JSON.stringify({
           result: 2,
-          text: 'Такой пользователь не найден',
-          type: 'profile',
+          text: 'Пользователь не найден',
         }),
       );
+
       let initialState = {
         profilePage: {
-          profileEdit: false,
-          uid: null,
+          uid: { uid: null, name: null },
+          myFriends: null,
           user: null,
         },
         error: {
@@ -87,7 +100,7 @@ describe('Profile actions', () => {
 
       const store = mockStore(() => initialState);
 
-      return store.dispatch(getUser('id1')).then(() => {
+      return store.dispatch(getUserProfileFromApi('id1')).then(() => {
         const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
 
         actions.forEach(action => {
@@ -95,19 +108,21 @@ describe('Profile actions', () => {
         });
 
         expect(initialState.profilePage.user).toBeNull();
-        expect(initialState.error.error).toEqual({
-          message: 'Такой пользователь не найден',
-          type: 'profile',
+        expect(initialState.error.error).toBeNull();
+        expect(initialState.error.snackMessage).toEqual({
+          text: 'Пользователь не найден',
+          result: 2,
         });
       });
     });
 
-    it('Get user with error', () => {
+    it('GetUserProfileFromApi with Error', () => {
       fetchMock.mockReject(new Error('Failed to fetch'));
+
       let initialState = {
         profilePage: {
-          profileEdit: false,
-          uid: null,
+          uid: { uid: null, name: null },
+          myFriends: null,
           user: null,
         },
         error: {
@@ -118,7 +133,7 @@ describe('Profile actions', () => {
 
       const store = mockStore(() => initialState);
 
-      return store.dispatch(getUser('id1')).then(() => {
+      return store.dispatch(getUserProfileFromApi('id1')).then(() => {
         const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
 
         actions.forEach(action => {
@@ -126,6 +141,115 @@ describe('Profile actions', () => {
         });
 
         expect(initialState.profilePage.user).toBeNull();
+        expect(initialState.error.error).toEqual({ message: 'Failed to fetch', type: 'error' });
+        expect(initialState.error.snackMessage).toBeNull();
+      });
+    });
+  });
+
+  describe('SendProfileChange action', () => {
+    const mockRequest = {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json;charset=utf-8' },
+      body: JSON.stringify({ about: { lang: 'en', city: 'Moscow' } }),
+    };
+
+    it('SendProfileChange with result === 0', () => {
+      fetchMock.mockResponse(
+        JSON.stringify({
+          result: 0,
+          text: 'Обновлено!',
+        }),
+      );
+
+      let initialState = {
+        profilePage: {
+          uid: { uid: null, name: null },
+          myFriends: null,
+          user: null,
+        },
+        error: {
+          error: null,
+          snackMessage: null,
+        },
+      };
+
+      const store = mockStore(() => initialState);
+
+      return store.dispatch(sendProfileChange('id1', mockRequest)).then(() => {
+        const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
+
+        actions.forEach(action => {
+          initialState = reducerMock(initialState, action);
+        });
+
+        expect(fetchMock).toHaveBeenCalledWith(`${URL}/profile/id1`);
+        expect(initialState.error.snackMessage).toEqual({ text: 'Обновлено!', result: 0 });
+      });
+    });
+
+    it('SendProfileChange with result === 2', () => {
+      fetchMock.mockResponse(
+        JSON.stringify({
+          result: 2,
+          text: 'Ошибка',
+        }),
+      );
+
+      let initialState = {
+        profilePage: {
+          uid: { uid: null, name: null },
+          myFriends: null,
+          user: null,
+        },
+        error: {
+          error: null,
+          snackMessage: null,
+        },
+      };
+
+      const store = mockStore(() => initialState);
+
+      return store.dispatch(sendProfileChange('id1', mockRequest)).then(() => {
+        const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
+
+        actions.forEach(action => {
+          initialState = reducerMock(initialState, action);
+        });
+
+        expect(initialState.error.snackMessage).toEqual({ text: 'Ошибка', result: 2 });
+        expect(initialState.error.error).toEqual({
+          message: 'Ошибка',
+          type: 'send-profile-change',
+        });
+      });
+    });
+
+    it('SendProfileChange with Error', () => {
+      fetchMock.mockReject(new Error('Failed to fetch'));
+
+      let initialState = {
+        profilePage: {
+          uid: { uid: null, name: null },
+          myFriends: null,
+          user: null,
+        },
+        error: {
+          error: null,
+          snackMessage: null,
+        },
+      };
+
+      const store = mockStore(() => initialState);
+
+      return store.dispatch(sendProfileChange('id1', mockRequest)).then(() => {
+        const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
+
+        actions.forEach(action => {
+          initialState = reducerMock(initialState, action);
+        });
+
+        expect(initialState.error.snackMessage).toBeNull();
         expect(initialState.error.error).toEqual({
           message: 'Failed to fetch',
           type: 'error',
@@ -134,19 +258,23 @@ describe('Profile actions', () => {
     });
   });
 
-  describe('SetStatus action', () => {
-    it('SetStatus with result === 0', () => {
+  describe('GetMyFriendsList action', () => {
+    const mockFriendsList = {
+      friends_requstions: [{ uid: 'id3', user_name: 'Name', avatar: null }],
+      user_friends: [{ uid: 'id2', user_name: 'testname', avatar: null }],
+    };
+
+    it('GetMyFriendsList with result === 0', () => {
       fetchMock.mockResponse(
         JSON.stringify({
           result: 0,
-          text: 'Статус изменен!',
+          friends: mockFriendsList,
         }),
       );
+
       let initialState = {
         profilePage: {
-          profileEdit: false,
-          uid: null,
-          user: null,
+          myFriends: null,
         },
         error: {
           error: null,
@@ -156,30 +284,31 @@ describe('Profile actions', () => {
 
       const store = mockStore(() => initialState);
 
-      return store.dispatch(setStatus('MyStatus', 'id1')).then(() => {
+      return store.dispatch(getMyFriendsList('id1')).then(() => {
         const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
 
         actions.forEach(action => {
           initialState = reducerMock(initialState, action);
         });
 
-        expect(initialState.error.snackMessage).toEqual({ text: 'Статус изменен!', result: 0 });
+        expect(fetchMock).toHaveBeenCalledWith(`${URL}/friends/id1`);
+        expect(initialState.error.snackMessage).toBeNull();
+        expect(initialState.error.error).toBeNull();
+        expect(initialState.profilePage.myFriends).toEqual(mockFriendsList);
       });
     });
 
-    it('SetStatus with result === 2', () => {
+    it('GetMyFriendsList with result === 2', () => {
       fetchMock.mockResponse(
         JSON.stringify({
           result: 2,
           text: 'Ошибка',
-          type: 'profile',
         }),
       );
+
       let initialState = {
         profilePage: {
-          profileEdit: false,
-          uid: null,
-          user: null,
+          myFriends: null,
         },
         error: {
           error: null,
@@ -189,7 +318,7 @@ describe('Profile actions', () => {
 
       const store = mockStore(() => initialState);
 
-      return store.dispatch(setStatus('MyStatus', 'id1')).then(() => {
+      return store.dispatch(getMyFriendsList('id1')).then(() => {
         const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
 
         actions.forEach(action => {
@@ -197,17 +326,17 @@ describe('Profile actions', () => {
         });
 
         expect(initialState.error.snackMessage).toEqual({ text: 'Ошибка', result: 2 });
-        expect(initialState.error.error).toEqual({ message: 'Ошибка', result: 2, type: 'profile' });
+        expect(initialState.error.error).toEqual({ message: 'Ошибка', type: 'get-friends-list' });
+        expect(initialState.profilePage.myFriends).toBeNull();
       });
     });
 
-    it('SetStatus with error', () => {
+    it('GetMyFriendsList with Error', () => {
       fetchMock.mockReject(new Error('Failed to fetch'));
+
       let initialState = {
         profilePage: {
-          profileEdit: false,
-          uid: null,
-          user: null,
+          myFriends: null,
         },
         error: {
           error: null,
@@ -217,31 +346,32 @@ describe('Profile actions', () => {
 
       const store = mockStore(() => initialState);
 
-      return store.dispatch(setStatus('MyStatus', 'id1')).then(() => {
+      return store.dispatch(getMyFriendsList('id1')).then(() => {
         const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
 
         actions.forEach(action => {
           initialState = reducerMock(initialState, action);
         });
 
+        expect(initialState.error.snackMessage).toBeNull();
         expect(initialState.error.error).toEqual({ message: 'Failed to fetch', type: 'error' });
+        expect(initialState.profilePage.myFriends).toBeNull();
       });
     });
   });
 
-  describe('SetAboutUser action', () => {
-    it('SetAboutUser with result === 0', () => {
+  describe('SendRequestToFriendList action', () => {
+    it('SendRequestToFriendList with result === 0', () => {
       fetchMock.mockResponse(
         JSON.stringify({
           result: 0,
-          text: 'Сохранено!',
+          text: 'Отправлено',
         }),
       );
+
       let initialState = {
         profilePage: {
-          profileEdit: false,
-          uid: null,
-          user: null,
+          myFriends: null,
         },
         error: {
           error: null,
@@ -251,32 +381,133 @@ describe('Profile actions', () => {
 
       const store = mockStore(() => initialState);
 
-      return store
-        .dispatch(setAboutUser('id1', { lang: { text: 'Lang', payload: 'Eng' } }))
-        .then(() => {
-          const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
+      return store.dispatch(sendRequestToFriendList('id1', 'id2')).then(() => {
+        const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
 
-          actions.forEach(action => {
-            initialState = reducerMock(initialState, action);
-          });
-
-          expect(initialState.error.snackMessage).toEqual({ text: 'Сохранено!', result: 0 });
+        actions.forEach(action => {
+          initialState = reducerMock(initialState, action);
         });
+
+        expect(fetchMock).toHaveBeenCalledWith(`${URL}/friends`, expect.any(Object));
+        expect(initialState.error.snackMessage).toEqual({ result: 0, text: 'Отправлено' });
+        expect(initialState.error.error).toBeNull();
+      });
     });
 
-    it('SetAboutUser with result === 2', () => {
+    it('SendRequestToFriendList with result === 2', () => {
+      fetchMock.mockResponse(
+        JSON.stringify({
+          result: 2,
+          text: 'Заявка уже отправлена',
+        }),
+      );
+
+      let initialState = {
+        profilePage: {
+          myFriends: null,
+        },
+        error: {
+          error: null,
+          snackMessage: null,
+        },
+      };
+
+      const store = mockStore(() => initialState);
+
+      return store.dispatch(sendRequestToFriendList('id1', 'id2')).then(() => {
+        const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
+
+        actions.forEach(action => {
+          initialState = reducerMock(initialState, action);
+        });
+
+        expect(initialState.error.snackMessage).toEqual({
+          result: 2,
+          text: 'Заявка уже отправлена',
+        });
+        expect(initialState.error.error).toEqual({
+          message: 'Заявка уже отправлена',
+          type: 'add-friends',
+        });
+      });
+    });
+
+    it('SendRequestToFriendList with Error', () => {
+      fetchMock.mockReject(new Error('Failed to fetch'));
+
+      let initialState = {
+        profilePage: {
+          myFriends: null,
+        },
+        error: {
+          error: null,
+          snackMessage: null,
+        },
+      };
+
+      const store = mockStore(() => initialState);
+
+      return store.dispatch(sendRequestToFriendList('id1', 'id2')).then(() => {
+        const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
+
+        actions.forEach(action => {
+          initialState = reducerMock(initialState, action);
+        });
+
+        expect(initialState.error.snackMessage).toBeNull();
+        expect(initialState.error.error).toEqual({
+          message: 'Failed to fetch',
+          type: 'error',
+        });
+      });
+    });
+  });
+
+  describe('RejectFriendRequest action', () => {
+    it('RejectFriendRequest with result === 0', () => {
+      fetchMock.mockResponse(
+        JSON.stringify({
+          result: 0,
+          text: 'Удалено',
+        }),
+      );
+
+      let initialState = {
+        profilePage: {
+          myFriends: null,
+        },
+        error: {
+          error: null,
+          snackMessage: null,
+        },
+      };
+
+      const store = mockStore(() => initialState);
+
+      return store.dispatch(rejectFriendRequest('id1', 'id2')).then(() => {
+        const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
+
+        actions.forEach(action => {
+          initialState = reducerMock(initialState, action);
+        });
+
+        expect(fetchMock).toHaveBeenCalledWith(`${URL}/friends`, expect.any(Object));
+        expect(initialState.error.snackMessage).toEqual({ result: 0, text: 'Удалено' });
+        expect(initialState.error.error).toBeNull();
+      });
+    });
+
+    it('RejectFriendRequest with result === 2', () => {
       fetchMock.mockResponse(
         JSON.stringify({
           result: 2,
           text: 'Ошибка',
-          type: 'edit-profile',
         }),
       );
+
       let initialState = {
         profilePage: {
-          profileEdit: false,
-          uid: null,
-          user: null,
+          myFriends: null,
         },
         error: {
           error: null,
@@ -286,31 +517,27 @@ describe('Profile actions', () => {
 
       const store = mockStore(() => initialState);
 
-      return store
-        .dispatch(setAboutUser('id1', { lang: { text: 'Lang', payload: 'Eng' } }))
-        .then(() => {
-          const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
+      return store.dispatch(rejectFriendRequest('id1', 'id2')).then(() => {
+        const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
 
-          actions.forEach(action => {
-            initialState = reducerMock(initialState, action);
-          });
-
-          expect(initialState.error.snackMessage).toEqual({ text: 'Ошибка', result: 2 });
-          expect(initialState.error.error).toEqual({
-            message: 'Ошибка',
-            result: 2,
-            type: 'edit-profile',
-          });
+        actions.forEach(action => {
+          initialState = reducerMock(initialState, action);
         });
+
+        expect(initialState.error.snackMessage).toEqual({ result: 2, text: 'Ошибка' });
+        expect(initialState.error.error).toEqual({
+          message: 'Ошибка',
+          type: 'reject-friend-request',
+        });
+      });
     });
 
-    it('SetAboutUser with error', () => {
+    it('RejectFriendRequest with Error', () => {
       fetchMock.mockReject(new Error('Failed to fetch'));
+
       let initialState = {
         profilePage: {
-          profileEdit: false,
-          uid: null,
-          user: null,
+          myFriends: null,
         },
         error: {
           error: null,
@@ -320,20 +547,225 @@ describe('Profile actions', () => {
 
       const store = mockStore(() => initialState);
 
-      return store
-        .dispatch(setAboutUser('id1', { lang: { text: 'Lang', payload: 'Eng' } }))
-        .then(() => {
-          const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
+      return store.dispatch(rejectFriendRequest('id1', 'id2')).then(() => {
+        const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
 
-          actions.forEach(action => {
-            initialState = reducerMock(initialState, action);
-          });
-
-          expect(initialState.error.error).toEqual({
-            message: 'Failed to fetch',
-            type: 'error',
-          });
+        actions.forEach(action => {
+          initialState = reducerMock(initialState, action);
         });
+
+        expect(initialState.error.snackMessage).toBeNull();
+        expect(initialState.error.error).toEqual({
+          message: 'Failed to fetch',
+          type: 'error',
+        });
+      });
+    });
+  });
+
+  describe('DeleteFriendFromFriendsList action', () => {
+    it('DeleteFriendFromFriendsList with result === 0', () => {
+      fetchMock.mockResponse(
+        JSON.stringify({
+          result: 0,
+          text: 'Удален из друзей',
+        }),
+      );
+
+      let initialState = {
+        profilePage: {
+          myFriends: null,
+        },
+        error: {
+          error: null,
+          snackMessage: null,
+        },
+      };
+
+      const store = mockStore(() => initialState);
+
+      return store.dispatch(deleteFriendFromFriendsList('id1', 'id2')).then(() => {
+        const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
+
+        actions.forEach(action => {
+          initialState = reducerMock(initialState, action);
+        });
+
+        expect(fetchMock).toHaveBeenCalledWith(`${URL}/friends`, expect.any(Object));
+        expect(initialState.error.snackMessage).toEqual({ result: 0, text: 'Удален из друзей' });
+        expect(initialState.error.error).toBeNull();
+      });
+    });
+
+    it('DeleteFriendFromFriendsList with result === 2', () => {
+      fetchMock.mockResponse(
+        JSON.stringify({
+          result: 2,
+          text: 'Уже был удален',
+        }),
+      );
+
+      let initialState = {
+        profilePage: {
+          myFriends: null,
+        },
+        error: {
+          error: null,
+          snackMessage: null,
+        },
+      };
+
+      const store = mockStore(() => initialState);
+
+      return store.dispatch(deleteFriendFromFriendsList('id1', 'id2')).then(() => {
+        const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
+
+        actions.forEach(action => {
+          initialState = reducerMock(initialState, action);
+        });
+
+        expect(initialState.error.snackMessage).toEqual({
+          result: 2,
+          text: 'Уже был удален',
+        });
+        expect(initialState.error.error).toEqual({
+          message: 'Уже был удален',
+          type: 'delete-friend',
+        });
+      });
+    });
+
+    it('RejectFriendRequest with Error', () => {
+      fetchMock.mockReject(new Error('Failed to fetch'));
+
+      let initialState = {
+        profilePage: {
+          myFriends: null,
+        },
+        error: {
+          error: null,
+          snackMessage: null,
+        },
+      };
+
+      const store = mockStore(() => initialState);
+
+      return store.dispatch(deleteFriendFromFriendsList('id1', 'id2')).then(() => {
+        const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
+
+        actions.forEach(action => {
+          initialState = reducerMock(initialState, action);
+        });
+
+        expect(initialState.error.snackMessage).toBeNull();
+        expect(initialState.error.error).toEqual({
+          message: 'Failed to fetch',
+          type: 'error',
+        });
+      });
+    });
+  });
+
+  describe('AddToFriendsList action', () => {
+    it('AddToFriendsList with result === 0', () => {
+      fetchMock.mockResponse(
+        JSON.stringify({
+          result: 0,
+          text: 'Добавлен в друзья',
+        }),
+      );
+
+      let initialState = {
+        profilePage: {
+          myFriends: null,
+        },
+        error: {
+          error: null,
+          snackMessage: null,
+        },
+      };
+
+      const store = mockStore(() => initialState);
+
+      return store.dispatch(addToFriendsList('id1', 'id2')).then(() => {
+        const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
+
+        actions.forEach(action => {
+          initialState = reducerMock(initialState, action);
+        });
+
+        expect(fetchMock).toHaveBeenCalledWith(`${URL}/friends`, expect.any(Object));
+        expect(initialState.error.snackMessage).toEqual({ result: 0, text: 'Добавлен в друзья' });
+        expect(initialState.error.error).toBeNull();
+      });
+    });
+
+    it('AddToFriendsList with result === 2', () => {
+      fetchMock.mockResponse(
+        JSON.stringify({
+          result: 2,
+          text: 'Уже в друзьях',
+        }),
+      );
+
+      let initialState = {
+        profilePage: {
+          myFriends: null,
+        },
+        error: {
+          error: null,
+          snackMessage: null,
+        },
+      };
+
+      const store = mockStore(() => initialState);
+
+      return store.dispatch(addToFriendsList('id1', 'id2')).then(() => {
+        const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
+
+        actions.forEach(action => {
+          initialState = reducerMock(initialState, action);
+        });
+
+        expect(initialState.error.snackMessage).toEqual({
+          result: 2,
+          text: 'Уже в друзьях',
+        });
+        expect(initialState.error.error).toEqual({
+          message: 'Уже в друзьях',
+          type: 'add-friend',
+        });
+      });
+    });
+
+    it('AddToFriendsList with Error', () => {
+      fetchMock.mockReject(new Error('Failed to fetch'));
+
+      let initialState = {
+        profilePage: {
+          myFriends: null,
+        },
+        error: {
+          error: null,
+          snackMessage: null,
+        },
+      };
+
+      const store = mockStore(() => initialState);
+
+      return store.dispatch(addToFriendsList('id1', 'id2')).then(() => {
+        const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
+
+        actions.forEach(action => {
+          initialState = reducerMock(initialState, action);
+        });
+
+        expect(initialState.error.snackMessage).toBeNull();
+        expect(initialState.error.error).toEqual({
+          message: 'Failed to fetch',
+          type: 'error',
+        });
+      });
     });
   });
 });

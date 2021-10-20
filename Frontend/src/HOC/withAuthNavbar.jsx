@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../actions/authActions';
 import NavbarContainer from '../components/NavbarContainer/NavbarContainer';
-import { getUid, getUserName } from '../store/profileReducer/profileSelector';
+import { getMyUid, getMyName } from '../store/profileReducer/profileSelector';
 
 const NavbarHOC = ({ authenticated, ...props }) => {
-  const uid = useSelector(getUid);
-  const userName = useSelector(getUserName);
+  const uid = useSelector(getMyUid);
+  const userName = useSelector(getMyName);
 
   const dispatch = useDispatch();
   const logOutHandler = () => {

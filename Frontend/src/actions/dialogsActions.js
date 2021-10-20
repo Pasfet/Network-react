@@ -106,8 +106,8 @@ export const addChatToApi = (uid, user) => {
           dispatch(getChatsList(uid));
           dispatch(setSnack({ text: data.text, result: data.result }));
         } else {
-          dispatch(setError({ message: data.text, type: data.type }));
           dispatch(setSnack({ text: data.text, result: data.result }));
+          dispatch(setError({ message: data.text, type: data.type }));
         }
       })
       .catch(err => dispatch(setError({ message: err.message, type: 'error' })));

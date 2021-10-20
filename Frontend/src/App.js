@@ -11,6 +11,8 @@ import Routes from './components/Routes/Routes';
 import SnackbarAlert from './components/SnackbarAlert/SnackbarAlert';
 import { getSnackMessage } from './store/errorReducer/errorSelector';
 import { clearError, clearSnack } from './actions/errorActions';
+import { getMyFriendsList } from './actions/profileActions';
+import { getMyUid } from './store/profileReducer/profileSelector';
 
 const AppStyled = styled('div')({
   display: 'grid',
@@ -30,6 +32,8 @@ const App = () => {
   const auth = useSelector(getAuth);
   const navbarList = useSelector(getNavbarList);
   const snackMessage = useSelector(getSnackMessage);
+  const uid = useSelector(getMyUid);
+
   const [authed, setAuthed] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -38,6 +42,9 @@ const App = () => {
     dispatch(loadingTrue());
     dispatch(clearSnack());
     dispatch(clearError());
+    if (uid) {
+      dispatch(getMyFriendsList(uid));
+    }
     if (auth) {
       setAuthed(auth);
     } else {

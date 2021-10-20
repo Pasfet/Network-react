@@ -8,7 +8,9 @@ import ProfileContainer from '../../pages/ProfileContainer/ProfileContainer';
 import Dialogs from '../../pages/Dialogs/Dialogs';
 import SignUpContainer from '../../pages/SignUpContainer/SignUpContainer';
 import WithAuthForm from '../../HOC/WithAuthForm';
-import ProfileEdit from '../../pages/ProfileEdit/ProfileEdit';
+import ProfileEditContainer from '../../pages/ProfileEditContainer/ProfileEditContainer';
+import UserFriendsContainer from '../../pages/UserFriendsContainer/UserFriendsContainer';
+import MyFriendsContainer from '../../pages/MyFriendsContainer/MyFriendsContainer';
 
 const Routes = ({ authed }) => {
   return (
@@ -22,12 +24,18 @@ const Routes = ({ authed }) => {
       <PrivateRoute authenticated={authed} exact path="/profile/:uid">
         <ProfileContainer />
       </PrivateRoute>
+      <PrivateRoute authenticated={authed} path="/profile/:uid/edit">
+        <ProfileEditContainer />
+      </PrivateRoute>
       <PrivateRoute authenticated={authed} path="/dialogs">
         <Dialogs />
       </PrivateRoute>
-      <PrivateRoute authenticated={authed} path="/profile/:uid/edit">
-        <ProfileEdit />
+      <PrivateRoute authenticated={authed} path="/friends/:uid">
+        <MyFriendsContainer />
       </PrivateRoute>
+      <Route exact path="/profile/:uid/friends">
+        <UserFriendsContainer />
+      </Route>
       <Route path="*">
         <Page404 />
       </Route>
