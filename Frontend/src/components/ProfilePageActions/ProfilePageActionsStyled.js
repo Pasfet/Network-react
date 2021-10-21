@@ -1,6 +1,7 @@
 import { List, ListItem, ListItemButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
+const maxWeightAvatar = '300px';
 const maxHeightAvatar = '300px';
 
 export const PageActions = styled(List)({});
@@ -10,6 +11,8 @@ export const ListItemPageActions = styled(ListItem)({});
 export const PageActionsEdit = styled(ListItemButton)(({ theme }) => ({
   '&.MuiListItemButton-root': {
     padding: '8px 40px',
+    maxWidth: '250px',
+    margin: '0 auto',
     backgroundColor: `${theme.palette.primary.main}`,
     border: '1px solid transparent',
     color: '#fff',
@@ -30,6 +33,8 @@ export const PageActionsButton = styled(
   {},
 )(({ theme, addbutton, deletebutton }) => ({
   '&.MuiListItemButton-root': {
+    maxWidth: '250px',
+    margin: '0 auto',
     padding: '8px 20px',
     border: '1px solid transparent',
     color: '#fff',
@@ -59,7 +64,9 @@ export const PageActionsButton = styled(
 export const AvatarImageWrapper = styled(ListItem)({
   width: '100%',
   maxHeight: maxHeightAvatar,
+  maxWidth: maxWeightAvatar,
   height: '100%',
+  margin: '0 auto',
 });
 
 export const AvatarImage = styled('img')({

@@ -31,6 +31,7 @@ export const FriendBlockList = styled(List)({
   gridTemplateColumns: 'repeat(3, 50px)',
   gap: '10px',
   justifyContent: 'space-around',
+  position: 'relative',
 });
 
 export const FriendsBlockItem = styled(ListItem)({
@@ -39,11 +40,22 @@ export const FriendsBlockItem = styled(ListItem)({
 });
 
 export const FriendsBlockUserAvatar = styled(Avatar)({
-  width: '50px',
-  height: '50px',
+  width: '70px',
+  height: '70px',
 });
 
 export const FriendsBlockUserName = styled(Link)({
   color: '#000',
   marginTop: '5px',
+  textTransform: 'capitalize',
+  fontSize: '16px',
+  '&:hover': {
+    opacity: '.8',
+  },
+});
+
+export const FriendsBlockMockFriends = styled('p')({
+  position: 'absolute',
+  left: '50%',
+  transform: 'translateX(-50%)',
 });

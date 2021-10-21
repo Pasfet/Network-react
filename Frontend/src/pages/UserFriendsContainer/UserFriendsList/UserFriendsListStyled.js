@@ -8,13 +8,21 @@ export const UserFriendsListWrapper = styled(Grid)({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  justifyContent: 'center',
 });
 
 export const UserFriendsListBox = styled(Box)({});
 
 export const UserFriendsListHeading = styled('h1')({
   marginBottom: '20px',
+  '@media (max-width: 580px)': {
+    fontSize: '22px',
+  },
+  '@media (max-width: 480px)': {
+    fontSize: '18px',
+  },
+  '@media (max-width: 370px)': {
+    fontSize: '16px',
+  },
 });
 
 export const UserFriendsListHeadingName = styled('span')({

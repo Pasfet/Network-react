@@ -31,7 +31,7 @@ const Profile = ({
 }) => {
   return (
     <ProfileWrapper container spacing={2}>
-      <ProfileBar item lg={2}>
+      <ProfileBar item lg={3} md={4}>
         <BoxStyled>
           <ProfilePageActions
             userAvatar={user?.avatar}
@@ -47,7 +47,7 @@ const Profile = ({
           <FriendsBlock userFriends={user?.user_friends} uid={uid} />
         </BoxStyled>
       </ProfileBar>
-      <ProfileMainContainer item lg={8}>
+      <ProfileMainContainer item lg={9} md={8}>
         {error && <ErrorMessage> {error} </ErrorMessage>}
 
         <BoxStyled>
@@ -73,7 +73,7 @@ const Profile = ({
 };
 
 Profile.propTypes = {
-  user: PropTypes.object.isRequired,
+  user: PropTypes.object,
   myFriends: PropTypes.object,
   friendsRequests: PropTypes.array,
   error: PropTypes.string,

@@ -1,4 +1,4 @@
-import { Alert, Paper, Tab, TableBody, TableCell } from '@mui/material';
+import { Alert, Paper, Tab, TableBody, TableCell, TableRow } from '@mui/material';
 import { TabContext, TabPanel, TabList } from '@material-ui/lab';
 import PropTypes from 'prop-types';
 import { CURRENT_URL } from '../../../store/types/authTypes';
@@ -43,72 +43,80 @@ const MyFriendsList = ({
           <TabPanel value="1">
             <MyFriendsListTable aria-label="Мои друзья">
               <TableBody>
-                {!myFriends?.user_friends.length
-                  ? 'Пока нет друзей'
-                  : myFriends?.user_friends?.map(friend => (
-                      <MyFriendsListTableRow key={friend.uid} hover>
-                        <TableCell>
-                          <MyFriendsListImgWrapper>
-                            <MyFriendsListAvatar
-                              src={`${CURRENT_URL}/images/profile/${friend.uid}/avatar/${friend.avatar}`}
-                              alt="ava"
-                            />
-                          </MyFriendsListImgWrapper>
-                        </TableCell>
-                        <TableCell>
-                          <MyFriendsListName to={`/profile/${friend.uid}`}>
-                            {friend.user_name}
-                          </MyFriendsListName>
-                        </TableCell>
-                        <TableCell>
-                          <MyFriendsDeleteButton
-                            data-testid="frendsDeleteButton"
-                            onClick={() => deleteFriend(friend.uid)}
-                          >
-                            <DeleteIcon />
-                          </MyFriendsDeleteButton>
-                        </TableCell>
-                      </MyFriendsListTableRow>
-                    ))}
+                {!myFriends?.user_friends.length ? (
+                  <TableRow>
+                    <TableCell>Пока нет друзей</TableCell>
+                  </TableRow>
+                ) : (
+                  myFriends?.user_friends?.map(friend => (
+                    <MyFriendsListTableRow key={friend.uid} hover>
+                      <TableCell>
+                        <MyFriendsListImgWrapper>
+                          <MyFriendsListAvatar
+                            src={`${CURRENT_URL}/images/profile/${friend.uid}/avatar/${friend.avatar}`}
+                            alt="ava"
+                          />
+                        </MyFriendsListImgWrapper>
+                      </TableCell>
+                      <TableCell>
+                        <MyFriendsListName to={`/profile/${friend.uid}`}>
+                          {friend.user_name}
+                        </MyFriendsListName>
+                      </TableCell>
+                      <TableCell>
+                        <MyFriendsDeleteButton
+                          data-testid="frendsDeleteButton"
+                          onClick={() => deleteFriend(friend.uid)}
+                        >
+                          <DeleteIcon />
+                        </MyFriendsDeleteButton>
+                      </TableCell>
+                    </MyFriendsListTableRow>
+                  ))
+                )}
               </TableBody>
             </MyFriendsListTable>
           </TabPanel>
           <TabPanel value="2">
             <MyFriendsListTable aria-label="Запросы в друзья">
               <TableBody>
-                {!myFriends?.friends_requstions.length
-                  ? 'Пока нет заявок'
-                  : myFriends?.friends_requstions?.map(request => (
-                      <MyFriendsListTableRow key={request.uid} hover>
-                        <TableCell>
-                          <MyFriendsListImgWrapper>
-                            <MyFriendsListAvatar
-                              src={`${CURRENT_URL}/images/profile/${request.uid}/avatar/${request.avatar}`}
-                              alt="ava"
-                            />
-                          </MyFriendsListImgWrapper>
-                        </TableCell>
-                        <TableCell>
-                          <MyFriendsListName to={`/profile/${request.uid}`}>
-                            {request.user_name}
-                          </MyFriendsListName>
-                        </TableCell>
-                        <TableCell>
-                          <MyFriendsAgreeRequstionsButton
-                            data-testid="confirmRequestButton"
-                            onClick={() => confirmRequestToFriendsList(request.uid)}
-                          >
-                            <AddIcon />
-                          </MyFriendsAgreeRequstionsButton>
-                          <MyFriendsRejectRequstionsButton
-                            data-testid="rejectRequestButton"
-                            onClick={() => rejectFriendRequestHandler(request.uid)}
-                          >
-                            <DeleteIcon />
-                          </MyFriendsRejectRequstionsButton>
-                        </TableCell>
-                      </MyFriendsListTableRow>
-                    ))}
+                {!myFriends?.friends_requstions.length ? (
+                  <TableRow>
+                    <TableCell>Пока нет заявок</TableCell>
+                  </TableRow>
+                ) : (
+                  myFriends?.friends_requstions?.map(request => (
+                    <MyFriendsListTableRow key={request.uid} hover>
+                      <TableCell>
+                        <MyFriendsListImgWrapper>
+                          <MyFriendsListAvatar
+                            src={`${CURRENT_URL}/images/profile/${request.uid}/avatar/${request.avatar}`}
+                            alt="ava"
+                          />
+                        </MyFriendsListImgWrapper>
+                      </TableCell>
+                      <TableCell>
+                        <MyFriendsListName to={`/profile/${request.uid}`}>
+                          {request.user_name}
+                        </MyFriendsListName>
+                      </TableCell>
+                      <TableCell>
+                        <MyFriendsAgreeRequstionsButton
+                          data-testid="confirmRequestButton"
+                          onClick={() => confirmRequestToFriendsList(request.uid)}
+                        >
+                          <AddIcon />
+                        </MyFriendsAgreeRequstionsButton>
+                        <MyFriendsRejectRequstionsButton
+                          data-testid="rejectRequestButton"
+                          onClick={() => rejectFriendRequestHandler(request.uid)}
+                        >
+                          <DeleteIcon />
+                        </MyFriendsRejectRequstionsButton>
+                      </TableCell>
+                    </MyFriendsListTableRow>
+                  ))
+                )}
               </TableBody>
             </MyFriendsListTable>
           </TabPanel>

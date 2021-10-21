@@ -5,6 +5,7 @@ import {
   FriendBlockList,
   FriendsBlockItem,
   FriendsBlockLink,
+  FriendsBlockMockFriends,
   FriendsBlockUserAvatar,
   FriendsBlockUserName,
 } from './FriendsBlockStyled';
@@ -23,21 +24,23 @@ const FriendsBlock = ({ userFriends, uid }) => {
         <FriendsBlockLink to={`/profile/${uid}/friends`}>Все друзья</FriendsBlockLink>
       </FriendBlockHeading>
       <FriendBlockList>
-        {userFriends?.length
-          ? userFriends.slice(0, 6)?.map(friend => (
-              <FriendsBlockItem key={friend.uid}>
-                <FriendsBlockUserAvatar
-                  src={`${CURRENT_URL}/images/profile/${friend.uid}/avatar/${friend.avatar}`}
-                  alt="ava"
-                  width="50"
-                  height="50"
-                />
-                <FriendsBlockUserName to={`/profile/${friend.uid}`}>
-                  {friend.user_name}
-                </FriendsBlockUserName>
-              </FriendsBlockItem>
-            ))
-          : 'Нет друзей'}
+        {userFriends?.length ? (
+          userFriends.slice(0, 6)?.map(friend => (
+            <FriendsBlockItem key={friend.uid}>
+              <FriendsBlockUserAvatar
+                src={`${CURRENT_URL}/images/profile/${friend.uid}/avatar/${friend.avatar}`}
+                alt="ava"
+                width="70"
+                height="70"
+              />
+              <FriendsBlockUserName to={`/profile/${friend.uid}`}>
+                {friend.user_name}
+              </FriendsBlockUserName>
+            </FriendsBlockItem>
+          ))
+        ) : (
+          <FriendsBlockMockFriends>Нет друзей</FriendsBlockMockFriends>
+        )}
       </FriendBlockList>
     </>
   );
