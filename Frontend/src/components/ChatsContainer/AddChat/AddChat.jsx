@@ -3,6 +3,7 @@ import { TextField } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
 import PropTypes from 'prop-types';
+import { memo } from 'react';
 
 const AddChatWrapper = styled('div')({
   display: 'flex',
@@ -84,4 +85,4 @@ AddChat.propsTypes = {
   error: PropTypes.string,
 };
 
-export default AddChat;
+export default memo(AddChat);

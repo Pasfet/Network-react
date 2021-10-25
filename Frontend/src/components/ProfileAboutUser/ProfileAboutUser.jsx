@@ -1,5 +1,6 @@
 import { Table, TableBody, TableCell } from '@mui/material';
 import PropTypes from 'prop-types';
+import { memo } from 'react';
 import { ProfileAboutContainer, ProfileAboutRow } from './ProfileAboutUserStyled';
 
 const ProfileAboutUser = ({ about }) => {
@@ -26,4 +27,4 @@ ProfileAboutUser.propsTypes = {
   about: PropTypes.object.isRequired,
 };
 
-export default ProfileAboutUser;
+export default memo(ProfileAboutUser);

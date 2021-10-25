@@ -7,6 +7,7 @@ import MuiAppBar from '@mui/material/AppBar';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 
 import PropTypes from 'prop-types';
+import { memo } from 'react';
 
 const drawerWidth = 240;
 const AppBar = styled(MuiAppBar, {
@@ -73,4 +74,4 @@ AppBarContainer.propTypes = {
   userName: PropTypes.string,
 };
 
-export default AppBarContainer;
+export default memo(AppBarContainer);

@@ -8,9 +8,9 @@ import {
   getIsEmptyChats,
   getIsEmptyMessagesState,
   getMessagesFromStore,
-} from '../../store/dialogsReducer/dialogsSelector';
-import { getMyName } from '../../store/profileReducer/profileSelector';
-import { getError } from '../../store/errorReducer/errorSelector';
+} from '../../store/dialogsReducer/dialogsSelectors';
+import { getMyName } from '../../store/profileReducer/profileSelectors';
+import { getError } from '../../store/errorReducer/errorSelectors';
 import { clearMessages, getChatsList, getMessagesFromAPI } from '../../actions/dialogsActions';
 import { clearError, setError } from '../../actions/errorActions';
 import MessageBar from './MessageBar/MessageBar';
@@ -49,8 +49,7 @@ const MessagesContainer = () => {
       socket.current.send(JSON.stringify(message));
       setInputValue('');
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [inputValue],
+    [uid, chatId, userName, inputValue, chats],
   );
 
   useEffect(() => {
@@ -93,8 +92,7 @@ const MessagesContainer = () => {
     if (!isEmptyChats?.isEmpty) {
       dispatch(getChatsList(uid));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isEmptyChats]);
+  }, [isEmptyChats, dispatch, uid]);
 
   return (
     <>

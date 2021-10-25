@@ -17,8 +17,9 @@ const sendRequestToFriendsList = (usersList, req) => {
   const {senderUid, recipientUid} = req.body;
 
   const findRequest = users[senderUid].friends_requstions.find(req => req.uid === recipientUid);
+  const findFriend = users[senderUid].user_friends.find(friend => friend.uid === recipientUid);
 
-  if (findRequest) return null;
+  if (findRequest || findFriend) return null;
 
   const senderRequestsList = [{user_name: users[recipientUid].user_name, avatar: users[recipientUid].avatar, uid: recipientUid, incoming: false}, ...users[senderUid].friends_requstions];
   const recipientRequestsList = [{user_name: users[senderUid].user_name, avatar: users[senderUid].avatar, uid: senderUid, incoming: true}, ...users[recipientUid].friends_requstions];

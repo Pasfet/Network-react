@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getError } from '../../store/errorReducer/errorSelector';
-import { getMyUid, getUserProfile } from '../../store/profileReducer/profileSelector';
-import ProfileEditTable from '../../components/ProfileEditTable/ProfileEditTable';
+import { getError } from '../../store/errorReducer/errorSelectors';
+import { getMyUid, getUserProfile } from '../../store/profileReducer/profileSelectors';
 import { sendProfileChange } from '../../actions/profileActions';
+import ProfileEditTable from '../../components/ProfileEditTable/ProfileEditTable';
 
 const ProfileEditContainer = () => {
   const dispatch = useDispatch();

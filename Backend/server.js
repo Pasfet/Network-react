@@ -8,6 +8,8 @@ const profile = require('./routes/profile/profileRouter');
 const dialogs = require('./routes/dialogs/dialogsRouter');
 const images = require('./routes/images/imagesRouter');
 const friends = require('./routes/friends/friendsRouter');
+const users = require('./routes/users/usersRouter');
+const posts = require('./routes/posts/postsRouter');
 
 app.use(cors());
 app.use(express.json());
@@ -17,6 +19,8 @@ app.use(profile);
 app.use(dialogs);
 app.use(images);
 app.use(friends);
+app.use(users);
+app.use(posts);
 
 
 module.exports = app;

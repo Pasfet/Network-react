@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import PropTypes from 'prop-types';
 import AppBarContainer from '../AppBarContainer/AppBarContainer';
 import NavbarItems from './NavbarItems/NavbarItems';
@@ -45,7 +45,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'flex-end',
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
 
@@ -108,4 +107,4 @@ NavbarContainer.propTypes = {
   userName: PropTypes.string,
 };
 
-export default NavbarContainer;
+export default memo(NavbarContainer);

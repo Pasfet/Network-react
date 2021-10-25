@@ -36,10 +36,10 @@ describe('<MyFriendsList />', () => {
     expect(getByText(/Failed/i)).toBeInTheDocument();
   });
 
-  it('Render "Пока нет друзей" if usersList is empty', () => {
+  it('Render "Пусто" if usersList is empty', () => {
     const { getByText } = renderComponent(mockProps);
 
-    expect(getByText('Пока нет друзей')).toBeInTheDocument();
+    expect(getByText('Пусто')).toBeInTheDocument();
   });
 
   it('Render usersList', () => {
@@ -54,7 +54,7 @@ describe('<MyFriendsList />', () => {
     expect(getByText(/Test/i)).toBeInTheDocument();
   });
 
-  it('Render alt text ava', () => {
+  it('Render alt text', () => {
     const { getByAltText } = renderComponent({
       ...mockProps,
       myFriends: {
@@ -63,7 +63,7 @@ describe('<MyFriendsList />', () => {
       },
     });
 
-    expect(getByAltText(/ava/i)).toBeInTheDocument();
+    expect(getByAltText(/Test/i)).toBeInTheDocument();
   });
 
   it('Push to="/profile/:uid"', () => {
@@ -94,7 +94,7 @@ describe('<MyFriendsList />', () => {
     expect(mockProps.deleteFriend).toHaveBeenCalledWith('id1');
   });
 
-  it('Render "Пока нет заявок" if friendsRequestions is empty', () => {
+  it('Render "Пусто" if friendsRequestions is empty', () => {
     const { getByText } = renderComponent({
       ...mockProps,
       tabsValue: '2',
@@ -104,7 +104,7 @@ describe('<MyFriendsList />', () => {
       },
     });
 
-    expect(getByText(/Пока нет заявок/i)).toBeInTheDocument();
+    expect(getByText(/Пусто/i)).toBeInTheDocument();
   });
 
   it('Render friendsRequestions', () => {

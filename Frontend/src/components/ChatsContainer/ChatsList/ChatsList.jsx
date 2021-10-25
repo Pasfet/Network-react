@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { List, ListItem, ListItemText } from '@material-ui/core';
 import { Alert, ListItemButton } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -56,4 +57,4 @@ ChatsList.propsTypes = {
   isEmpty: PropTypes.string,
 };
 
-export default ChatsList;
+export default memo(ChatsList);

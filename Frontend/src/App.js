@@ -2,17 +2,17 @@ import { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { getAuth } from './store/auth/authSelector';
+import { getAuth } from './store/auth/authSelectors';
 import { loadingFalse, loadingTrue } from './actions/spinnerActions';
-import { getNavbarList } from './store/navbarReducer/navbarSelector';
+import { getNavbarList } from './store/navbarReducer/navbarSelectors';
+import { getSnackMessage } from './store/errorReducer/errorSelectors';
+import { clearError, clearSnack } from './actions/errorActions';
+import { getMyFriendsList } from './actions/profileActions';
+import { getMyUid } from './store/profileReducer/profileSelectors';
 import Spinner from './components/Spinner/Spinner';
 import NavbarHOC from './HOC/withAuthNavbar';
 import Routes from './components/Routes/Routes';
 import SnackbarAlert from './components/SnackbarAlert/SnackbarAlert';
-import { getSnackMessage } from './store/errorReducer/errorSelector';
-import { clearError, clearSnack } from './actions/errorActions';
-import { getMyFriendsList } from './actions/profileActions';
-import { getMyUid } from './store/profileReducer/profileSelector';
 
 const AppStyled = styled('div')({
   display: 'grid',
@@ -52,8 +52,7 @@ const App = () => {
       history.push('/login');
     }
     dispatch(loadingFalse());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth]);
+  }, [auth, dispatch, uid, history]);
 
   return (
     <AppStyled>

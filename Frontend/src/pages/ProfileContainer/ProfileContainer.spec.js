@@ -244,7 +244,6 @@ describe('<ProfileContainer />', () => {
 
     const store = mockStore(() => initialState);
     const { getByText } = renderComponent(store);
-
     expect(getByText(/Failed to fetch/i)).toBeInTheDocument();
   });
 });

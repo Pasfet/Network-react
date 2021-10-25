@@ -1,6 +1,7 @@
 import { styled } from '@material-ui/styles';
 
 import { PropTypes } from 'prop-types';
+import { memo } from 'react';
 
 const MessageBarWrapper = styled('div')({
   borderRadius: '20px',
@@ -28,4 +29,4 @@ MessageBar.propTypes = {
   chatId: PropTypes.string.isRequired,
 };
 
-export default MessageBar;
+export default memo(MessageBar);

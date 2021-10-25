@@ -12,6 +12,29 @@ import {
   SignUpWrapper,
 } from './SignUpStyle';
 
+const createInputs = (
+  label,
+  changeHandler,
+  name,
+  type,
+  value,
+  validators,
+  errorMsg,
+  inputProps,
+) => (
+  <SignUpInput
+    variant="standard"
+    label={label}
+    onChange={e => changeHandler(e.target.value)}
+    name={name}
+    type={type}
+    value={value}
+    validators={validators}
+    errorMessages={errorMsg}
+    inputProps={inputProps}
+  />
+);
+
 const SignUp = ({
   onSubmitHandler,
   nameValue,
@@ -41,52 +64,46 @@ const SignUp = ({
       <SignUpForm onSubmit={onSubmitHandler}>
         <h2>SIGN UP</h2>
         {error && <ErrorStyled severity="error">{error}</ErrorStyled>}
-        <SignUpInput
-          variant="standard"
-          label="Введите Имя"
-          onChange={e => setNameValue(e.target.value)}
-          name="name"
-          type="text"
-          value={nameValue}
-          validators={['required', 'isString', 'trim']}
-          errorMessages={['Это поле обязательно']}
-          inputProps={{ 'data-testid': 'nameInput' }}
-        />
-        <SignUpInput
-          variant="standard"
-          label="Введите Email"
-          onChange={e => setEmail(e.target.value)}
-          name="email"
-          type="email"
-          value={emailValue}
-          validators={['required', 'isEmail', 'trim']}
-          errorMessages={['Это поле обязательно', 'Email введен не верно']}
-          inputProps={{ 'data-testid': 'emailInput' }}
-        />
-        <SignUpInput
-          autoComplete="off"
-          variant="standard"
-          label="Введите пароль"
-          onChange={e => setPassword(e.target.value)}
-          name="password"
-          type="password"
-          value={passwordValue}
-          validators={['required', 'minStringLength:8', 'trim']}
-          errorMessages={['Это поле обязательно', 'Пароль должен содержать минимум 8 символов']}
-          inputProps={{ 'data-testid': 'passwordInput' }}
-        />
-        <SignUpInput
-          autoComplete="off"
-          variant="standard"
-          label="Повторите пароль"
-          onChange={e => setRepeatPassword(e.target.value)}
-          name="repeatPassword"
-          type="password"
-          value={repeatPasswordValue}
-          validators={['required', 'isPasswordMatch', 'trim']}
-          errorMessages={['Это поле обязательно', 'Пароль должен совпадать']}
-          inputProps={{ 'data-testid': 'repeatPasswordInput' }}
-        />
+        {createInputs(
+          'Введите Имя',
+          setNameValue,
+          'name',
+          'text',
+          nameValue,
+          ['required', 'isString', 'trim'],
+          ['Это поле обязательно'],
+          { 'data-testid': 'nameInput' },
+        )}
+        {createInputs(
+          'Введите Email',
+          setEmail,
+          'email',
+          'email',
+          emailValue,
+          ['required', 'isEmail', 'trim'],
+          ['Это поле обязательно', 'Email введен не верно'],
+          { 'data-testid': 'emailInput' },
+        )}
+        {createInputs(
+          'Введите пароль',
+          setPassword,
+          'password',
+          'password',
+          passwordValue,
+          ['required', 'minStringLength:8', 'trim'],
+          ['Это поле обязательно', 'Пароль должен содержать минимум 8 символов'],
+          { 'data-testid': 'passwordInput' },
+        )}
+        {createInputs(
+          'Повторите пароль',
+          setRepeatPassword,
+          'repeatPassword',
+          'password',
+          repeatPasswordValue,
+          ['required', 'isPasswordMatch', 'trim'],
+          ['Это поле обязательно', 'Пароль должен совпадать'],
+          { 'data-testid': 'repeatPasswordInput' },
+        )}
         <SignUpList>
           <ListItem>
             <ButtonStyled

@@ -15,9 +15,9 @@ import {
   getChats,
   getSearchChats,
   getIsEmptyChats,
-} from '../../store/dialogsReducer/dialogsSelector';
-import { getError } from '../../store/errorReducer/errorSelector';
-import { getMyUid } from '../../store/profileReducer/profileSelector';
+} from '../../store/dialogsReducer/dialogsSelectors';
+import { getError } from '../../store/errorReducer/errorSelectors';
+import { getMyUid } from '../../store/profileReducer/profileSelectors';
 import { clearError } from '../../actions/errorActions';
 
 const ChatsWrapper = styled('div')({
@@ -63,10 +63,12 @@ const ChatsContainer = () => {
     [dispatch, uid],
   );
 
-  const deleteChat = useCallback((uid, chatId) => {
-    dispatch(deleteChatFromAPI(uid, chatId));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const deleteChat = useCallback(
+    (uid, chatId) => {
+      dispatch(deleteChatFromAPI(uid, chatId));
+    },
+    [dispatch],
+  );
 
   useEffect(() => {
     if (error?.code === 2) {
@@ -89,8 +91,7 @@ const ChatsContainer = () => {
     return () => {
       dispatch(clearError());
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debounce, open, error, isEmptyChats, uid]);
+  }, [debounce, open, error, isEmptyChats, uid, dispatch]);
 
   return (
     <ChatsWrapper>

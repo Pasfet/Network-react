@@ -34,7 +34,7 @@ const handler = (req, res, action, file) => {
               }
             })
           } else {
-            res.send(JSON.stringify({result: 2, text: 'Заявка уже отправлена'}))
+            res.send(JSON.stringify({result: 2, text: 'Заявка уже отправлена или уже в друзьях!'}))
           }
         }
       });

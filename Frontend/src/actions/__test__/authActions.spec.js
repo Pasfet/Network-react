@@ -132,7 +132,7 @@ describe('Auth actions', () => {
             initialState = reducerMock(initialState, action);
           });
 
-          expect(initialState.auth.isAuth).toBe(true);
+          expect(initialState.auth.isAuth).toBe(false);
           expect(initialState.error.error).toBeNull();
         });
     });

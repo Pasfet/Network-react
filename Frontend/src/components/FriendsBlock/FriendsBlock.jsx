@@ -12,6 +12,7 @@ import {
 
 import PropTypes from 'prop-types';
 import { CURRENT_URL } from '../../store/types/authTypes';
+import { memo } from 'react';
 
 const FriendsBlock = ({ userFriends, uid }) => {
   return (
@@ -51,4 +52,4 @@ FriendsBlock.propsTypes = {
   uid: PropTypes.string.isRequired,
 };
 
-export default FriendsBlock;
+export default memo(FriendsBlock);

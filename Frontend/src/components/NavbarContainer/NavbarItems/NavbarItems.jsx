@@ -6,9 +6,12 @@ import MovieIcon from '@mui/icons-material/Movie';
 import InboxIcon from '@mui/icons-material/Inbox';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import FriendsIcon from '@mui/icons-material/PeopleAlt';
+import UsersIcon from '@mui/icons-material/GroupAdd';
+import NewsIcon from '@mui/icons-material/Announcement';
 import { useHistory } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
+import { memo } from 'react';
 
 const NavbarItems = ({ uid, navbarList }) => {
   const history = useHistory();
@@ -27,6 +30,10 @@ const NavbarItems = ({ uid, navbarList }) => {
         return <AssignmentIndIcon />;
       case 'friends':
         return <FriendsIcon />;
+      case 'users':
+        return <UsersIcon />;
+      case 'news':
+        return <NewsIcon />;
       default:
         return <InboxIcon />;
     }
@@ -54,4 +61,4 @@ NavbarItems.propTypes = {
   navbarList: PropTypes.array,
 };
 
-export default NavbarItems;
+export default memo(NavbarItems);

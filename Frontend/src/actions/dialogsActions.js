@@ -11,7 +11,8 @@ import {
   IS_EMPTY_MESSAGES,
   IS_NOT_EMPTY_MESSAGES,
 } from '../store/types/dialogsTypes';
-import { clearError, setError, setSnack } from './errorActions';
+import { dialogsChatsActionsHelper } from './actionHelper';
+import { clearError, setError } from './errorActions';
 
 export const getChats = chats => ({
   type: GET_CHATS,
@@ -59,95 +60,69 @@ export const isNotEmptyMessages = () => ({
 });
 
 export const searchUsersChat = (text, uid) => {
-  return dispatch => {
+  return async dispatch => {
     dispatch(clearError());
-    return fetch(`${CURRENT_URL}/dialogs?uid=${uid}&searchChat=${text}`)
-      .then(response => response.json())
-      .then(data => {
-        if (data.result === 0) {
-          dispatch(setSearchChats(data.users));
-        } else {
-          dispatch(setError({ message: data.text, type: data.type, code: data.code }));
-        }
-      })
-      .catch(err => dispatch(setError({ message: err.message, type: 'error' })));
+    try {
+      const response = await fetch(`${CURRENT_URL}/dialogs?uid=${uid}&searchChat=${text}`);
+      const data = await response.json();
+      if (data.result === 0) {
+        dispatch(setSearchChats(data.users));
+      } else {
+        dispatch(setError({ message: data.text, type: data.type, code: data.code }));
+      }
+    } catch (err) {
+      dispatch(setError({ message: err.message, type: 'error' }));
+    }
   };
 };
 
 export const getChatsList = uid => {
-  return dispatch => {
-    return fetch(`${CURRENT_URL}/dialogs/${uid}`)
-      .then(response => response.json())
-      .then(data => {
-        if (data.result === 0) {
-          dispatch(getChats(data.chats));
-          dispatch(clearIsEmptyChatsState());
-        } else if (data.code === 3) {
-          dispatch(setIsEmptyChatsState({ message: data.text, isEmpty: true }));
-          dispatch(clearChats());
-        } else {
-          dispatch(setError({ message: data.text, type: data.type, code: data.code }));
-        }
-      })
-      .catch(err => dispatch(setError({ message: err.message, type: 'error' })));
+  return async dispatch => {
+    try {
+      const response = await fetch(`${CURRENT_URL}/dialogs/${uid}`);
+      const data = await response.json();
+      if (data.result === 0) {
+        dispatch(getChats(data.chats));
+        dispatch(clearIsEmptyChatsState());
+      } else if (data.code === 3) {
+        dispatch(setIsEmptyChatsState({ message: data.text, isEmpty: true }));
+        dispatch(clearChats());
+      } else {
+        dispatch(setError({ message: data.text, type: data.type, code: data.code }));
+      }
+    } catch (err) {
+      dispatch(setError({ message: err.message, type: 'error' }));
+    }
   };
 };
 
 export const addChatToApi = (uid, user) => {
   return dispatch => {
-    return fetch(`${CURRENT_URL}/dialogs`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json;charset=utf-8' },
-      body: JSON.stringify({ uid, user }),
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data.result === 0) {
-          dispatch(getChatsList(uid));
-          dispatch(setSnack({ text: data.text, result: data.result }));
-        } else {
-          dispatch(setSnack({ text: data.text, result: data.result }));
-          dispatch(setError({ message: data.text, type: data.type }));
-        }
-      })
-      .catch(err => dispatch(setError({ message: err.message, type: 'error' })));
+    return dialogsChatsActionsHelper('POST', { uid, user }, dispatch);
   };
 };
 
 export const deleteChatFromAPI = (uid, chatId) => {
   return dispatch => {
-    return fetch(`${CURRENT_URL}/dialogs`, {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json;charset=utf-8' },
-      body: JSON.stringify({ uid, chatId }),
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data.result === 0) {
-          dispatch(getChatsList(uid));
-          dispatch(setSnack({ text: data.text, result: data.result }));
-        } else {
-          dispatch(setError({ message: data.text, type: data.type }));
-        }
-      })
-      .catch(err => dispatch(setError({ message: err.message, type: 'error' })));
+    return dialogsChatsActionsHelper('DELETE', { uid, chatId }, dispatch);
   };
 };
 
 export const getMessagesFromAPI = (uid, chatId) => {
-  return dispatch => {
+  return async dispatch => {
     dispatch(isNotEmptyMessages());
-    return fetch(`${CURRENT_URL}/dialogs/${uid}/${chatId}`)
-      .then(response => response.json())
-      .then(data => {
-        if (data.result === 0) {
-          dispatch(setMessagesFromApi(data.payload));
-        } else if (data.code === 3) {
-          dispatch(isEmptyMessages({ message: data.text, code: data.code }));
-        } else {
-          dispatch(setError({ message: data.text, type: data.type }));
-        }
-      })
-      .catch(err => dispatch(setError({ message: err.message, type: 'error' })));
+    try {
+      const response = await fetch(`${CURRENT_URL}/dialogs/${uid}/${chatId}`);
+      const data = await response.json();
+      if (data.result === 0) {
+        dispatch(setMessagesFromApi(data.payload));
+      } else if (data.code === 3) {
+        dispatch(isEmptyMessages({ message: data.text, code: data.code }));
+      } else {
+        dispatch(setError({ message: data.text, type: data.type }));
+      }
+    } catch (err) {
+      dispatch(setError({ message: err.message, type: 'error' }));
+    }
   };
 };

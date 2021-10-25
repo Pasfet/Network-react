@@ -1,24 +1,24 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../actions/authActions';
 import NavbarContainer from '../components/NavbarContainer/NavbarContainer';
-import { getMyUid, getMyName } from '../store/profileReducer/profileSelector';
+import { getMyUid, getMyName } from '../store/profileReducer/profileSelectors';
 
 const NavbarHOC = ({ authenticated, ...props }) => {
   const uid = useSelector(getMyUid);
   const userName = useSelector(getMyName);
-
+  let newProps;
   const dispatch = useDispatch();
   const logOutHandler = () => {
     dispatch(logOut());
   };
 
   if (!authenticated) {
-    props = {
+    newProps = {
       ...props,
       navbarList: props.navbarList?.filter(item => item.requiredAuth === false),
     };
   } else {
-    props = {
+    newProps = {
       ...props,
       navbarList: props.navbarList?.filter(item => item.requiredAuth === true || item?.public),
     };
@@ -30,10 +30,10 @@ const NavbarHOC = ({ authenticated, ...props }) => {
       uid={uid}
       logOut={logOutHandler}
       userName={userName}
-      {...props}
+      {...newProps}
     />
   ) : (
-    <NavbarContainer auth={authenticated} {...props} />
+    <NavbarContainer auth={authenticated} {...newProps} />
   );
 };
 

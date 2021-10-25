@@ -10,6 +10,7 @@ import {
 } from './ProfilePageActionsStyled';
 import PropTypes from 'prop-types';
 import { CURRENT_URL } from '../../store/types/authTypes';
+import { memo } from 'react';
 
 const ProfilePageActions = ({
   myUid,
@@ -75,4 +76,4 @@ ProfilePageActions.propsTypes = {
   rejectFriendRequestHandler: PropTypes.func,
 };
 
-export default ProfilePageActions;
+export default memo(ProfilePageActions);

@@ -6,7 +6,7 @@ import PrivateRoute from '../../HOC/PrivateRoute';
 import ChatsContainer from '../../components/ChatsContainer/ChatsContainer';
 
 import MessagesContainer from '../../components/MessagesContainer/MessagesContainer';
-import { getAuth } from '../../store/auth/authSelector';
+import { getAuth } from '../../store/auth/authSelectors';
 
 const DialogsWrap = styled('div')({
   width: '100%',

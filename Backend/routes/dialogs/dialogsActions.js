@@ -43,7 +43,8 @@ const addChat = (usersList, messagesList, req) => {
   const {messages} = messagesList;
   const {uid, user} = req.body;
 
-  if (messages[uid][user.uid] || uid === user.uid) return null;
+
+  if (messages?.[uid]?.[user.uid] || uid === user.uid) return null;
 
   const roomId = generateRoomId();
 

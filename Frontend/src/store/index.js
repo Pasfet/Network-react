@@ -10,6 +10,8 @@ import spinnerReducer from './SpinnerReducer/spinnerReducer';
 import authReducer from './auth/authReducer';
 import errorReducer from './errorReducer/errorReducer';
 import navbarReducer from './navbarReducer/navbarReducer';
+import usersReducer from './usersReducer/usersReducer';
+import newsReducer from './newsReducer/newsReducer';
 
 const rootReducer = combineReducers({
   profilePage: profileReducer,
@@ -18,12 +20,14 @@ const rootReducer = combineReducers({
   auth: authReducer,
   error: errorReducer,
   navbar: navbarReducer,
+  usersPage: usersReducer,
+  newsPage: newsReducer,
 });
 
 const persistConfig = {
   key: 'social',
   storage: storage,
-  blacklist: ['searchTitle', 'spinner', 'navbar', 'dialogsPage'],
+  blacklist: ['searchTitle', 'spinner', 'navbar', 'dialogsPage', 'usersPage', 'newsPage'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

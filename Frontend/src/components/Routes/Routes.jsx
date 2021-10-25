@@ -11,10 +11,15 @@ import WithAuthForm from '../../HOC/WithAuthForm';
 import ProfileEditContainer from '../../pages/ProfileEditContainer/ProfileEditContainer';
 import UserFriendsContainer from '../../pages/UserFriendsContainer/UserFriendsContainer';
 import MyFriendsContainer from '../../pages/MyFriendsContainer/MyFriendsContainer';
+import UsersListContainer from '../../pages/UsersListContainer/UsersListContainer';
+import NewsContainer from '../../pages/NewsContainer/NewsContainer';
 
 const Routes = ({ authed }) => {
   return (
     <Switch>
+      <Route exact path="/">
+        <NewsContainer />
+      </Route>
       <WithAuthForm authenticated={authed} exact path="/login">
         <LogInContainer />
       </WithAuthForm>
@@ -27,15 +32,18 @@ const Routes = ({ authed }) => {
       <PrivateRoute authenticated={authed} path="/profile/:uid/edit">
         <ProfileEditContainer />
       </PrivateRoute>
-      <PrivateRoute authenticated={authed} path="/dialogs">
-        <Dialogs />
-      </PrivateRoute>
-      <PrivateRoute authenticated={authed} path="/friends/:uid">
-        <MyFriendsContainer />
-      </PrivateRoute>
       <Route exact path="/profile/:uid/friends">
         <UserFriendsContainer />
       </Route>
+      <PrivateRoute authenticated={authed} path="/friends/:uid">
+        <MyFriendsContainer />
+      </PrivateRoute>
+      <PrivateRoute authenticated={authed} exact path="/users">
+        <UsersListContainer />
+      </PrivateRoute>
+      <PrivateRoute authenticated={authed} path="/dialogs">
+        <Dialogs />
+      </PrivateRoute>
       <Route path="*">
         <Page404 />
       </Route>

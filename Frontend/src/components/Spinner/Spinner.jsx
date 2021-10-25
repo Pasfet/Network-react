@@ -1,6 +1,6 @@
 import CircularProgress from '@mui/material/CircularProgress';
 import { useSelector } from 'react-redux';
-import { spinnerState } from '../../store/SpinnerReducer/spinnerSelector';
+import { spinnerState } from '../../store/SpinnerReducer/spinnerSelectors';
 import style from './Spinner.module.scss';
 
 const Spinner = ({ fullPage = false }) => {

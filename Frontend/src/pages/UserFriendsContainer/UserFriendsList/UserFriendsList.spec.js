@@ -37,10 +37,10 @@ describe('<UserFriendsList />', () => {
     expect(getByText(/MyFriend/i)).toBeInTheDocument();
   });
 
-  it('Render alt text ava"', () => {
+  it('Render alt text"', () => {
     const { getByAltText } = renderComponent(mockProps);
 
-    expect(getByAltText(/ava/i)).toBeInTheDocument();
+    expect(getByAltText(mockProps.user.user_friends[0].user_name)).toBeInTheDocument();
   });
 
   it('Push to="/profile/:uid" when click on Name friend', () => {

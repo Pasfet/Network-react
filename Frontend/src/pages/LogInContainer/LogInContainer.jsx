@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { authorization } from '../../actions/authActions';
-import { getError } from '../../store/errorReducer/errorSelector';
+import { getError } from '../../store/errorReducer/errorSelectors';
 import { clearError } from '../../actions/errorActions';
 import LogIn from './LogIn/LogIn';
 import { useEffect } from 'react';
@@ -15,8 +15,7 @@ const LogInContainer = () => {
 
   useEffect(() => {
     return () => dispatch(clearError());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
 
   const onSubmitHandler = e => {
     e.preventDefault();
@@ -29,7 +28,7 @@ const LogInContainer = () => {
       emailValue={email}
       setPassword={setPassword}
       passwordValue={password}
-      error={error?.type === 'login' || (error?.type === 'error' && error.message)}
+      error={error && error.message}
     />
   );
 };

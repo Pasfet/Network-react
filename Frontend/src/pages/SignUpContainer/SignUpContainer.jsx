@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { registration } from '../../actions/authActions';
 import { clearError } from '../../actions/errorActions';
-import { getError } from '../../store/errorReducer/errorSelector';
+import { getError } from '../../store/errorReducer/errorSelectors';
 import SignUp from './SignUp/SignUp';
 
 const SignUpContainer = () => {
@@ -22,8 +22,7 @@ const SignUpContainer = () => {
 
   useEffect(() => {
     return () => dispatch(clearError());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
 
   return (
     <SignUp

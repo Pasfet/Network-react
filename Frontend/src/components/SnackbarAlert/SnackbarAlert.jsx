@@ -15,8 +15,7 @@ const SnackbarAlert = ({ snackMessage }) => {
   useEffect(() => {
     setOpen(true);
     return () => dispatch(clearSnack);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [snackMessage]);
+  }, [snackMessage, dispatch]);
 
   return (
     <div>

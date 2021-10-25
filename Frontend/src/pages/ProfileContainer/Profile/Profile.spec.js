@@ -21,7 +21,7 @@ describe('<Profile />', () => {
     user: { user_name: 'MyName', about: {}, status: '' },
     uid: '',
     myUid: '',
-    error: '',
+    error: {},
     openStatus: false,
     setOpenStatus: jest.fn(),
     statusInput: '',
@@ -87,7 +87,10 @@ describe('<Profile />', () => {
   });
 
   it('Render error', () => {
-    const { getByText } = renderComponent({ ...mockProps, error: 'Error' });
+    const { getByText } = renderComponent({
+      ...mockProps,
+      error: { message: 'Error', type: 'error' },
+    });
 
     expect(getByText(/Error/i)).toBeInTheDocument();
   });

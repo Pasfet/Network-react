@@ -1,7 +1,6 @@
-import { Avatar, Grid, IconButton, ListItemAvatar, Table, TableRow } from '@mui/material';
+import { Grid, Table } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Box } from '@mui/system';
-import { Link } from 'react-router-dom';
 
 export const MyFriendsListWrapper = styled(Grid)({
   display: 'flex',
@@ -24,28 +23,3 @@ export const MyFriendsListHeadingName = styled('span')({
 export const MyFriendsListTable = styled(Table)({
   minWidth: '300px',
 });
-
-export const MyFriendsListTableRow = styled(TableRow)({
-  '& td:first-of-type': {
-    width: '100px',
-  },
-});
-
-export const MyFriendsListImgWrapper = styled(ListItemAvatar)({});
-
-export const MyFriendsListAvatar = styled(Avatar)({
-  width: '70px',
-  height: '70px',
-});
-
-export const MyFriendsListName = styled(Link)({
-  textTransform: 'capitalize',
-  fontSize: '18px',
-  color: '#000',
-});
-
-export const MyFriendsDeleteButton = styled(IconButton)({});
-
-export const MyFriendsAgreeRequstionsButton = styled(IconButton)({});
-
-export const MyFriendsRejectRequstionsButton = styled(IconButton)({});

@@ -8,8 +8,8 @@ import {
   getMyFriendsList,
   rejectFriendRequest,
 } from '../../actions/profileActions';
-import { getError } from '../../store/errorReducer/errorSelector';
-import { getMyFriends, getMyUid } from '../../store/profileReducer/profileSelector';
+import { getError } from '../../store/errorReducer/errorSelectors';
+import { getMyFriends, getMyUid } from '../../store/profileReducer/profileSelectors';
 import MyFriendsList from './MyFriendsList/MyFriendsList';
 
 const MyFriendsContainer = () => {

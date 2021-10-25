@@ -8,11 +8,14 @@ import fetchMock from 'jest-fetch-mock';
 import {
   addToFriendsList,
   deleteFriendFromFriendsList,
+  deleteUserPost,
   getMyFriendsList,
+  getUserPosts,
   getUserProfileFromApi,
   rejectFriendRequest,
   sendProfileChange,
   sendRequestToFriendList,
+  sendUserPost,
 } from '../profileActions';
 
 fetchMock.enableMocks();
@@ -765,6 +768,275 @@ describe('Profile actions', () => {
           message: 'Failed to fetch',
           type: 'error',
         });
+      });
+    });
+  });
+
+  describe('GetUserPosts action', () => {
+    it('GetUserPosts with result === 0', () => {
+      const mockPosts = [{ id: 'id1', text: 'text posts', author_uid: 'id2' }];
+      fetchMock.mockResponse(
+        JSON.stringify({
+          result: 0,
+          posts: mockPosts,
+        }),
+      );
+
+      let initialState = {
+        profilePage: {
+          myFriends: null,
+          posts: [],
+        },
+        error: {
+          error: null,
+          snackMessage: null,
+        },
+      };
+
+      const store = mockStore(() => initialState);
+
+      return store.dispatch(getUserPosts('id1')).then(() => {
+        const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
+
+        actions.forEach(action => {
+          initialState = reducerMock(initialState, action);
+        });
+
+        expect(fetchMock).toHaveBeenCalledWith(`${URL}/posts?uid=id1`);
+        expect(initialState.profilePage.posts).toEqual(mockPosts);
+        expect(initialState.error.snackMessage).toBeNull();
+        expect(initialState.error.error).toBeNull();
+      });
+    });
+
+    it('GetUserPosts with result === 2', () => {
+      fetchMock.mockResponse(
+        JSON.stringify({
+          result: 2,
+          text: 'Нет постов',
+        }),
+      );
+
+      let initialState = {
+        profilePage: {
+          myFriends: null,
+          posts: [],
+        },
+        error: {
+          error: null,
+          snackMessage: null,
+        },
+      };
+
+      const store = mockStore(() => initialState);
+
+      return store.dispatch(getUserPosts('id1')).then(() => {
+        const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
+
+        actions.forEach(action => {
+          initialState = reducerMock(initialState, action);
+        });
+
+        expect(fetchMock).toHaveBeenCalledWith(`${URL}/posts?uid=id1`);
+        expect(initialState.profilePage.posts).toEqual([]);
+        expect(initialState.error.snackMessage).toBeNull();
+        expect(initialState.error.error).toEqual({ message: 'Нет постов', type: 'user-posts' });
+      });
+    });
+
+    it('GetUserPosts with Error', () => {
+      fetchMock.mockReject(new Error('Failed to fetch'));
+
+      let initialState = {
+        profilePage: {
+          myFriends: null,
+          posts: [],
+        },
+        error: {
+          error: null,
+          snackMessage: null,
+        },
+      };
+
+      const store = mockStore(() => initialState);
+
+      return store.dispatch(getUserPosts('id1')).then(() => {
+        const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
+
+        actions.forEach(action => {
+          initialState = reducerMock(initialState, action);
+        });
+
+        expect(fetchMock).toHaveBeenCalledWith(`${URL}/posts?uid=id1`);
+        expect(initialState.profilePage.posts).toEqual([]);
+        expect(initialState.error.snackMessage).toBeNull();
+        expect(initialState.error.error).toEqual({ message: 'Failed to fetch', type: 'error' });
+      });
+    });
+  });
+
+  describe('SendUserPost action', () => {
+    it('SendUserPost with result === 0', () => {
+      fetchMock.mockResponse(
+        JSON.stringify({
+          result: 0,
+          text: 'Отправлено!',
+        }),
+      );
+
+      let initialState = {
+        profilePage: {
+          myFriends: null,
+          posts: [],
+        },
+        error: {
+          error: null,
+          snackMessage: null,
+        },
+      };
+
+      const store = mockStore(() => initialState);
+
+      return store.dispatch(sendUserPost('id1')).then(() => {
+        const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
+
+        actions.forEach(action => {
+          initialState = reducerMock(initialState, action);
+        });
+
+        expect(fetchMock).toHaveBeenCalledWith(`${URL}/posts?uid=id1`);
+        expect(initialState.profilePage.posts).toEqual([]);
+        expect(initialState.error.snackMessage).toEqual({ text: 'Отправлено!', result: 0 });
+        expect(initialState.error.error).toBeNull();
+      });
+    });
+
+    it('SendUserPost with Error', () => {
+      fetchMock.mockReject(new Error('Failed to fetch'));
+
+      let initialState = {
+        profilePage: {
+          myFriends: null,
+          posts: [],
+        },
+        error: {
+          error: null,
+          snackMessage: null,
+        },
+      };
+
+      const store = mockStore(() => initialState);
+
+      return store.dispatch(sendUserPost('id1')).then(() => {
+        const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
+
+        actions.forEach(action => {
+          initialState = reducerMock(initialState, action);
+        });
+
+        expect(initialState.profilePage.posts).toEqual([]);
+        expect(initialState.error.snackMessage).toBeNull();
+        expect(initialState.error.error).toEqual({ message: 'Failed to fetch', type: 'error' });
+      });
+    });
+  });
+
+  describe('DeleteUserPost', () => {
+    it('DeleteUserPost with result === 0', () => {
+      fetchMock.mockResponse(
+        JSON.stringify({
+          result: 0,
+          text: 'Удалено!',
+        }),
+      );
+
+      let initialState = {
+        profilePage: {
+          myFriends: null,
+          posts: [],
+        },
+        error: {
+          error: null,
+          snackMessage: null,
+        },
+      };
+
+      const store = mockStore(() => initialState);
+
+      return store.dispatch(deleteUserPost('id1')).then(() => {
+        const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
+
+        actions.forEach(action => {
+          initialState = reducerMock(initialState, action);
+        });
+
+        expect(fetchMock).toHaveBeenCalledWith(`${URL}/posts?uid=id1`);
+        expect(initialState.profilePage.posts).toEqual([]);
+        expect(initialState.error.snackMessage).toEqual({ text: 'Удалено!', result: 0 });
+        expect(initialState.error.error).toBeNull();
+      });
+    });
+
+    it('DeleteUserPost with result === 2', () => {
+      fetchMock.mockResponse(
+        JSON.stringify({
+          result: 2,
+          text: 'Ошибка!',
+        }),
+      );
+
+      let initialState = {
+        profilePage: {
+          myFriends: null,
+          posts: [],
+        },
+        error: {
+          error: null,
+          snackMessage: null,
+        },
+      };
+
+      const store = mockStore(() => initialState);
+
+      return store.dispatch(deleteUserPost('id1')).then(() => {
+        const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
+
+        actions.forEach(action => {
+          initialState = reducerMock(initialState, action);
+        });
+
+        expect(initialState.profilePage.posts).toEqual([]);
+        expect(initialState.error.snackMessage).toEqual({ text: 'Ошибка!', result: 2 });
+        expect(initialState.error.error).toEqual({ message: 'Ошибка!', type: 'user-posts' });
+      });
+    });
+
+    it('DeleteUserPost with Error', () => {
+      fetchMock.mockReject(new Error('Failed to fetch'));
+
+      let initialState = {
+        profilePage: {
+          myFriends: null,
+          posts: [],
+        },
+        error: {
+          error: null,
+          snackMessage: null,
+        },
+      };
+
+      const store = mockStore(() => initialState);
+
+      return store.dispatch(deleteUserPost('id1')).then(() => {
+        const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
+
+        actions.forEach(action => {
+          initialState = reducerMock(initialState, action);
+        });
+
+        expect(initialState.profilePage.posts).toEqual([]);
+        expect(initialState.error.snackMessage).toBeNull();
+        expect(initialState.error.error).toEqual({ message: 'Failed to fetch', type: 'error' });
       });
     });
   });

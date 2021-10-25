@@ -2,15 +2,18 @@ import {
   CLEAR_MY_FRIENDS,
   CLEAR_UID,
   CLEAR_USER,
+  CLEAR_USER_POSTS,
   SET_MY_FRIENDS,
   SET_UID,
   SET_USER,
+  SET_USER_POSTS,
 } from '../types/profileTypes';
 
 const initialState = {
   uid: { uid: null, name: null },
   myFriends: null,
   user: null,
+  posts: [],
 };
 
 const profileReducer = (state = initialState, { type, payload }) => {
@@ -44,6 +47,16 @@ const profileReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         myFriends: null,
+      };
+    case SET_USER_POSTS:
+      return {
+        ...state,
+        posts: payload,
+      };
+    case CLEAR_USER_POSTS:
+      return {
+        ...state,
+        posts: [],
       };
     default:
       return state;

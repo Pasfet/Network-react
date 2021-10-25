@@ -1,19 +1,15 @@
-import { Paper, TableBody, TableCell } from '@mui/material';
+import { Paper } from '@mui/material';
 import PropTypes from 'prop-types';
-import { CURRENT_URL } from '../../../store/types/authTypes';
+import UsersListTable from '../../../components/UsersListTable/UsersListTable';
 import {
-  UserFriendsListAvatar,
   UserFriendsListBox,
   UserFriendsListHeading,
   UserFriendsListHeadingName,
-  UserFriendsListImgWrapper,
-  UserFriendsListName,
   UserFriendsListTable,
-  UserFriendsListTableRow,
   UserFriendsListWrapper,
 } from './UserFriendsListStyled';
 
-const UserFriendsList = ({ user }) => {
+const UserFriendsList = ({ user, addToFriendsList }) => {
   return (
     <UserFriendsListWrapper container>
       <UserFriendsListHeading>
@@ -22,25 +18,11 @@ const UserFriendsList = ({ user }) => {
       </UserFriendsListHeading>
       <UserFriendsListBox component={Paper}>
         <UserFriendsListTable aria-label="Друзья">
-          <TableBody>
-            {user.user_friends?.map(friend => (
-              <UserFriendsListTableRow key={friend.uid} hover>
-                <TableCell>
-                  <UserFriendsListImgWrapper>
-                    <UserFriendsListAvatar
-                      src={`${CURRENT_URL}/images/profile/${friend.uid}/avatar/${friend.avatar}`}
-                      alt="ava"
-                    />
-                  </UserFriendsListImgWrapper>
-                </TableCell>
-                <TableCell>
-                  <UserFriendsListName to={`/profile/${friend.uid}`}>
-                    {friend.user_name}
-                  </UserFriendsListName>
-                </TableCell>
-              </UserFriendsListTableRow>
-            ))}
-          </TableBody>
+          <UsersListTable
+            users={user?.user_friends}
+            addToFriendsList={addToFriendsList}
+            isFriendsOfFriends={true}
+          />
         </UserFriendsListTable>
       </UserFriendsListBox>
     </UserFriendsListWrapper>
@@ -49,6 +31,7 @@ const UserFriendsList = ({ user }) => {
 
 UserFriendsList.propsTypes = {
   user: PropTypes.object.isRequired,
+  addToFriendsList: PropTypes.func,
 };
 
 export default UserFriendsList;

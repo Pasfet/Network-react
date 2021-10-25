@@ -374,7 +374,7 @@ describe('Dialogs actions', () => {
           type: 'chats',
           message: 'Что-то не так',
         });
-        expect(initialState.error.snackMessage).toBeNull();
+        expect(initialState.error.snackMessage).toEqual({ text: 'Что-то не так', result: 2 });
       });
     });
 
