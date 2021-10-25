@@ -1,0 +1,39 @@
+{
+  "users": {
+    "a301bfc": {
+      "uid": "a301bfc",
+      "user_email": "test@mail.com",
+      "password": "12345678",
+      "user_name": "test",
+      "user_friends": []
+    },
+    "f1175d3": {
+      "uid": "f1175d3",
+      "user_email": "anna@anna.ru",
+      "password": "qwertyui",
+      "user_name": "anna",
+      "user_friends": []
+    },
+    "ff9eccc": {
+      "uid": "ff9eccc",
+      "user_email": "roman@mail.com",
+      "password": "zxcvbnm,",
+      "user_name": "roman",
+      "user_friends": []
+    },
+    "26ed639": {
+      "uid": "26ed639",
+      "user_email": "name@mail.com",
+      "password": "namename",
+      "user_name": "name",
+      "user_friends": []
+    },
+    "1b45259": {
+      "uid": "1b45259",
+      "user_email": "sd@sad.r",
+      "password": "testtest",
+      "user_name": "Павел Константинов",
+      "user_friends": []
+    }
+  }
+}
