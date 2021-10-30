@@ -1,4 +1,4 @@
-import { Button, Card, Typography } from '@mui/material';
+import { Button, Card, CardMedia, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 export const CardWrapper = styled(Card)({
@@ -6,10 +6,18 @@ export const CardWrapper = styled(Card)({
   marginBottom: '20px',
 });
 
+export const CardImgWrapper = styled(CardMedia)({
+  maxHeight: '500px',
+  height: '100%',
+});
+
 export const CardTitle = styled(Typography)({
   '&.MuiTypography-h2': {
     fontSize: '22px',
     marginBottom: '20px',
+    '@media(max-width: 650px)': {
+      fontSize: '18px',
+    },
   },
 });
 
