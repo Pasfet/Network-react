@@ -6,7 +6,7 @@ import Spinner from '../../../components/Spinner/Spinner';
 
 const NewsList = ({ news, fetchMoreNews }) => {
   return (
-    <Grid container sx={{ justifyContent: 'center' }}>
+    <Grid container sx={{ justifyContent: 'center', padding: '0 15px' }}>
       <InfiniteScroll
         dataLength={news.length}
         next={fetchMoreNews}

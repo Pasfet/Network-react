@@ -24,7 +24,7 @@ const Bubble = styled('div')(({ me }) => ({
   padding: '14px 18px',
   margin: '6px 8px',
   backgroundColor: me ? '#5b5377' : '#6c8ea4',
-  borderRadius: '16px 16px 16px 0',
+  borderRadius: me ? '16px 16px 0 16px' : '16px 16px 16px 0',
   border: me ? '1px solid #443f56' : '1px solid #54788e',
 }));
 
