@@ -9,6 +9,7 @@ import {
   SET_SEARCH_CHAT,
   IS_EMPTY_MESSAGES,
   IS_NOT_EMPTY_MESSAGES,
+  SEND_MESSAGE,
 } from '../types/dialogsTypes';
 
 const initialState = {
@@ -65,6 +66,11 @@ const dialogsReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         messages: payload,
+      };
+    case SEND_MESSAGE:
+      return {
+        ...state,
+        messages: [...state.messages, payload],
       };
     case CLEAR_MESSAGES:
       return {

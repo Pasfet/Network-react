@@ -49,7 +49,7 @@ const MessagesList = ({
         {messages?.map(message => (
           <Message key={message.id} message={message} uid={uid} />
         ))}
-        {error?.type === 'messages' && <Alert severity="error"> {error.message} </Alert>}
+        {error && <Alert severity="error"> {error} </Alert>}
         {isEmpty && <Alert severity="info"> {isEmpty} </Alert>}
         <div ref={messagesListWrapperScroll}></div>
       </MessageListStyled>

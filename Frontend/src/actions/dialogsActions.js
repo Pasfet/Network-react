@@ -10,6 +10,7 @@ import {
   CLEAR_IS_EMPTY_CHATS_STATE,
   IS_EMPTY_MESSAGES,
   IS_NOT_EMPTY_MESSAGES,
+  SEND_MESSAGE,
 } from '../store/types/dialogsTypes';
 import { dialogsChatsActionsHelper } from './actionHelper';
 import { clearError, setError } from './errorActions';
@@ -39,6 +40,11 @@ export const setMessagesFromApi = messages => ({
 
 export const clearMessages = () => ({
   type: CLEAR_MESSAGES,
+});
+
+export const sendMessageToStore = payload => ({
+  type: SEND_MESSAGE,
+  payload,
 });
 
 export const setIsEmptyChatsState = message => ({

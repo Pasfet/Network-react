@@ -1,47 +1,27 @@
 {
-  "a301bfc": [
+  "c49fc41": [
     {
-      "id": "c8b9247_9a561db",
-      "author_name": "test",
-      "text": "zxc",
+      "id": "4051c28_3aefa87",
+      "author_name": "Павел Константинов",
+      "text": "c",
       "author_avatar": null,
-      "author_uid": "a301bfc"
+      "author_uid": "e0cc1e0"
+    },
+    {
+      "id": "7aaeb67_fc6c508",
+      "author_name": "Anna",
+      "text": "Hi on my Board!",
+      "author_avatar": null,
+      "author_uid": "c49fc41"
     }
   ],
-  "ff9eccc": [
+  "e0cc1e0": [
     {
-      "id": "a8cd9be_1318255",
-      "author_name": "test",
-      "text": "sad",
+      "id": "9867997_3b82563",
+      "author_name": "Павел Константинов",
+      "text": "s",
       "author_avatar": null,
-      "author_uid": "a301bfc"
-    }
-  ],
-  "f1175d3": [
-    {
-      "id": "bac0504_fc5c85c",
-      "author_name": "test",
-      "text": "asd",
-      "author_avatar": null,
-      "author_uid": "a301bfc"
-    }
-  ],
-  "d14df9d": [
-    {
-      "id": "7933b6e_6881ac4",
-      "author_name": "My Name",
-      "text": "??",
-      "author_avatar": null,
-      "author_uid": "d14df9d"
-    }
-  ],
-  "744234b": [
-    {
-      "id": "916d669_3bb9fc9",
-      "author_name": "Name",
-      "text": "Hey hey",
-      "author_avatar": null,
-      "author_uid": "744234b"
+      "author_uid": "e0cc1e0"
     }
   ]
 }

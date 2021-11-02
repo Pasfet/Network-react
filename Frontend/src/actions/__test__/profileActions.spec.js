@@ -17,6 +17,7 @@ import {
   sendRequestToFriendList,
   sendUserPost,
 } from '../profileActions';
+import { CURRENT_URL } from '../../store/types/authTypes';
 
 fetchMock.enableMocks();
 
@@ -35,8 +36,6 @@ describe('Profile actions', () => {
   beforeEach(() => {
     fetchMock.resetMocks();
   });
-
-  const URL = 'http://localhost:3001';
 
   describe('GetUserProfileFromApi action', () => {
     const mockUser = {
@@ -186,7 +185,7 @@ describe('Profile actions', () => {
           initialState = reducerMock(initialState, action);
         });
 
-        expect(fetchMock).toHaveBeenCalledWith(`${URL}/profile/id1`);
+        expect(fetchMock).toHaveBeenCalledWith(`${CURRENT_CURRENT_URL}/profile/id1`);
         expect(initialState.error.snackMessage).toEqual({ text: 'Обновлено!', result: 0 });
       });
     });
@@ -294,7 +293,7 @@ describe('Profile actions', () => {
           initialState = reducerMock(initialState, action);
         });
 
-        expect(fetchMock).toHaveBeenCalledWith(`${URL}/friends/id1`);
+        expect(fetchMock).toHaveBeenCalledWith(`${CURRENT_CURRENT_URL}/friends/id1`);
         expect(initialState.error.snackMessage).toBeNull();
         expect(initialState.error.error).toBeNull();
         expect(initialState.profilePage.myFriends).toEqual(mockFriendsList);
@@ -391,7 +390,7 @@ describe('Profile actions', () => {
           initialState = reducerMock(initialState, action);
         });
 
-        expect(fetchMock).toHaveBeenCalledWith(`${URL}/friends`, expect.any(Object));
+        expect(fetchMock).toHaveBeenCalledWith(`${CURRENT_URL}/friends`, expect.any(Object));
         expect(initialState.error.snackMessage).toEqual({ result: 0, text: 'Отправлено' });
         expect(initialState.error.error).toBeNull();
       });
@@ -494,7 +493,7 @@ describe('Profile actions', () => {
           initialState = reducerMock(initialState, action);
         });
 
-        expect(fetchMock).toHaveBeenCalledWith(`${URL}/friends`, expect.any(Object));
+        expect(fetchMock).toHaveBeenCalledWith(`${CURRENT_URL}/friends`, expect.any(Object));
         expect(initialState.error.snackMessage).toEqual({ result: 0, text: 'Удалено' });
         expect(initialState.error.error).toBeNull();
       });
@@ -594,7 +593,7 @@ describe('Profile actions', () => {
           initialState = reducerMock(initialState, action);
         });
 
-        expect(fetchMock).toHaveBeenCalledWith(`${URL}/friends`, expect.any(Object));
+        expect(fetchMock).toHaveBeenCalledWith(`${CURRENT_URL}/friends`, expect.any(Object));
         expect(initialState.error.snackMessage).toEqual({ result: 0, text: 'Удален из друзей' });
         expect(initialState.error.error).toBeNull();
       });
@@ -697,7 +696,7 @@ describe('Profile actions', () => {
           initialState = reducerMock(initialState, action);
         });
 
-        expect(fetchMock).toHaveBeenCalledWith(`${URL}/friends`, expect.any(Object));
+        expect(fetchMock).toHaveBeenCalledWith(`${CURRENT_URL}/friends`, expect.any(Object));
         expect(initialState.error.snackMessage).toEqual({ result: 0, text: 'Добавлен в друзья' });
         expect(initialState.error.error).toBeNull();
       });
@@ -802,7 +801,7 @@ describe('Profile actions', () => {
           initialState = reducerMock(initialState, action);
         });
 
-        expect(fetchMock).toHaveBeenCalledWith(`${URL}/posts?uid=id1`);
+        expect(fetchMock).toHaveBeenCalledWith(`${CURRENT_URL}/posts?uid=id1`);
         expect(initialState.profilePage.posts).toEqual(mockPosts);
         expect(initialState.error.snackMessage).toBeNull();
         expect(initialState.error.error).toBeNull();
@@ -837,7 +836,7 @@ describe('Profile actions', () => {
           initialState = reducerMock(initialState, action);
         });
 
-        expect(fetchMock).toHaveBeenCalledWith(`${URL}/posts?uid=id1`);
+        expect(fetchMock).toHaveBeenCalledWith(`${CURRENT_URL}/posts?uid=id1`);
         expect(initialState.profilePage.posts).toEqual([]);
         expect(initialState.error.snackMessage).toBeNull();
         expect(initialState.error.error).toEqual({ message: 'Нет постов', type: 'user-posts' });
@@ -867,7 +866,7 @@ describe('Profile actions', () => {
           initialState = reducerMock(initialState, action);
         });
 
-        expect(fetchMock).toHaveBeenCalledWith(`${URL}/posts?uid=id1`);
+        expect(fetchMock).toHaveBeenCalledWith(`${CURRENT_URL}/posts?uid=id1`);
         expect(initialState.profilePage.posts).toEqual([]);
         expect(initialState.error.snackMessage).toBeNull();
         expect(initialState.error.error).toEqual({ message: 'Failed to fetch', type: 'error' });
@@ -904,7 +903,7 @@ describe('Profile actions', () => {
           initialState = reducerMock(initialState, action);
         });
 
-        expect(fetchMock).toHaveBeenCalledWith(`${URL}/posts?uid=id1`);
+        expect(fetchMock).toHaveBeenCalledWith(`${CURRENT_URL}/posts?uid=id1`);
         expect(initialState.profilePage.posts).toEqual([]);
         expect(initialState.error.snackMessage).toEqual({ text: 'Отправлено!', result: 0 });
         expect(initialState.error.error).toBeNull();
@@ -970,7 +969,7 @@ describe('Profile actions', () => {
           initialState = reducerMock(initialState, action);
         });
 
-        expect(fetchMock).toHaveBeenCalledWith(`${URL}/posts?uid=id1`);
+        expect(fetchMock).toHaveBeenCalledWith(`${CURRENT_URL}/posts?uid=id1`);
         expect(initialState.profilePage.posts).toEqual([]);
         expect(initialState.error.snackMessage).toEqual({ text: 'Удалено!', result: 0 });
         expect(initialState.error.error).toBeNull();

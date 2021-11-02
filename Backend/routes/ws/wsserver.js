@@ -31,7 +31,7 @@ wss.on('connection', ws => {
         leave(uidRoom);
         break;
       case 'chat-message':
-        const msg = chatHandler(payload, 'DB/Messages.json', 'DB/Users.json');
+        const msg = chatHandler(payload, 'DB/Messages.json');
         Object.entries(rooms[uidRoom]).forEach(([_, client]) => {
           client.send(JSON.stringify(msg));
         });

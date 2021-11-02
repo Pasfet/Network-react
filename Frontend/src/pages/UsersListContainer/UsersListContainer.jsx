@@ -35,7 +35,6 @@ const UsersListContainer = () => {
       e.preventDefault();
       setPage(1);
       dispatch(getUsersList(page, perPage, searchValue));
-      console.log(page, perPage, searchValue);
     },
     [searchValue, page, perPage, dispatch],
   );

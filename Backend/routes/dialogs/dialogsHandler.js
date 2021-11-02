@@ -1,5 +1,5 @@
 const fs = require('fs');
-const {SEARCH_CHAT, GET_CHATS, ADD_CHAT, DELETE_CHAT, GET_MESSAGES, SEND_MESSAGE} = require('../types/dialogsTypes');
+const {SEARCH_CHAT, GET_CHATS, ADD_CHAT, DELETE_CHAT, GET_MESSAGES} = require('../types/dialogsTypes');
 const dialogsAction = require('./dialogsActions');
 
 const actions = {
@@ -8,17 +8,16 @@ const actions = {
   GET_MESSAGES: dialogsAction.getMessages,
   ADD_CHAT: dialogsAction.addChat,
   DELETE_CHAT: dialogsAction.deleteChat,
-  SEND_MESSAGE: dialogsAction.sendMessage,
 }
 
 const handler = (req, res, action, file, fileUsers = null) => {
-fs.readFile(file, (err, data) => {
+fs.readFile(file, 'utf-8', (err, data) => {
   if (err) {
     res.sendStatus(404, JSON.stringify({result: 1, text: err}));
   } else {
     switch (action) {
       case SEARCH_CHAT: 
-        fs.readFile(fileUsers, (err, users) => {
+        fs.readFile(fileUsers, 'utf-8', (err, users) => {
           if (err) {
             res.sendStatus(404, JSON.stringify({result: 1, text: err}));
           } else {
@@ -40,7 +39,7 @@ fs.readFile(file, (err, data) => {
         }
       break;
       case ADD_CHAT:
-        fs.readFile(fileUsers, (err, users) => {
+        fs.readFile(fileUsers,'utf-8',  (err, users) => {
           if (err) {
             res.sendStatus(404, JSON.stringify({result: 1, text: err}))
           } else {

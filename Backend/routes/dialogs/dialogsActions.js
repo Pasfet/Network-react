@@ -1,4 +1,4 @@
-const {createChats, createMessage, copyMessagesListWithNewChat, copyMessagesListWithoutDeletedChat, copyMessagesListWithNewMessage, generateRoomId} = require('./dialogsHelper');
+const {createChats, copyMessagesListWithNewChat, copyMessagesListWithoutDeletedChat,  generateRoomId} = require('./dialogsHelper');
 
 const getUsersName = (usersList, req) => {
   const {users} = usersList;
@@ -88,27 +88,10 @@ const getMessages = (messagesJson, req) => {
   }
 }
 
-const sendMessage = (usersList, messagesList, messageFromClient, messageId) => {
-  const {messages} = messagesList;
-  const {users} = usersList;
-  const {uid, chatId, text} = messageFromClient;
-
-  const newMessage = createMessage(uid, text, users[uid].user_name, messageId);
-  const MessagesListCopy = copyMessagesListWithNewMessage(messages, uid, newMessage, chatId);
-  const newMessagesList = {
-    messages: {
-      ...MessagesListCopy
-    }
-  }
-
-  return JSON.stringify(newMessagesList, null, 2);
-}
-
 module.exports = {
   getUsersName,
   getChats,
   getMessages,
   addChat,
   deleteChat,
-  sendMessage
 }

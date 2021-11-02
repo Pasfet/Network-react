@@ -1,21 +1,15 @@
 const fs = require('fs');
 
-const {SEND_MESSAGE} = require('../types/dialogsTypes');
-const dialogsAction = require('../dialogs/dialogsActions');
+const {sendMessage} = require('./wsChatActions');
 const {generateRandomMessageId} = require('../dialogs/dialogsHelper');
 
-const actions = {
-  SEND_MESSAGE: dialogsAction.sendMessage,
-}
-const handler = (messageFromClient, fileMessage, fileUsers) => {
+const handler = (messageFromClient, fileMessage) => {
   const messageID = generateRandomMessageId();
-  fs.readFile(fileMessage, (err, messages) => {
-    fs.readFile(fileUsers, (err, users) => {
-      const newMessageList = actions[SEND_MESSAGE](JSON.parse(users), JSON.parse(messages), messageFromClient, messageID);
-      if (newMessageList) {
-        fs.writeFile(fileMessage, newMessageList, (err) => {});
-      };
-    });
+  fs.readFile(fileMessage, 'utf-8', (err, messages) => {
+    const newMessageList = sendMessage(JSON.parse(messages), messageFromClient, messageID);
+    if (newMessageList) {
+      fs.writeFile(fileMessage, newMessageList, (err) => {console.log(err)});
+    };
   });
   return Object.assign({id: messageID}, messageFromClient);
 };

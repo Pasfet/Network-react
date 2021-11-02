@@ -64,7 +64,6 @@ const ProfileContainer = () => {
   const addPost = useCallback(
     e => {
       e.preventDefault();
-      console.log(myAvatar);
       dispatch(clearError());
       dispatch(
         sendUserPost(uid, {

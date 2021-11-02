@@ -11,11 +11,17 @@ import {
 } from '../../store/dialogsReducer/dialogsSelectors';
 import { getMyName } from '../../store/profileReducer/profileSelectors';
 import { getError } from '../../store/errorReducer/errorSelectors';
-import { clearMessages, getChatsList, getMessagesFromAPI } from '../../actions/dialogsActions';
+import {
+  clearMessages,
+  getChatsList,
+  getMessagesFromAPI,
+  isNotEmptyMessages,
+  sendMessageToStore,
+} from '../../actions/dialogsActions';
 import { clearError, setError } from '../../actions/errorActions';
 import MessageBar from './MessageBar/MessageBar';
 
-const URL = 'ws://localhost:8999/';
+const URL = 'ws://31.31.192.217:8999/';
 
 const MessagesContainer = () => {
   const dispatch = useDispatch();
@@ -69,7 +75,8 @@ const MessagesContainer = () => {
     };
 
     socket.current.onmessage = e => {
-      dispatch(getMessagesFromAPI(uid, chatId));
+      dispatch(isNotEmptyMessages());
+      dispatch(sendMessageToStore(JSON.parse(e.data)));
     };
 
     socket.current.onerror = e => {
@@ -78,20 +85,23 @@ const MessagesContainer = () => {
 
     return () => {
       socket.current.onclose = () => {
+        socket.current.send(JSON.stringify({ event: 'leave', uidRoom: chats[chatId]?.roomId }));
         dispatch(clearMessages());
         dispatch(clearError());
       };
       socket.current.onclose();
-      dispatch(clearMessages());
-      dispatch(clearError());
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chatId]);
+  }, [chatId, dispatch]);
 
   useEffect(() => {
     if (!isEmptyChats?.isEmpty) {
       dispatch(getChatsList(uid));
     }
+    return () => {
+      dispatch(clearMessages());
+      dispatch(clearError());
+    };
   }, [isEmptyChats, dispatch, uid]);
 
   return (
@@ -102,7 +112,7 @@ const MessagesContainer = () => {
         messages={messages}
         inputValue={inputValue}
         setInputValue={setInputValue}
-        error={error}
+        error={error && error.message}
         sendMessage={sendMessage}
         isEmpty={isEmptyMessages && isEmptyMessages.message}
       />

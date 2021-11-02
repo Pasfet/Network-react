@@ -12,7 +12,6 @@ const writePost = (posts, req) => {
   const {uid} = req.query;
   const {post} = req.body;
 
-  console.log(post)
   const randomId = PostRandomId();
   const newPost = createPost(post, randomId);
 

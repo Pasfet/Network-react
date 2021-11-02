@@ -13,8 +13,8 @@ const BubbleWrapper = styled('div')({
 
 const InlineContainer = styled('div')(({ me }) => ({
   display: 'flex',
-  flexDirection: me && 'row-reverse',
-  alignSelf: me ? 'flex-end' : 'flex-start',
+  flexDirection: me === 'true' && 'row-reverse',
+  alignSelf: me === 'true' ? 'flex-end' : 'flex-start',
 }));
 
 const Bubble = styled('div')(({ me }) => ({
@@ -23,24 +23,24 @@ const Bubble = styled('div')(({ me }) => ({
   width: '100%',
   padding: '14px 18px',
   margin: '6px 8px',
-  backgroundColor: me ? '#5b5377' : '#6c8ea4',
-  borderRadius: me ? '16px 16px 0 16px' : '16px 16px 16px 0',
-  border: me ? '1px solid #443f56' : '1px solid #54788e',
+  backgroundColor: me === 'true' ? '#5b5377' : '#6c8ea4',
+  borderRadius: me === 'true' ? '16px 16px 0 16px' : '16px 16px 16px 0',
+  border: me === 'true' ? '1px solid #443f56' : '1px solid #54788e',
 }));
 
 const AuthorNameSpan = styled('span')(({ me }) => ({
   fontSize: '14px',
   color: 'grey',
-  alignSelf: me ? 'flex-end' : 'flex-start',
+  alignSelf: me === 'true' ? 'flex-end' : 'flex-start',
 }));
 
 const Message = ({ message, uid }) => {
   return (
     <BubbleWrapper>
-      <InlineContainer me={message?.authorId === uid ? true : false}>
-        <Bubble me={message?.authorId === uid ? true : false}>{message?.text}</Bubble>
+      <InlineContainer me={message?.authorId === uid ? 'true' : 'false'}>
+        <Bubble me={message?.authorId === uid ? 'true' : 'false'}>{message?.text}</Bubble>
       </InlineContainer>
-      <AuthorNameSpan me={message?.authorId === uid ? true : false}>
+      <AuthorNameSpan me={message?.authorId === uid ? 'true' : 'false'}>
         {message?.authorName}
       </AuthorNameSpan>
     </BubbleWrapper>

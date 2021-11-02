@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
+const compression = require('compression');
 const app = express();
 
 const auth = require('./routes/auth/authRouter');
@@ -11,6 +12,7 @@ const friends = require('./routes/friends/friendsRouter');
 const users = require('./routes/users/usersRouter');
 const posts = require('./routes/posts/postsRouter');
 
+app.use(compression());
 app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));

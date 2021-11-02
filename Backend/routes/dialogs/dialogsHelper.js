@@ -20,35 +20,6 @@ const createChats = (uid, name, roomId) => {
   }
 }
 
-const createMessage = (uid, message, authorName, messageId) => {
-  return {
-    id: messageId,
-    text: message,
-    authorId: uid,
-    authorName: authorName
-  }
-}
-
-const copyMessagesListWithNewMessage = (messagesList, authorUid, newMessage, chatId) => {
-  return {
-    ...messagesList,
-    [authorUid]: {
-      ...messagesList[authorUid],
-      [chatId]: {
-        ...messagesList[authorUid][chatId],
-        messages: [...messagesList[authorUid][chatId].messages, newMessage]
-      },
-    },
-    [chatId]: {
-      ...messagesList[chatId],
-      [authorUid]: {
-        ...messagesList[chatId][authorUid],
-        messages: [...messagesList[chatId][authorUid].messages, newMessage]
-      }
-    }
-  }
-}
-
 const copyMessagesListWithNewChat = (messagesList, authorUid, chatAuthor, recipientUid, recipientChat) => {
   return {
     ...messagesList,
@@ -77,10 +48,8 @@ const copyMessagesListWithoutDeletedChat = (messagesList, authorUid, chatsAuthor
 
 module.exports = {
   createChats,
-  createMessage,
   copyMessagesListWithNewChat,
   copyMessagesListWithoutDeletedChat,
-  copyMessagesListWithNewMessage,
   generateRandomMessageId,
   generateRoomId
 }
