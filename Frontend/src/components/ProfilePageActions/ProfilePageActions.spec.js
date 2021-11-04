@@ -37,6 +37,20 @@ describe('<ProfilePageActions />', () => {
     expect(queryByText(/Добавить в друзья/i)).not.toBeInTheDocument();
   });
 
+  it('Render button "Загрузить аватарку", if uid === myUid', () => {
+    const { getByText, queryByText } = renderComponent({
+      myUid: 'id1',
+      uid: 'id1',
+      userAvatar: 'avatar.jpeg',
+    });
+
+    expect(getByText(/Редактировать/i)).toBeInTheDocument();
+    expect(getByText(/Загрузить аватарку/i)).toBeInTheDocument();
+    expect(queryByText(/Отменить запрос/i)).not.toBeInTheDocument();
+    expect(queryByText(/Удалить из друзей/i)).not.toBeInTheDocument();
+    expect(queryByText(/Добавить в друзья/i)).not.toBeInTheDocument();
+  });
+
   it('Render button "Отменить запрос", if user send request', () => {
     const { getByText, queryByText } = renderComponent({
       myUid: 'id1',
@@ -157,5 +171,19 @@ describe('<ProfilePageActions />', () => {
     fireEvent.click(getByText(/Добавить в друзья/i));
 
     expect(addToFriendsList).toHaveBeenCalled();
+  });
+
+  it('Call setOpenDialog when click on "Загрузить аватарку"', () => {
+    const mockProps = {
+      myUid: 'id1',
+      uid: 'id1',
+      userAvatar: 'avatar.jpeg',
+      setOpenDialog: jest.fn(),
+    };
+    const { getByText } = renderComponent(mockProps);
+
+    fireEvent.click(getByText(/Загрузить аватарку/i));
+
+    expect(mockProps.setOpenDialog).toHaveBeenCalledWith(true);
   });
 });

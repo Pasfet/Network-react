@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getError } from '../../store/errorReducer/errorSelectors';
@@ -12,6 +12,7 @@ import {
   sendProfileChange,
   sendRequestToFriendList,
   sendUserPost,
+  setAvatar,
 } from '../../actions/profileActions';
 import {
   getUserProfile,
@@ -38,9 +39,12 @@ const ProfileContainer = () => {
 
   const { uid } = useParams();
 
+  const [openDialog, setOpenDialog] = useState(false);
   const [openStatus, setOpenStatus] = useState(false);
   const [statusInput, setStatusInput] = useState('');
   const [postValue, setPostValue] = useState('');
+  const [fileInfo, setFileInfo] = useState(null);
+  const formAvatar = useRef(null);
 
   const sendStatus = useCallback(() => {
     setOpenStatus(false);
@@ -85,6 +89,17 @@ const ProfileContainer = () => {
     [dispatch, uid],
   );
 
+  const sendAvatar = useCallback(
+    e => {
+      e.preventDefault();
+      const data = new FormData();
+      data.append('avatar', formAvatar.current.files[0]);
+      dispatch(setAvatar(myUid, data));
+      setOpenDialog(false);
+    },
+    [formAvatar, dispatch, myUid],
+  );
+
   useEffect(() => {
     dispatch(getUserProfileFromApi(uid));
     dispatch(getMyFriendsList(myUid));
@@ -116,6 +131,12 @@ const ProfileContainer = () => {
       setPostValue={setPostValue}
       addPost={addPost}
       deletePost={deletePost}
+      openDialog={openDialog}
+      setOpenDialog={setOpenDialog}
+      sendAvatar={sendAvatar}
+      formAvatar={formAvatar}
+      fileInfo={fileInfo}
+      setFileInfo={setFileInfo}
     />
   );
 };

@@ -16,6 +16,7 @@ import {
   sendProfileChange,
   sendRequestToFriendList,
   sendUserPost,
+  setAvatar,
 } from '../profileActions';
 import { CURRENT_URL } from '../../store/types/authTypes';
 
@@ -185,7 +186,7 @@ describe('Profile actions', () => {
           initialState = reducerMock(initialState, action);
         });
 
-        expect(fetchMock).toHaveBeenCalledWith(`${CURRENT_CURRENT_URL}/profile/id1`);
+        expect(fetchMock).toHaveBeenCalledWith(`${CURRENT_URL}/profile/id1`);
         expect(initialState.error.snackMessage).toEqual({ text: 'Обновлено!', result: 0 });
       });
     });
@@ -293,7 +294,7 @@ describe('Profile actions', () => {
           initialState = reducerMock(initialState, action);
         });
 
-        expect(fetchMock).toHaveBeenCalledWith(`${CURRENT_CURRENT_URL}/friends/id1`);
+        expect(fetchMock).toHaveBeenCalledWith(`${CURRENT_URL}/friends/id1`);
         expect(initialState.error.snackMessage).toBeNull();
         expect(initialState.error.error).toBeNull();
         expect(initialState.profilePage.myFriends).toEqual(mockFriendsList);
@@ -1034,6 +1035,69 @@ describe('Profile actions', () => {
         });
 
         expect(initialState.profilePage.posts).toEqual([]);
+        expect(initialState.error.snackMessage).toBeNull();
+        expect(initialState.error.error).toEqual({ message: 'Failed to fetch', type: 'error' });
+      });
+    });
+  });
+
+  describe('SetAvatar', () => {
+    it('SetAvatar with result === 0', () => {
+      fetchMock.mockResponse(
+        JSON.stringify({
+          result: 0,
+          text: 'Send!',
+        }),
+      );
+
+      let initialState = {
+        profilePage: {
+          myFriends: null,
+          posts: [],
+        },
+        error: {
+          error: null,
+          snackMessage: null,
+        },
+      };
+
+      const store = mockStore(() => initialState);
+
+      return store.dispatch(setAvatar('id1', {})).then(() => {
+        const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
+
+        actions.forEach(action => {
+          initialState = reducerMock(initialState, action);
+        });
+
+        expect(initialState.error.snackMessage).toEqual({ text: 'Send!', result: 0 });
+        expect(initialState.error.error).toBeNull();
+      });
+    });
+
+    it('SetAvatar with Error', () => {
+      fetchMock.mockReject(new Error('Failed to fetch'));
+
+      let initialState = {
+        profilePage: {
+          myFriends: null,
+          posts: [],
+        },
+        error: {
+          error: null,
+          snackMessage: null,
+        },
+      };
+
+      const store = mockStore(() => initialState);
+
+      return store.dispatch(setAvatar('id1', {})).then(() => {
+        const actions = store.getActions().map(({ type, payload }) => ({ type, payload }));
+
+        actions.forEach(action => {
+          initialState = reducerMock(initialState, action);
+        });
+
         expect(initialState.error.snackMessage).toBeNull();
         expect(initialState.error.error).toEqual({ message: 'Failed to fetch', type: 'error' });
       });

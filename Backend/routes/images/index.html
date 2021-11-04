@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  ФАЙЛ
+  <!-- <form action="http://localhost:3001/images" method="post" enctype="multipart/form-data">
+    <input type="file" name="avatar" />
+    <button type="submit">send</button>
+  </form> -->
+  <form class="form-test">
+    <input type="file" name="avatar" id="fileInput" />
+    <button type="submit">send</button>
+  </form>
+  <script>
+    const form = document.querySelector('.form-test');
+    const fileInput = document.getElementById('fileInput');
+
+    const upload = () => {
+      fetch('http://localhost:3001/images?uid=e0cc1e0', {
+        method: 'POST',
+        body: new FormData(form)
+      })
+    }
+
+    // const onSelectFile = () => upload(fileInput.files[0]);
+
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      upload()
+    });
+  </script>
+</body>
+</html>

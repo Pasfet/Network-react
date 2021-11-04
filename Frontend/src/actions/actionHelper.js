@@ -3,7 +3,7 @@ import { getChatsList } from './dialogsActions';
 import { setError, setSnack } from './errorActions';
 import { getMyFriendsList } from './profileActions';
 
-export const authFetchHepler = async (url, body) => {
+export const authFetchHelper = async (url, body) => {
   const response = await fetch(`${CURRENT_URL}/${url}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json;charset=utf-8' },

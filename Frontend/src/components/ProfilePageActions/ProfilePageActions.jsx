@@ -15,29 +15,32 @@ import { memo } from 'react';
 const ProfilePageActions = ({
   myUid,
   uid,
-  userAvatar,
   myFriends,
   addToFriendsList,
   deleteFriend,
   rejectFriendRequestHandler,
+  setOpenDialog,
 }) => {
   const history = useHistory();
   return (
     <PageActions>
       <AvatarImageWrapper>
-        <AvatarImage
-          src={`${CURRENT_URL}/images/profile/${uid}/avatar/${userAvatar}`}
-          height="300"
-          alt="avatar"
-        />
+        <AvatarImage src={`${CURRENT_URL}/images?uid=${uid}`} height="300" alt="avatar" />
       </AvatarImageWrapper>
       <Divider />
       {myUid === uid && (
-        <ListItemPageActions>
-          <PageActionsEdit onClick={() => history.push(`/profile/${myUid}/edit`)}>
-            Редактировать
-          </PageActionsEdit>
-        </ListItemPageActions>
+        <>
+          <ListItemPageActions>
+            <PageActionsEdit onClick={() => history.push(`/profile/${myUid}/edit`)}>
+              Редактировать
+            </PageActionsEdit>
+          </ListItemPageActions>
+          <ListItemPageActions>
+            <PageActionsEdit onClick={() => setOpenDialog(true)}>
+              Загрузить аватарку
+            </PageActionsEdit>
+          </ListItemPageActions>
+        </>
       )}
       {myUid !== uid ? (
         myFriends?.friends_requstions?.find(request => request.uid === uid && !request.incoming) ? (
@@ -74,6 +77,7 @@ ProfilePageActions.propsTypes = {
   addToFriendsList: PropTypes.func.isRequired,
   deleteFriend: PropTypes.func,
   rejectFriendRequestHandler: PropTypes.func,
+  setOpenDialog: PropTypes.func,
 };
 
 export default memo(ProfilePageActions);
