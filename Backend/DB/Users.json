@@ -7,6 +7,11 @@
       "user_name": "Павел Константинов",
       "user_friends": [
         {
+          "user_name": "Test",
+          "avatar": null,
+          "uid": "911f271"
+        },
+        {
           "user_name": "Anna",
           "avatar": null,
           "uid": "c49fc41"
@@ -29,13 +34,37 @@
           "text": "Языки"
         }
       },
-      "friends_requstions": []
+      "friends_requstions": [
+        {
+          "user_name": "Вася",
+          "avatar": null,
+          "uid": "fd4b5cc",
+          "incoming": true
+        }
+      ]
     },
     "c49fc41": {
       "uid": "c49fc41",
       "user_email": "anna@anna.com",
       "password": "qwertyui",
       "user_name": "Anna",
+      "user_friends": [
+        {
+          "user_name": "Павел Константинов",
+          "avatar": null,
+          "uid": "e0cc1e0"
+        }
+      ],
+      "status": "",
+      "avatar": null,
+      "about": {},
+      "friends_requstions": []
+    },
+    "911f271": {
+      "uid": "911f271",
+      "user_email": "testmail@mail.com",
+      "password": "asdfghjk",
+      "user_name": "Test",
       "user_friends": [
         {
           "user_name": "Павел Константинов",
@@ -47,6 +76,46 @@
       "avatar": null,
       "about": {},
       "friends_requstions": []
+    },
+    "764ec3c": {
+      "uid": "764ec3c",
+      "user_email": "dsadsa@mail.ry",
+      "password": "kekus1234",
+      "user_name": "тест",
+      "user_friends": [],
+      "status": "",
+      "avatar": null,
+      "about": {},
+      "friends_requstions": []
+    },
+    "5ccddae": {
+      "uid": "5ccddae",
+      "user_email": "test@mail.ru",
+      "password": "kekus123",
+      "user_name": "test",
+      "user_friends": [],
+      "status": "",
+      "avatar": null,
+      "about": {},
+      "friends_requstions": []
+    },
+    "fd4b5cc": {
+      "uid": "fd4b5cc",
+      "user_email": "mail@test.ru",
+      "password": "dwop*rhak3JICK0zilk",
+      "user_name": "Вася",
+      "user_friends": [],
+      "status": "",
+      "avatar": null,
+      "about": {},
+      "friends_requstions": [
+        {
+          "user_name": "Павел Константинов",
+          "avatar": "e0cc1e0_avatar.jpg",
+          "uid": "e0cc1e0",
+          "incoming": false
+        }
+      ]
     }
   }
 }
