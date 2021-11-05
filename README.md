@@ -1,5 +1,7 @@
 # Getting start
 
+Если перейти по ссылке [из описания](http://social-net-react.ru), то после перезагрузки будет ошибка 404, это связанно с тем, что статика загружается без обработки путей :(
+
 В папке "Backend" ввдеите `npm install`, а в папке "Frontend" введите `yarn install`.
 
 ## Available Scripts
