@@ -39,7 +39,7 @@ const UserListItem = ({
           myFriends?.friends_requstions.find(r => r.uid === user.uid) ||
           myFriends?.user_friends.find(f => f.uid === user.uid) ? (
             <TableCell>
-              <CheckIcon />
+              <CheckIcon data-testid="checkIcon" />
             </TableCell>
           ) : (
             <TableCell>
@@ -53,7 +53,7 @@ const UserListItem = ({
         )
       ) : isFriend ? (
         <TableCell>
-          <IconButton data-testid="frendsDeleteButton" onClick={() => deleteFriend(user.uid)}>
+          <IconButton data-testid="friendsDeleteButton" onClick={() => deleteFriend(user.uid)}>
             <DeleteIcon />
           </IconButton>
         </TableCell>

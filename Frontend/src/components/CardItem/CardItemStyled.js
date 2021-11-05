@@ -13,10 +13,10 @@ export const CardImgWrapper = styled(CardMedia)({
 
 export const CardTitle = styled(Typography)({
   '&.MuiTypography-h2': {
-    fontSize: '22px',
+    fontSize: '1.4rem',
     marginBottom: '20px',
     '@media(max-width: 650px)': {
-      fontSize: '18px',
+      fontSize: '1.1rem',
     },
   },
 });

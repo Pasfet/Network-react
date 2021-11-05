@@ -89,7 +89,7 @@ describe('<MyFriendsList />', () => {
       },
     });
 
-    fireEvent.click(getByTestId('frendsDeleteButton'));
+    fireEvent.click(getByTestId('friendsDeleteButton'));
 
     expect(mockProps.deleteFriend).toHaveBeenCalledWith('id1');
   });

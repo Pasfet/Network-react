@@ -27,8 +27,8 @@ describe('News actions', () => {
   describe('NewsPage actions', () => {
     describe('GetNewsAPI action', () => {
       it('GetNewsAPI with result === 0', () => {
-        const mockArticles = [{ id: '1', source: { name: 'namesource' }, text: 'Text' }];
-        fetchMock.mockResponse(JSON.stringify({ result: 0, articles: mockArticles }));
+        const mockArticles = [{ id: '1', source: 'namesource', text: 'Text' }];
+        fetchMock.mockResponse(JSON.stringify({ result: 0, data: mockArticles }));
 
         let initialState = {
           newsPage: {

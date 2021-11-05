@@ -25,27 +25,32 @@ const MyFriendsContainer = () => {
     setTabsValue(newValue);
   };
 
-  const confirmRequestToFriendsList = useCallback(recipientUid => {
-    dispatch(addToFriendsList(myUid, recipientUid));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const confirmRequestToFriendsList = useCallback(
+    recipientUid => {
+      dispatch(addToFriendsList(myUid, recipientUid));
+    },
+    [dispatch, myUid],
+  );
 
-  const rejectFriendRequestHandler = useCallback(recipientUid => {
-    dispatch(rejectFriendRequest(myUid, recipientUid));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const rejectFriendRequestHandler = useCallback(
+    recipientUid => {
+      dispatch(rejectFriendRequest(myUid, recipientUid));
+    },
+    [dispatch, myUid],
+  );
 
-  const deleteFriend = useCallback(recipientUid => {
-    dispatch(deleteFriendFromFriendsList(myUid, recipientUid));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const deleteFriend = useCallback(
+    recipientUid => {
+      dispatch(deleteFriendFromFriendsList(myUid, recipientUid));
+    },
+    [dispatch, myUid],
+  );
 
   useEffect(() => {
     dispatch(getMyFriendsList(myUid));
 
     return () => dispatch(clearError());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch, myUid]);
 
   return (
     <MyFriendsList

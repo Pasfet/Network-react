@@ -22,6 +22,7 @@ describe('<Profile />', () => {
     uid: '',
     myUid: '',
     error: {},
+    openDialog: false,
     openStatus: false,
     setOpenStatus: jest.fn(),
     statusInput: '',

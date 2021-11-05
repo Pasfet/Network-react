@@ -13,6 +13,7 @@ export const MyFriendsListBox = styled(Box)({});
 
 export const MyFriendsListHeading = styled('h1')({
   marginBottom: '20px',
+  fontSize: '1.5rem',
 });
 
 export const MyFriendsListHeadingName = styled('span')({

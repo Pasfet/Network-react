@@ -1,8 +1,8 @@
 import { Alert, Paper, Tab } from '@mui/material';
 import { TabContext, TabPanel, TabList } from '@material-ui/lab';
 import PropTypes from 'prop-types';
-import FreindsIcon from '@mui/icons-material/PeopleAlt';
-import FreindsRequestsIcon from '@mui/icons-material/GroupAdd';
+import FriendsIcon from '@mui/icons-material/PeopleAlt';
+import FriendsRequestsIcon from '@mui/icons-material/GroupAdd';
 
 import {
   MyFriendsListBox,
@@ -28,8 +28,8 @@ const MyFriendsList = ({
         {error && <Alert saverity="info"> {error} </Alert>}
         <TabContext value={tabsValue}>
           <TabList onChange={setTabsValue} aria-label="icon label tabs example">
-            <Tab icon={<FreindsIcon />} label="Друзья" value="1" />
-            <Tab icon={<FreindsRequestsIcon />} label="Заявки в друзья" value="2" />
+            <Tab icon={<FriendsIcon />} label="Друзья" value="1" />
+            <Tab icon={<FriendsRequestsIcon />} label="Заявки в друзья" value="2" />
           </TabList>
           <TabPanel value="1">
             <MyFriendsListTable aria-label="Мои друзья">

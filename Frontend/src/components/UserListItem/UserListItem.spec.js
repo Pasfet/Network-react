@@ -6,6 +6,11 @@ import UserListItem from './UserListItem';
 
 describe('<UserListItem />', () => {
   const mockProps = {
+    myUid: 'id2',
+    myFriends: {
+      friends_requstions: [],
+      user_friends: [],
+    },
     user: {
       avatar: null,
       uid: 'id1',
@@ -54,18 +59,18 @@ describe('<UserListItem />', () => {
     });
 
     expect(getByTestId('addToFriendsList')).toBeInTheDocument();
-    expect(queryByTestId('frendsDeleteButton')).not.toBeInTheDocument();
+    expect(queryByTestId('friendsDeleteButton')).not.toBeInTheDocument();
     expect(queryByTestId('confirmRequestToFriendsList')).not.toBeInTheDocument();
     expect(queryByTestId('rejectFriendRequestHandler')).not.toBeInTheDocument();
   });
 
-  it('Render frendsDeleteButton if isFriend === true', () => {
+  it('Render friendsDeleteButton if isFriend === true', () => {
     const { getByTestId, queryByTestId } = renderComponent({
       ...mockProps,
       isFriend: true,
     });
 
-    expect(getByTestId('frendsDeleteButton')).toBeInTheDocument();
+    expect(getByTestId('friendsDeleteButton')).toBeInTheDocument();
     expect(queryByTestId('addToFriendsList')).not.toBeInTheDocument();
     expect(queryByTestId('confirmRequestToFriendsList')).not.toBeInTheDocument();
     expect(queryByTestId('rejectFriendRequestHandler')).not.toBeInTheDocument();
@@ -76,8 +81,62 @@ describe('<UserListItem />', () => {
 
     expect(getByTestId('confirmRequestButton')).toBeInTheDocument();
     expect(getByTestId('rejectRequestButton')).toBeInTheDocument();
-    expect(queryByTestId('frendsDeleteButton')).not.toBeInTheDocument();
+    expect(queryByTestId('friendsDeleteButton')).not.toBeInTheDocument();
     expect(queryByTestId('addToFriendsList')).not.toBeInTheDocument();
+  });
+
+  it('Render CheckIcon if isFriendsOfFriends & user contains in my friendsRequestions', () => {
+    const { getByTestId, queryByTestId, getByText } = renderComponent({
+      ...mockProps,
+      isFriendsOfFriends: true,
+      myFriends: {
+        ...mockProps.myFriends,
+        friends_requstions: [{ uid: 'id1', user_name: 'Name' }],
+      },
+    });
+
+    expect(getByText(/Name/i)).toBeInTheDocument();
+    expect(getByTestId('checkIcon')).toBeInTheDocument();
+    expect(queryByTestId('addToFriendsList')).not.toBeInTheDocument();
+    expect(queryByTestId('friendsDeleteButton')).not.toBeInTheDocument();
+    expect(queryByTestId('confirmRequestButton')).not.toBeInTheDocument();
+    expect(queryByTestId('rejectRequestButton')).not.toBeInTheDocument();
+  });
+
+  it('Render CheckIcon if isFriendsOfFriends & user contains in my user_friends', () => {
+    const { getByTestId, queryByTestId, getByText } = renderComponent({
+      ...mockProps,
+      isFriendsOfFriends: true,
+      myFriends: {
+        ...mockProps.myFriends,
+        user_friends: [{ uid: 'id1', user_name: 'Name' }],
+      },
+    });
+
+    expect(getByText(/Name/i)).toBeInTheDocument();
+    expect(getByTestId('checkIcon')).toBeInTheDocument();
+    expect(queryByTestId('addToFriendsList')).not.toBeInTheDocument();
+    expect(queryByTestId('friendsDeleteButton')).not.toBeInTheDocument();
+    expect(queryByTestId('confirmRequestButton')).not.toBeInTheDocument();
+    expect(queryByTestId('rejectRequestButton')).not.toBeInTheDocument();
+  });
+
+  it('Does not render allButtons if isFriendsOfFriends & myUid === user.uid', () => {
+    const { getByTestId, queryByTestId, getByText } = renderComponent({
+      ...mockProps,
+      isFriendsOfFriends: true,
+      user: {
+        uid: 'id2',
+        user_name: 'My name',
+      },
+    });
+
+    expect(getByText(/My name/i)).toBeInTheDocument();
+    expect(queryByTestId('checkIcon')).not.toBeInTheDocument();
+    expect(queryByTestId('addToFriendsList')).not.toBeInTheDocument();
+    expect(queryByTestId('friendsDeleteButton')).not.toBeInTheDocument();
+    expect(queryByTestId('confirmRequestButton')).not.toBeInTheDocument();
+    expect(queryByTestId('rejectRequestButton')).not.toBeInTheDocument();
   });
 
   it('Push to="/profile/:uid" when click on userName', () => {
@@ -96,10 +155,10 @@ describe('<UserListItem />', () => {
     expect(mockProps.addToFriendsList).toHaveBeenCalledWith(mockProps.user.uid);
   });
 
-  it('Called deleteFriend when click on frendsDeleteButton Button', () => {
+  it('Called deleteFriend when click on friendsDeleteButton Button', () => {
     const { getByTestId } = renderComponent({ ...mockProps, isFriend: true });
 
-    fireEvent.click(getByTestId('frendsDeleteButton'));
+    fireEvent.click(getByTestId('friendsDeleteButton'));
 
     expect(mockProps.deleteFriend).toHaveBeenCalledWith(mockProps.user.uid);
   });
