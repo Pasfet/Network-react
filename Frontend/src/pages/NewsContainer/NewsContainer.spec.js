@@ -18,13 +18,12 @@ describe('<NewsContainer />', () => {
 
   const mockNews = [
     {
-      urlToImage: 'url',
+      image: 'url',
       title: 'News post title',
       description: 'News post description',
-      source: {
-        name: 'name source',
-      },
+      source: 'source',
       url: 'urlPost.com',
+      published_at: '544',
     },
   ];
 
@@ -57,7 +56,7 @@ describe('<NewsContainer />', () => {
 
     expect(getByText(mockNews[0].title)).toBeInTheDocument();
     expect(getByText(mockNews[0].description)).toBeInTheDocument();
-    expect(getByText(mockNews[0].source.name)).toBeInTheDocument();
+    expect(getByText(mockNews[0].source)).toBeInTheDocument();
   });
 
   it('Link "Перейти к статье" href === "urlPost.com"', () => {

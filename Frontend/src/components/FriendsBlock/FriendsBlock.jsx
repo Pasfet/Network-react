@@ -1,13 +1,13 @@
 import {
-  CountFirends,
-  FreindsBlockTitle,
+  FriendsBlockTitle,
   FriendBlockHeading,
-  FriendBlockList,
+  CountFriends,
   FriendsBlockItem,
   FriendsBlockLink,
   FriendsBlockMockFriends,
   FriendsBlockUserAvatar,
   FriendsBlockUserName,
+  FriendsBlockList,
 } from './FriendsBlockStyled';
 
 import PropTypes from 'prop-types';
@@ -18,13 +18,13 @@ const FriendsBlock = ({ userFriends, uid }) => {
   return (
     <>
       <FriendBlockHeading>
-        <FreindsBlockTitle>
+        <FriendsBlockTitle>
           Друзья
-          <CountFirends> {userFriends && userFriends.length} </CountFirends>
-        </FreindsBlockTitle>
+          <CountFriends> {userFriends && userFriends.length} </CountFriends>
+        </FriendsBlockTitle>
         <FriendsBlockLink to={`/profile/${uid}/friends`}>Все друзья</FriendsBlockLink>
       </FriendBlockHeading>
-      <FriendBlockList>
+      <FriendsBlockList>
         {userFriends?.length ? (
           userFriends.slice(0, 6)?.map(friend => (
             <FriendsBlockItem key={friend.uid}>
@@ -42,7 +42,7 @@ const FriendsBlock = ({ userFriends, uid }) => {
         ) : (
           <FriendsBlockMockFriends>Нет друзей</FriendsBlockMockFriends>
         )}
-      </FriendBlockList>
+      </FriendsBlockList>
     </>
   );
 };

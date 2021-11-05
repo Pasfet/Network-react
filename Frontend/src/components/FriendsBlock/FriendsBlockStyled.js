@@ -8,11 +8,11 @@ export const FriendBlockHeading = styled('div')({
   justifyContent: 'space-between',
 });
 
-export const FreindsBlockTitle = styled('h3')({
+export const FriendsBlockTitle = styled('h3')({
   fontSize: '14px',
 });
 
-export const CountFirends = styled('span')({
+export const CountFriends = styled('span')({
   marginLeft: '10px',
   fontSize: '12px',
   color: '#000',
@@ -26,7 +26,7 @@ export const FriendsBlockLink = styled(Link)({
   },
 });
 
-export const FriendBlockList = styled(List)({
+export const FriendsBlockList = styled(List)({
   display: 'grid',
   gridTemplateColumns: 'repeat(3, 50px)',
   gap: '10px',
@@ -48,9 +48,13 @@ export const FriendsBlockUserName = styled(Link)({
   color: '#000',
   marginTop: '5px',
   textTransform: 'capitalize',
-  fontSize: '16px',
+  fontSize: '1rem',
+  textAlign: 'center',
   '&:hover': {
     opacity: '.8',
+  },
+  '@media(max-width: 400px)': {
+    fontSize: '0.8rem',
   },
 });
 

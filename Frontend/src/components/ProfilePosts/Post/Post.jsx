@@ -9,12 +9,15 @@ import { Link } from 'react-router-dom';
 const CardHeaderStyled = styled(CardHeader)({
   '& .MuiCardHeader-title': {
     textTransform: 'capitalize',
-    fontSize: '18px',
+    fontSize: '1.2rem',
   },
 });
 
 const CardHeaderLink = styled(Link)({
   color: '#000',
+  '@media(max-width: 420px)': {
+    fontSize: '0.8rem',
+  },
 });
 
 const Post = ({ post, myUid, uid, deletePost }) => {

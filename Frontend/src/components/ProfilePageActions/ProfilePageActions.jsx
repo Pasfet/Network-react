@@ -45,19 +45,19 @@ const ProfilePageActions = ({
       {myUid !== uid ? (
         myFriends?.friends_requstions?.find(request => request.uid === uid && !request.incoming) ? (
           <ListItemPageActions>
-            <PageActionsButton deletebutton="true" onClick={() => rejectFriendRequestHandler()}>
+            <PageActionsButton deletebutton={'true'} onClick={() => rejectFriendRequestHandler()}>
               Отменить запрос
             </PageActionsButton>
           </ListItemPageActions>
         ) : myFriends?.user_friends.find(friend => friend.uid === uid) ? (
           <ListItemPageActions>
-            <PageActionsButton deletebutton="true" onClick={() => deleteFriend()}>
+            <PageActionsButton deletebutton={'true'} onClick={() => deleteFriend()}>
               Удалить из друзей
             </PageActionsButton>
           </ListItemPageActions>
         ) : (
           <ListItemPageActions>
-            <PageActionsButton addbutton="true" onClick={() => addToFriendsList()}>
+            <PageActionsButton addbutton={'true'} onClick={() => addToFriendsList()}>
               Добавить в друзья
             </PageActionsButton>
           </ListItemPageActions>

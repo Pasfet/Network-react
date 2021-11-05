@@ -1,7 +1,7 @@
-import { Table, TableBody, TableCell } from '@mui/material';
+import { Table, TableBody } from '@mui/material';
 import PropTypes from 'prop-types';
 import { memo } from 'react';
-import { ProfileAboutContainer, ProfileAboutRow } from './ProfileAboutUserStyled';
+import { ProfileAboutContainer, ProfileAboutRow, TableRowTitle } from './ProfileAboutUserStyled';
 
 const ProfileAboutUser = ({ about }) => {
   return (
@@ -11,10 +11,10 @@ const ProfileAboutUser = ({ about }) => {
           {about &&
             Object.keys(about)?.map(item => (
               <ProfileAboutRow key={item} hover>
-                <TableCell>{about[item].text}</TableCell>
-                <TableCell>
+                <TableRowTitle>{about[item].text}</TableRowTitle>
+                <TableRowTitle>
                   {about[item].payload ? about[item].payload : 'Ничего не задано'}
-                </TableCell>
+                </TableRowTitle>
               </ProfileAboutRow>
             ))}
         </TableBody>
