@@ -29,7 +29,7 @@ const FriendsBlock = ({ userFriends, uid }) => {
           userFriends.slice(0, 6)?.map(friend => (
             <FriendsBlockItem key={friend.uid}>
               <FriendsBlockUserAvatar
-                src={`${CURRENT_URL}/images/profile/${friend.uid}/avatar/${friend.avatar}`}
+                src={`${CURRENT_URL}/images?uid=${friend.uid}`}
                 alt="ava"
                 width="70"
                 height="70"

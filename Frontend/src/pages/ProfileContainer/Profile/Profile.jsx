@@ -1,5 +1,6 @@
 import { Divider } from '@mui/material';
 import PropTypes from 'prop-types';
+import DialogSendImage from '../../../components/DialogSendImage/DialogSendImage';
 import FriendsBlock from '../../../components/FriendsBlock/FriendsBlock';
 import ProfileAboutUser from '../../../components/ProfileAboutUser/ProfileAboutUser';
 import ProfilePageActions from '../../../components/ProfilePageActions/ProfilePageActions';
@@ -34,9 +35,25 @@ const Profile = ({
   setPostValue,
   addPost,
   deletePost,
+  openDialog,
+  setOpenDialog,
+  sendAvatar,
+  formAvatar,
+  fileInfo,
+  setFileInfo,
 }) => {
   return (
     <ProfileWrapper container spacing={2}>
+      <DialogSendImage
+        open={openDialog}
+        handleClose={setOpenDialog}
+        sendAvatar={sendAvatar}
+        title={'Отправка фото'}
+        text={'Загрузите фотографию в качестве аватарке'}
+        formAvatar={formAvatar}
+        fileInfo={fileInfo}
+        setFileInfo={setFileInfo}
+      />
       <ProfileBar item lg={3} md={4}>
         <BoxStyled>
           <ProfilePageActions
@@ -47,6 +64,7 @@ const Profile = ({
             addToFriendsList={addToFriendsList}
             deleteFriend={deleteFriend}
             rejectFriendRequestHandler={rejectFriendRequestHandler}
+            setOpenDialog={setOpenDialog}
           />
         </BoxStyled>
         <BoxStyled>
@@ -114,6 +132,11 @@ Profile.propTypes = {
   setPostValue: PropTypes.func,
   addPost: PropTypes.func,
   deletePost: PropTypes.func,
+  openDialog: PropTypes.bool,
+  setOpenDialog: PropTypes.func,
+  sendAvatar: PropTypes.func,
+  fileInfo: PropTypes.object,
+  setFileInfo: PropTypes.func,
 };
 
 export default Profile;

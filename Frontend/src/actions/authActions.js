@@ -3,7 +3,7 @@ import { clearError, setError, setSnack } from './errorActions';
 import { loadingFalse, loadingTrue } from './spinnerActions';
 import { clearMyFriends, clearUid, clearUser, clearUserPosts, setUid } from './profileActions';
 import { clearChats } from './dialogsActions';
-import { authFetchHepler } from './actionHelper';
+import { authFetchHelper } from './actionHelper';
 import { clearNews } from './newsPageActions';
 import { clearLastPage, clearUsers, clearUsersListLength } from './usersActions';
 
@@ -20,7 +20,7 @@ export const authorization = user => {
     dispatch(loadingTrue());
 
     try {
-      const data = await authFetchHepler('login', user);
+      const data = await authFetchHelper('login', user);
       if (data.result === 0) {
         dispatch(setAuth());
         dispatch(setUid(data.user));
@@ -42,7 +42,7 @@ export const registration = user => {
     dispatch(loadingTrue());
 
     try {
-      const data = await authFetchHepler('signup', user);
+      const data = await authFetchHelper('signup', user);
       if (data.result === 0) {
         dispatch(authorization(user));
         dispatch(setSnack({ text: data.text, result: data.result }));

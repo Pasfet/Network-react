@@ -24,7 +24,7 @@ const Post = ({ post, myUid, uid, deletePost }) => {
         avatar={
           <Avatar
             sx={{ width: '60px', height: '60px' }}
-            src={`${CURRENT_URL}/images/profile/${post.author_uid}/avatar/${post.author_avatar}`}
+            src={`${CURRENT_URL}/images?uid=${post.author_uid}`}
             alt={post.author_name}
           />
         }

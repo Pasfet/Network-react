@@ -199,3 +199,21 @@ export const deleteUserPost = (uid, postId) => {
     }
   };
 };
+
+export const setAvatar = (uid, image) => {
+  return async dispatch => {
+    try {
+      const response = await fetch(`${CURRENT_URL}/images?uid=${uid}`, {
+        method: 'POST',
+        body: image,
+      });
+      const data = await response.json();
+      if (data.result === 0) {
+        dispatch(setSnack({ text: data.text, result: data.result }));
+        dispatch(getUserProfileFromApi(uid));
+      }
+    } catch (err) {
+      dispatch(setError({ message: err.message, type: 'error' }));
+    }
+  };
+};

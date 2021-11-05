@@ -25,10 +25,7 @@ const UserListItem = ({
     <UserListItemRow hover>
       <TableCell>
         <UserListItemImgWrapper>
-          <UserListItemAvatar
-            src={`${CURRENT_URL}/images/profile/${user.uid}/avatar/${user.avatar}`}
-            alt={user?.user_name}
-          />
+          <UserListItemAvatar src={`${CURRENT_URL}/images?uid=${user.uid}`} alt={user?.user_name} />
         </UserListItemImgWrapper>
       </TableCell>
       <TableCell>
