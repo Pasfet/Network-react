@@ -7,16 +7,23 @@ import Spinner from '../../../components/Spinner/Spinner';
 const NewsList = ({ news, fetchMoreNews }) => {
   return (
     <Grid container sx={{ justifyContent: 'center', padding: '0 15px' }}>
-      <InfiniteScroll
-        dataLength={news.length}
-        next={fetchMoreNews}
-        hasMore={true}
-        loader={<Spinner fullPage={true} />}
-      >
-        {news?.map(post => (
-          <CardItem key={post.title} post={post} />
-        ))}
-      </InfiniteScroll>
+      {news?.length ? (
+        <InfiniteScroll
+          dataLength={news.length}
+          next={fetchMoreNews}
+          hasMore={true}
+          loader={<Spinner fullPage={true} />}
+        >
+          {news?.map(post => (
+            <CardItem key={post.published_at} post={post} />
+          ))}
+        </InfiniteScroll>
+      ) : (
+        <p>
+          К сожалению, news API для production версии платный, поэтому можно использовать локальную
+          версию
+        </p>
+      )}
     </Grid>
   );
 };

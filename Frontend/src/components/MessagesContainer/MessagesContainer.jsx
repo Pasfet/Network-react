@@ -20,8 +20,7 @@ import {
 } from '../../actions/dialogsActions';
 import { clearError, setError } from '../../actions/errorActions';
 import MessageBar from './MessageBar/MessageBar';
-
-const URL = 'ws://31.31.192.217:8999/';
+import { WS_URL } from '../../store/types/authTypes';
 
 const MessagesContainer = () => {
   const dispatch = useDispatch();
@@ -59,7 +58,7 @@ const MessagesContainer = () => {
   );
 
   useEffect(() => {
-    socket.current = new WebSocket(URL);
+    socket.current = new WebSocket(WS_URL);
 
     socket.current.onopen = () => {
       const connect = {

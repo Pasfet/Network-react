@@ -14,7 +14,7 @@ const UsersListWrapper = styled(Grid)({
   alignItems: 'center',
 });
 
-const UserListTable = styled(Table)({
+const UserListTableWrap = styled(Table)({
   minWidth: '300px',
 });
 
@@ -23,6 +23,8 @@ const SearchWrapper = styled('div')({
 });
 
 const UsersList = ({
+  myUid,
+  myFriends,
   users,
   usersListLength,
   setPage,
@@ -50,20 +52,24 @@ const UsersList = ({
         currentPage={page}
       />
       <Box component={Paper}>
-        <UserListTable>
+        <UserListTableWrap>
           <UsersListTable
+            myUid={myUid}
+            myFriends={myFriends}
             users={users}
             isFriend={false}
             isFriendsOfFriends={true}
             addToFriendsList={addToFriendsList}
           />
-        </UserListTable>
+        </UserListTableWrap>
       </Box>
     </UsersListWrapper>
   );
 };
 
 UsersList.propTypes = {
+  myUid: PropTypes.string,
+  myFriends: PropTypes.object,
   users: PropTypes.array,
   usersListLength: PropTypes.number,
   setPage: PropTypes.func,

@@ -3,6 +3,8 @@ import UserListItem from '../UserListItem/UserListItem';
 import PropTypes from 'prop-types';
 
 const UsersListTable = ({
+  myUid,
+  myFriends,
   users,
   isFriend,
   deleteFriend,
@@ -20,6 +22,8 @@ const UsersListTable = ({
       ) : (
         users?.map(friend => (
           <UserListItem
+            myUid={myUid}
+            myFriends={myFriends}
             key={friend.uid}
             user={friend}
             isFriend={isFriend}
@@ -36,6 +40,8 @@ const UsersListTable = ({
 };
 
 UsersListTable.propTypes = {
+  myUid: PropTypes.string,
+  myFriends: PropTypes.object,
   users: PropTypes.array,
   isFriend: PropTypes.bool,
   deleteFriend: PropTypes.func,

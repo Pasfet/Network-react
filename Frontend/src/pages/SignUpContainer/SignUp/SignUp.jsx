@@ -106,17 +106,17 @@ const SignUp = ({
         )}
         <SignUpList>
           <ListItem>
+            <ButtonStyled type="submit" variant="contained" color="success">
+              Sign up
+            </ButtonStyled>
+          </ListItem>
+          <ListItem>
             <ButtonStyled
               variant="contained"
               color="secondary"
               onClick={() => history.push('/login')}
             >
               Log in
-            </ButtonStyled>
-          </ListItem>
-          <ListItem>
-            <ButtonStyled type="submit" variant="contained" color="success">
-              Sign up
             </ButtonStyled>
           </ListItem>
         </SignUpList>

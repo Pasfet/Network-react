@@ -62,17 +62,17 @@ const LogIn = ({ onSubmitHandler, setEmail, emailValue, setPassword, passwordVal
         )}
         <ListStyled>
           <ListItemStyled>
+            <ButtonStyled type="submit" variant="contained">
+              Log in
+            </ButtonStyled>
+          </ListItemStyled>
+          <ListItemStyled>
             <ButtonStyled
               variant="contained"
               color="secondary"
               onClick={() => history.push('/signup')}
             >
               Sign Up
-            </ButtonStyled>
-          </ListItemStyled>
-          <ListItemStyled>
-            <ButtonStyled type="submit" variant="contained">
-              Log in
             </ButtonStyled>
           </ListItemStyled>
         </ListStyled>

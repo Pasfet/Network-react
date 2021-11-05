@@ -9,10 +9,10 @@ const NewsContainer = () => {
   const news = useSelector(getNewsFromStore);
   const dispatch = useDispatch();
 
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(10);
 
   const fetchMoreNews = () => {
-    setPage(prevState => prevState + 1);
+    setPage(prevState => prevState + 10);
   };
 
   useEffect(() => {
