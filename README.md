@@ -1,6 +1,21 @@
 # Getting start
 
-Если перейти по ссылке [из описания](http://social-net-react.ru), то после перезагрузки будет ошибка 404, это связанно с тем, что статика загружается без обработки путей :(
+Если перейти по ссылке [из описания](http://social-net-react.ru), то после перезагрузки будет ошибка 404, это связанно с тем, что статика загружается без обработки путей :( \
+Это решается так: 
+```
+const express = require('express');
+const path = require('path');
+const app = express();
+
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
+app.listen(9000);
+```
+Но к сожалению тот хостинг не поддерживает node.js :)
 
 В папке "Backend" ввдеите `npm install`, а в папке "Frontend" введите `yarn install`.
 
