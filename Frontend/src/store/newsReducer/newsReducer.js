@@ -9,7 +9,7 @@ const newsReducer = (state = initialState, { type, payload }) => {
     case SET_NEWS:
       return {
         ...state,
-        news: [...state.news, ...payload],
+        news: [...payload],
       };
 
     case CLEAR_NEWS:

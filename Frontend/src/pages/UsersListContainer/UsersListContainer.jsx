@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sendRequestToFriendList } from '../../actions/profileActions';
 import { getUsersList } from '../../actions/usersActions';
-import { getMyUid } from '../../store/profileReducer/profileSelectors';
+import { getMyFriends, getMyUid } from '../../store/profileReducer/profileSelectors';
 import {
   getUsersListFromStore,
   getUsersListLastPage,
@@ -14,6 +14,7 @@ import UsersList from './UsersList/UsersList';
 
 const UsersListContainer = () => {
   const dispatch = useDispatch();
+  const myFriends = useSelector(getMyFriends);
   const usersList = useSelector(getUsersListFromStore);
   const usersListLength = useSelector(getUsersListLength);
   const usersListLastPage = useSelector(getUsersListLastPage);
@@ -45,6 +46,8 @@ const UsersListContainer = () => {
 
   return (
     <UsersList
+      myUid={myUid}
+      myFriends={myFriends}
       users={usersList}
       usersListLength={usersListLength}
       setPage={setPage}

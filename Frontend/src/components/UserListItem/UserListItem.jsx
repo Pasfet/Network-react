@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/AddCircleOutline';
+import CheckIcon from '@mui/icons-material/CheckCircleOutline';
 
 import { CURRENT_URL } from '../../store/types/authTypes';
 import {
@@ -13,6 +14,8 @@ import {
 } from './UserListItemStyled';
 
 const UserListItem = ({
+  myUid,
+  myFriends,
   user,
   isFriendsOfFriends,
   isFriend,
@@ -32,11 +35,22 @@ const UserListItem = ({
         <UserListItemName to={`/profile/${user.uid}`}>{user.user_name}</UserListItemName>
       </TableCell>
       {isFriendsOfFriends ? (
-        <TableCell>
-          <IconButton data-testid="addToFriendsList" onClick={() => addToFriendsList(user.uid)}>
-            <AddIcon />
-          </IconButton>
-        </TableCell>
+        myUid !== user.uid ? (
+          myFriends?.friends_requstions.find(r => r.uid === user.uid) ||
+          myFriends?.user_friends.find(f => f.uid === user.uid) ? (
+            <TableCell>
+              <CheckIcon />
+            </TableCell>
+          ) : (
+            <TableCell>
+              <IconButton data-testid="addToFriendsList" onClick={() => addToFriendsList(user.uid)}>
+                <AddIcon />
+              </IconButton>
+            </TableCell>
+          )
+        ) : (
+          <TableCell></TableCell>
+        )
       ) : isFriend ? (
         <TableCell>
           <IconButton data-testid="frendsDeleteButton" onClick={() => deleteFriend(user.uid)}>
@@ -64,6 +78,8 @@ const UserListItem = ({
 };
 
 UserListItem.propTypes = {
+  myUid: PropTypes.string,
+  myFriends: PropTypes.object,
   user: PropTypes.object,
   isFriend: PropTypes.bool,
   deleteFriend: PropTypes.func,
