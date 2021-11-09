@@ -1,6 +1,6 @@
 # Getting start
 
-В папке "Backend" введеите `npm install`, а в папке "Frontend" введите `yarn install`.
+В папке "Backend" введите `npm install`, а в папке "Frontend" введите `yarn install`.
 
 ## Available Scripts
 
