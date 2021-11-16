@@ -20,7 +20,7 @@ import {
 } from '../../actions/dialogsActions';
 import { clearError, setError } from '../../actions/errorActions';
 import MessageBar from './MessageBar/MessageBar';
-import { WS_URL } from '../../store/types/authTypes';
+import { WS_URL } from '../../types/authTypes';
 
 const MessagesContainer = () => {
   const dispatch = useDispatch();

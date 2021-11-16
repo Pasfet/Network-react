@@ -1,7 +1,7 @@
 import { Avatar, Card, CardContent, CardHeader, IconButton, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PropTypes from 'prop-types';
-import { CURRENT_URL } from '../../../store/types/authTypes';
+import { CURRENT_URL } from '../../../types/authTypes';
 
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';

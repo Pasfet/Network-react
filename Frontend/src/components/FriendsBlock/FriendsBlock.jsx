@@ -11,7 +11,7 @@ import {
 } from './FriendsBlockStyled';
 
 import PropTypes from 'prop-types';
-import { CURRENT_URL } from '../../store/types/authTypes';
+import { CURRENT_URL } from '../../types/authTypes';
 import { memo } from 'react';
 
 const FriendsBlock = ({ userFriends, uid }) => {

@@ -1,6 +1,0 @@
-export const SET_USERS = 'SET_USERS';
-export const CLEAR_USERS = 'CLEAR_USERS';
-export const SET_USERS_LENGTH = 'SET_USERS_LENGTH';
-export const CLEAR_USERS_LENGTH = 'CLEAR_USERS_LENGTH';
-export const SET_LAST_PAGE = 'SET_LAST_PAGE';
-export const CLEAR_LAST_PAGE = 'CLEAR_LAST_PAGE';

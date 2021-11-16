@@ -5,7 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/AddCircleOutline';
 import CheckIcon from '@mui/icons-material/CheckCircleOutline';
 
-import { CURRENT_URL } from '../../store/types/authTypes';
+import { CURRENT_URL } from '../../types/authTypes';
 import {
   UserListItemAvatar,
   UserListItemImgWrapper,
