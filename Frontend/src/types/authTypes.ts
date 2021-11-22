@@ -22,29 +22,30 @@ interface ClearAuthTypes {
 export type AuthActions = SetAuthTypes | ClearAuthTypes;
 
 export interface AuthUserTypes {
-  email: string
-  password: string
+  email: string,
+  password: string,
+  name?: string
 }
 
 export interface AuthResponseTypes {
-  result: number
-  text: string
-  type?: string
+  result: number,
+  text: string,
+  type?: string,
   user?: AuthUserTypes
 }
 
 export interface ProfilePageActionsTypes {
-  senderUid: string
-  recipientUid: string
+  senderUid: string | null,
+  recipientUid: string | null
 }
 
 export interface UserChatTypes {
-  uid: string
+  uid: string,
   user_name: string
 }
 
 export interface DialogsChatsActions {
-  uid: string
-  user?: UserChatTypes
+  uid: string,
+  user?: UserChatTypes,
   chatId?: string
 }

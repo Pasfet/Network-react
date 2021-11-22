@@ -34,7 +34,7 @@ export const clearLastPage = (): UsersPageActions => ({
   payload: null
 });
 
-export const getUsersList = (page = 1, perPage = 10, name: string) => {
+export const getUsersList = (page = 1, perPage = 10, name?: string) => {
   return async (dispatch: Dispatch<any>): Promise<void> => {
     dispatch(loadingTrue());
     try {
@@ -50,7 +50,8 @@ export const getUsersList = (page = 1, perPage = 10, name: string) => {
       } else {
         dispatch(setError({ message: data.text, type: data.type }));
       }
-    } catch (err: any) {
+    } catch (err) {
+      //@ts-ignore
       dispatch(setError({ message: err.message, type: 'error' }));
     } finally {
       dispatch(loadingFalse());

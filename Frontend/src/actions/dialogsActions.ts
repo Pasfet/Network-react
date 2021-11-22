@@ -70,7 +70,8 @@ export const searchUsersChat = (text: string, uid: string) => {
       } else {
         dispatch(setError({ message: data.text, type: data.type, code: data.code }));
       }
-    } catch (err: any) {
+    } catch (err) {
+    //@ts-ignore
       dispatch(setError({ message: err.message, type: 'error' }));
     }
   };
@@ -90,7 +91,8 @@ export const getChatsList = (uid: string) => {
       } else {
         dispatch(setError({ message: data.text, type: data.type, code: data.code }));
       }
-    } catch (err: any) {
+    } catch (err) {
+    //@ts-ignore
       dispatch(setError({ message: err.message, type: 'error' }));
     }
   };
@@ -121,7 +123,8 @@ export const getMessagesFromAPI = (uid: string, chatId: string) => {
       } else {
         dispatch(setError({ message: data.text, type: data.type }));
       }
-    } catch (err: any) {
+    } catch (err) {
+    //@ts-ignore
       dispatch(setError({ message: err.message, type: 'error' }));
     }
   };

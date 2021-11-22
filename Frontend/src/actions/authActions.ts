@@ -30,7 +30,8 @@ export const authorization = (user: AuthUserTypes) => {
         dispatch(setError({ message: data.text, type: data.type }));
         dispatch(setSnack({ text: data.text, result: data.result }));
       }
-    } catch (error: any) {
+    } catch (error) {
+    //@ts-ignore
       dispatch(setError({ message: error.message, type: 'error' }));
     } finally {
       dispatch(loadingFalse());
@@ -51,7 +52,8 @@ export const registration = (user: AuthUserTypes) => {
         dispatch(setError({ message: data.text, type: data.type }));
         dispatch(setSnack({ text: data.text, result: data.result }));
       }
-    } catch (error: any) {
+    } catch (error) {
+    //@ts-ignore
       dispatch(setError({ message: error.message, type: 'error' }));
     } finally {
       dispatch(loadingFalse());

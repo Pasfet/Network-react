@@ -1,16 +1,16 @@
 export interface ErrorTypes {
-  message: string
-  code?: number
+  message: string,
+  code?: number,
   type: string
 }
 
 export interface SnackMessageTypes {
-  text: string
+  text: string,
   result: number
 }
 
 export interface ErrorStateTypes {
-  error: ErrorTypes | null
+  error: ErrorTypes | null,
   snackMessage: SnackMessageTypes | null
 }
 
@@ -22,22 +22,22 @@ export enum ErrorActionsType {
 }
 
 interface SetError {
-  type: ErrorActionsType.SET_ERROR
+  type: ErrorActionsType.SET_ERROR,
   payload: ErrorTypes
 }
 
 interface ClearError {
-  type: ErrorActionsType.CLEAR_ERROR
+  type: ErrorActionsType.CLEAR_ERROR,
   payload: any
 }
 
 interface SetSnack {
-  type: ErrorActionsType.SET_SNACK
+  type: ErrorActionsType.SET_SNACK,
   payload: SnackMessageTypes
 }
 
 interface ClearSnack {
-  type: ErrorActionsType.CLEAR_SNACK
+  type: ErrorActionsType.CLEAR_SNACK,
   payload: any
 }
 

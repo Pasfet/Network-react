@@ -1,12 +1,12 @@
 export interface UserItemTypes {
-  user_name: string
-  uid: string
+  user_name: string,
+  uid: string,
   avatar: string | null
 }
 
 export interface UsersStateTypes {
-  users: Array<UserItemTypes> | []
-  usersListLength: number | null
+  users: Array<UserItemTypes> | [],
+  usersListLength: number | null,
   lastPage: number | null
 }
 
@@ -20,27 +20,27 @@ export enum UsersPageActionsTypes {
 }
 
 interface SetUsers {
-  type: UsersPageActionsTypes.SET_USERS
+  type: UsersPageActionsTypes.SET_USERS,
   payload: Array<UserItemTypes>
 }
 interface ClearUsers {
-  type: UsersPageActionsTypes.CLEAR_USERS
+  type: UsersPageActionsTypes.CLEAR_USERS,
   payload: any
 }
 interface SetUsersLength {
-  type: UsersPageActionsTypes.SET_USERS_LENGTH
+  type: UsersPageActionsTypes.SET_USERS_LENGTH,
   payload: number
 }
 interface ClearUsersLength {
-  type: UsersPageActionsTypes.CLEAR_USERS_LENGTH
+  type: UsersPageActionsTypes.CLEAR_USERS_LENGTH,
   payload: any
 }
 interface SetLastPage {
-  type: UsersPageActionsTypes.SET_LAST_PAGE
+  type: UsersPageActionsTypes.SET_LAST_PAGE,
   payload: number
 }
 interface ClearLastPage {
-  type: UsersPageActionsTypes.CLEAR_LAST_PAGE
+  type: UsersPageActionsTypes.CLEAR_LAST_PAGE,
   payload: any
 }
 

@@ -11,11 +11,11 @@ const copyAddFriendsRequstion = (usersList, uid, addUserUid) => {
     ...usersList,
     [uid]: {
       ...usersList[uid],
-      friends_requstions: [{...friendsRequstionsSender, incoming: false}, ...usersList[uid].friends_requstions]
+      friends_requisitions: [{...friendsRequstionsSender, incoming: false}, ...usersList[uid].friends_requisitions]
     },
     [addUserUid]: {
       ...usersList[addUserUid],
-      friends_requstions: [{...friendsRequstionsRecipient, incoming: true}, ...usersList[addUserUid].friends_requstions]
+      friends_requisitions: [{...friendsRequstionsRecipient, incoming: true}, ...usersList[addUserUid].friends_requisitions]
     }
   }
 }
@@ -27,12 +27,12 @@ const copyWithAgreeFriendRequest = (usersList, uid, addUserUid) => {
     ...usersList,
     [uid]: {
       ...usersList[uid],
-      friends_requstions: usersList[uid].friends_requstions.filter(req => req.uid !== addUserUid),
+      friends_requisitions: usersList[uid].friends_requisitions.filter(req => req.uid !== addUserUid),
       user_friends: [friendsSender, ...usersList[uid].user_friends]
     },
     [addUserUid]: {
       ...usersList[addUserUid],
-      friends_requstions: usersList[addUserUid].friends_requstions.filter(req => req.uid === addUserUid),
+      friends_requisitions: usersList[addUserUid].friends_requisitions.filter(req => req.uid === addUserUid),
       user_friends: [friendsRecipient, ...usersList[addUserUid].user_friends]
     }
   }
@@ -42,11 +42,11 @@ const copyWithoutRequest = (usersList, uid, deleteUid) => ({
   ...usersList,
   [uid]: {
     ...usersList[uid],
-    friends_requstions: usersList[uid].friends_requstions.filter(req => req.uid !== deleteUid)
+    friends_requisitions: usersList[uid].friends_requisitions.filter(req => req.uid !== deleteUid)
   },
   [deleteUid]: {
     ...usersList[deleteUid],
-    friends_requstions: usersList[deleteUid].friends_requstions.filter(req => req.uid === deleteUid)
+    friends_requisitions: usersList[deleteUid].friends_requisitions.filter(req => req.uid === deleteUid)
   }
 })
 

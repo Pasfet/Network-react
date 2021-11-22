@@ -23,7 +23,9 @@ export const getNewsAPI = (page: number) => {
       );
       const data = await response.json();
       dispatch(setNews(data.data));
-    } catch (err: any) {
+    } catch (err) {
+      //@ts-ignore
+
       dispatch(setError({ message: err.message, type: 'error' }));
     } finally {
       dispatch(loadingFalse());

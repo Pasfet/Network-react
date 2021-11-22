@@ -8,11 +8,11 @@ export enum SpinnerActionsTypes {
 }
 
 interface LoadingTrue {
-  type: SpinnerActionsTypes.LOADING_TRUE
+  type: SpinnerActionsTypes.LOADING_TRUE,
   payload: any
 }
 interface LoadingFalse {
-  type: SpinnerActionsTypes.LOADING_FALSE
+  type: SpinnerActionsTypes.LOADING_FALSE,
   payload: any
 }
 

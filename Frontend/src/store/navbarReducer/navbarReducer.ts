@@ -1,4 +1,6 @@
-const initialState = {
+import {INavbarActionsType, NavbarStateTypes} from '../../types/navbarTypes';
+
+const initialState: NavbarStateTypes = {
   navbarList: [
     { name: 'Войти', href: '/login', requiredAuth: false, dynamic: false, icon: 'login' },
     { name: 'Регистрация', href: '/signup', requiredAuth: false, dynamic: false, icon: 'signup' },
@@ -10,9 +12,7 @@ const initialState = {
   ],
 };
 
-type InitialStateNavbarTypes = typeof initialState;
-
-const navbarReducer = (state = initialState, { type, payload } : {type: string, payload: any}) : InitialStateNavbarTypes => {
+const navbarReducer = (state = initialState, { type, payload }: INavbarActionsType) : NavbarStateTypes => {
   switch (type) {
     default:
       return state;

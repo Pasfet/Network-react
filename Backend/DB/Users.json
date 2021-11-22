@@ -7,14 +7,14 @@
       "user_name": "Павел Константинов",
       "user_friends": [
         {
-          "user_name": "Test",
-          "avatar": null,
-          "uid": "911f271"
-        },
-        {
           "user_name": "Anna",
           "avatar": null,
           "uid": "c49fc41"
+        },
+        {
+          "user_name": "Test",
+          "avatar": null,
+          "uid": "911f271"
         }
       ],
       "status": "",
@@ -25,7 +25,8 @@
           "payload": "22.03.1999"
         },
         "city": {
-          "text": "Город"
+          "text": "Город",
+          "payload": "sd"
         },
         "site": {
           "text": "Ваш сайт"
@@ -34,14 +35,7 @@
           "text": "Языки"
         }
       },
-      "friends_requstions": [
-        {
-          "user_name": "Вася",
-          "avatar": null,
-          "uid": "fd4b5cc",
-          "incoming": true
-        }
-      ]
+      "friends_requisitions": []
     },
     "c49fc41": {
       "uid": "c49fc41",
@@ -51,14 +45,14 @@
       "user_friends": [
         {
           "user_name": "Павел Константинов",
-          "avatar": null,
+          "avatar": "e0cc1e0_avatar.jpg",
           "uid": "e0cc1e0"
         }
       ],
       "status": "",
       "avatar": null,
       "about": {},
-      "friends_requstions": []
+      "friends_requisitions": []
     },
     "911f271": {
       "uid": "911f271",
@@ -75,7 +69,7 @@
       "status": "",
       "avatar": null,
       "about": {},
-      "friends_requstions": []
+      "friends_requisitions": []
     },
     "764ec3c": {
       "uid": "764ec3c",
@@ -86,7 +80,7 @@
       "status": "",
       "avatar": null,
       "about": {},
-      "friends_requstions": []
+      "friends_requisitions": []
     },
     "5ccddae": {
       "uid": "5ccddae",
@@ -97,7 +91,7 @@
       "status": "",
       "avatar": null,
       "about": {},
-      "friends_requstions": []
+      "friends_requisitions": []
     },
     "fd4b5cc": {
       "uid": "fd4b5cc",
@@ -108,14 +102,7 @@
       "status": "",
       "avatar": null,
       "about": {},
-      "friends_requstions": [
-        {
-          "user_name": "Павел Константинов",
-          "avatar": "e0cc1e0_avatar.jpg",
-          "uid": "e0cc1e0",
-          "incoming": false
-        }
-      ]
+      "friends_requisitions": []
     }
   }
 }

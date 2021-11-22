@@ -3,7 +3,7 @@ import { CURRENT_URL } from '../types/authTypes';
 import { loadingTrue, loadingFalse } from './spinnerActions';
 import { setError, setSnack } from './errorActions';
 import { profileChangeFetchHelper, profilePageActionsHelper } from './actionHelper';
-import { MyFriendsTypes, PostItemTypes, ProfileActions, ProfileActionsTypes, UidTypes, UserTypes } from '../types/profileTypes';
+import { AboutUserTypes, MyFriendsTypes, PostItemTypes, ProfileActions, ProfileActionsTypes, UidTypes, UserTypes } from '../types/profileTypes';
 
 export const clearUid = (): ProfileActions => ({
   type: ProfileActionsTypes.CLEAR_UID,
@@ -46,7 +46,7 @@ export const clearUserPosts = (): ProfileActions => ({
 });
 
 // REQUESTS
-export const getUserProfileFromApi = (uid: string) => {
+export const getUserProfileFromApi = (uid: string | null) => {
   return async (dispatch: Dispatch<any>): Promise<void> => {
     dispatch(loadingTrue());
     try {
@@ -59,7 +59,8 @@ export const getUserProfileFromApi = (uid: string) => {
         dispatch(setSnack({ text: data.text, result: data.result }));
         dispatch(loadingFalse());
       }
-    } catch (err: any) {
+    } catch (err) {
+      //@ts-ignore
       dispatch(setError({ message: err.message, type: 'error' }));
     } finally {
       dispatch(loadingFalse());
@@ -67,7 +68,7 @@ export const getUserProfileFromApi = (uid: string) => {
   };
 };
 
-export const sendProfileChange = (uid: string, change: Object) => {
+export const sendProfileChange = (uid: string| null, change: Object) => {
   return async (dispatch: Dispatch<any>): Promise<void> => {
     try {
       const data = await profileChangeFetchHelper('PATCH', 'profile', uid, change);
@@ -78,13 +79,14 @@ export const sendProfileChange = (uid: string, change: Object) => {
         dispatch(setSnack({ text: data.text, result: data.result }));
         dispatch(setError({ message: data.text, type: 'send-profile-change' }));
       }
-    } catch (err: any) {
+    } catch (err) {
+      //@ts-ignore
       dispatch(setError({ message: err.message, type: 'error' }));
     }
   };
 };
 
-export const getMyFriendsList = (uid: string) => {
+export const getMyFriendsList = (uid: string | null) => {
   return async (dispatch: Dispatch<any>): Promise<void> => {
     try {
       const response = await fetch(`${CURRENT_URL}/friends/${uid}`);
@@ -95,19 +97,20 @@ export const getMyFriendsList = (uid: string) => {
         dispatch(setSnack({ text: data.text, result: data.result }));
         dispatch(setError({ message: data.text, type: 'get-friends-list' }));
       }
-    } catch (err: any) {
+    } catch (err) {
+      //@ts-ignore
       dispatch(setError({ message: err.message, type: 'error' }));
     }
   };
 };
 
-export const sendRequestToFriendList = (senderUid: string, recipientUid: string) => {
+export const sendRequestToFriendList = (senderUid: string | null, recipientUid: string | null) => {
   return (dispatch: Dispatch<any>): Promise<void> => {
     return profilePageActionsHelper('PATCH', { senderUid, recipientUid }, 'add-friends', dispatch);
   };
 };
 
-export const rejectFriendRequest = (senderUid: string, recipientUid: string) => {
+export const rejectFriendRequest = (senderUid: string | null, recipientUid: string | null) => {
   return async (dispatch: Dispatch<any>): Promise<void> => {
     return profilePageActionsHelper(
       'DELETE',
@@ -118,7 +121,7 @@ export const rejectFriendRequest = (senderUid: string, recipientUid: string) => 
   };
 };
 
-export const deleteFriendFromFriendsList = (senderUid: string, recipientUid: string) => {
+export const deleteFriendFromFriendsList = (senderUid: string | null, recipientUid: string | null) => {
   return async (dispatch: Dispatch<any>): Promise<void> => {
     return profilePageActionsHelper('PUT', { senderUid, recipientUid }, 'delete-friend', dispatch);
   };
@@ -142,7 +145,8 @@ export const getUserPosts = (uid: string) => {
         dispatch(clearUserPosts());
         dispatch(setError({ message: data.text, type: 'user-posts' }));
       }
-    } catch (err: any) {
+    } catch (err) {
+      //@ts-ignore
       dispatch(setError({ message: err.message, type: 'error' }));
     }
   };
@@ -166,7 +170,8 @@ export const sendUserPost = (uid: string, post: PostItemTypes) => {
         dispatch(setSnack({ text: data.text, result: data.result }));
         dispatch(setError({ message: data.text, type: 'user-posts' }));
       }
-    } catch (err: any) {
+    } catch (err) {
+      //@ts-ignore
       dispatch(setError({ message: err.message, type: 'error' }));
     }
   };
@@ -190,13 +195,14 @@ export const deleteUserPost = (uid:string, postId: string) => {
         dispatch(setSnack({ text: data.text, result: data.result }));
         dispatch(setError({ message: data.text, type: 'user-posts' }));
       }
-    } catch (err: any) {
+    } catch (err) {
+      //@ts-ignore
       dispatch(setError({ message: err.message, type: 'error' }));
     }
   };
 };
 
-export const setAvatar = (uid: string, image: any) => {
+export const setAvatar = (uid: string | null, image: any) => {
   return async (dispatch: Dispatch<any>): Promise<void> => {
     try {
       const response = await fetch(`${CURRENT_URL}/images?uid=${uid}`, {
@@ -208,7 +214,8 @@ export const setAvatar = (uid: string, image: any) => {
         dispatch(setSnack({ text: data.text, result: data.result }));
         dispatch(getUserProfileFromApi(uid));
       }
-    } catch (err: any) {
+    } catch (err) {
+      //@ts-ignore
       dispatch(setError({ message: err.message, type: 'error' }));
     }
   };

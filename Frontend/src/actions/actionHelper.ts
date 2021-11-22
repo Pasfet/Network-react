@@ -13,7 +13,7 @@ export const authFetchHelper = async (url: string, body: AuthUserTypes) : Promis
   return response.json();
 };
 
-export const profileChangeFetchHelper = async (method : string, url : string, uid : string, body: Object) : Promise<AuthResponseTypes> => {
+export const profileChangeFetchHelper = async (method : string, url : string, uid : string | null, body: Object) : Promise<AuthResponseTypes> => {
   const response = await fetch(`${CURRENT_URL}/${url}/${uid}`, {
     method: method,
     headers: { 'Content-Type': 'application/json;charset=utf-8' },
@@ -38,7 +38,8 @@ export const profilePageActionsHelper = async (method: string, body: ProfilePage
       dispatch(setSnack({ text: data.text, result: data.result }));
       dispatch(setError({ message: data.text, type: type }));
     }
-  } catch (err: any) {
+  } catch (err) {
+    //@ts-ignore
     dispatch(setError({ message: err.message, type: 'error' }));
   }
 };
@@ -59,7 +60,8 @@ export const dialogsChatsActionsHelper = async (method: string, body: DialogsCha
       dispatch(setSnack({ text: data.text, result: data.result }));
       dispatch(setError({ message: data.text, type: data.type }));
     }
-  } catch (err: any) {
+  } catch (err) {
+    //@ts-ignore
     dispatch(setError({ message: err.message, type: 'error' }));
   }
 };

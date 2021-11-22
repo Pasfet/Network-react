@@ -1,13 +1,13 @@
 export type NewsItemTypes = {
-  author: null | string
-  title: string
-  description: string
-  url: string
-  source: string
-  image: string
-  category: string
-  language: string
-  country: string
+  author: null | string,
+  title: string,
+  description: string,
+  url: string,
+  source: string,
+  image: string,
+  category: string,
+  language: string,
+  country: string,
   published_at: string
 }
 
@@ -22,12 +22,12 @@ export enum NewsActionsTypes {
 }
 
 interface SetNews {
-  type: NewsActionsTypes.SET_NEWS
+  type: NewsActionsTypes.SET_NEWS,
   payload: Array<NewsItemTypes>
 }
 
 interface ClearNews {
-  type: NewsActionsTypes.CLEAR_NEWS
+  type: NewsActionsTypes.CLEAR_NEWS,
   payload: any
 }
 
