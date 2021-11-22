@@ -31,7 +31,7 @@ export const PageActionsEdit = styled(ListItemButton)(({ theme }) => ({
 export const PageActionsButton = styled(
   ListItemButton,
   {},
-)(({ theme, addbutton, deletebutton }) => ({
+)(({ theme }) => ({
   '&.MuiListItemButton-root': {
     maxWidth: '250px',
     margin: '0 auto',
@@ -42,22 +42,22 @@ export const PageActionsButton = styled(
       easing: theme.transitions.easing.easeInOut,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    ...(deletebutton && {
+    '&.deleteButton': {
       backgroundColor: theme.palette.grey[400],
       '&:hover': {
         backgroundColor: theme.palette.grey[500],
         color: theme.palette.primary.contrastText,
         border: `1px solid ${theme.palette.grey[400]}`,
       },
-    }),
-    ...(addbutton && {
+    },
+    '&.addButton': {
       backgroundColor: theme.palette.primary.main,
       '&:hover': {
         backgroundColor: theme.palette.primary.contrastText,
         color: theme.palette.primary.main,
         border: `1px solid ${theme.palette.primary.main}`,
       },
-    }),
+    },
   },
 }));
 

@@ -5,7 +5,7 @@ const getUserFriends = (usersList, req) => {
   if (!users[uid]) return null;
 
   const userFriends = {
-    friends_requstions: users[uid].friends_requstions,
+    friends_requisitions: users[uid].friends_requisitions,
     user_friends: users[uid].user_friends,
   }
 
@@ -16,24 +16,24 @@ const sendRequestToFriendsList = (usersList, req) => {
   const {users} = usersList;
   const {senderUid, recipientUid} = req.body;
 
-  const findRequest = users[senderUid].friends_requstions.find(req => req.uid === recipientUid);
+  const findRequest = users[senderUid].friends_requisitions.find(req => req.uid === recipientUid);
   const findFriend = users[senderUid].user_friends.find(friend => friend.uid === recipientUid);
 
   if (findRequest || findFriend) return null;
 
-  const senderRequestsList = [{user_name: users[recipientUid].user_name, avatar: users[recipientUid].avatar, uid: recipientUid, incoming: false}, ...users[senderUid].friends_requstions];
-  const recipientRequestsList = [{user_name: users[senderUid].user_name, avatar: users[senderUid].avatar, uid: senderUid, incoming: true}, ...users[recipientUid].friends_requstions];
+  const senderRequestsList = [{user_name: users[recipientUid].user_name, avatar: users[recipientUid].avatar, uid: recipientUid, incoming: false}, ...users[senderUid].friends_requisitions];
+  const recipientRequestsList = [{user_name: users[senderUid].user_name, avatar: users[senderUid].avatar, uid: senderUid, incoming: true}, ...users[recipientUid].friends_requisitions];
 
   const newUsersList = {
     users: {
       ...users,
       [senderUid]: {
         ...users[senderUid],
-        friends_requstions: senderRequestsList,
+        friends_requisitions: senderRequestsList,
       },
       [recipientUid]: {
         ...users[recipientUid],
-        friends_requstions: recipientRequestsList,
+        friends_requisitions: recipientRequestsList,
       }
     }
   };
@@ -47,19 +47,19 @@ const deleteRequest = (usersList, req) => {
 
   if (!users[senderUid] || !users[recipientUid]) return null;
 
-  const senderRequestsList = users[senderUid].friends_requstions.filter(req => req.uid !== recipientUid);
-  const recipientRequestsList = users[recipientUid].friends_requstions.filter(req => req.uid !== senderUid);
+  const senderRequestsList = users[senderUid].friends_requisitions.filter(req => req.uid !== recipientUid);
+  const recipientRequestsList = users[recipientUid].friends_requisitions.filter(req => req.uid !== senderUid);
 
   const newUsersList = {
     users: {
       ...users,
       [senderUid]: {
         ...users[senderUid],
-        friends_requstions: senderRequestsList
+        friends_requisitions: senderRequestsList
       },
       [recipientUid]: {
         ...users[recipientUid],
-        friends_requstions: recipientRequestsList
+        friends_requisitions: recipientRequestsList
       }
     }
   };
@@ -75,8 +75,8 @@ const addToFriendsList = (usersList, req) => {
 
   if (findFriend) return null;
 
-  const senderRequestsList = users[senderUid].friends_requstions.filter(req => req.uid !== recipientUid);
-  const recipientRequestsList = users[recipientUid].friends_requstions.filter(req => req.uid !== senderUid);
+  const senderRequestsList = users[senderUid].friends_requisitions.filter(req => req.uid !== recipientUid);
+  const recipientRequestsList = users[recipientUid].friends_requisitions.filter(req => req.uid !== senderUid);
   const senderFriendsList = [{user_name: users[recipientUid].user_name, avatar: users[recipientUid].avatar, uid: users[recipientUid].uid}, ...users[senderUid].user_friends];
   const recipientFriendsList = [{user_name: users[senderUid].user_name, avatar: users[senderUid].avatar, uid: users[senderUid].uid}, ...users[recipientUid].user_friends];
 
@@ -85,12 +85,12 @@ const addToFriendsList = (usersList, req) => {
       ...users,
       [senderUid]: {
         ...users[senderUid],
-        friends_requstions: senderRequestsList,
+        friends_requisitions: senderRequestsList,
         user_friends: senderFriendsList,
       },
       [recipientUid]: {
         ...users[recipientUid],
-        friends_requstions: recipientRequestsList,
+        friends_requisitions: recipientRequestsList,
         user_friends: recipientFriendsList
       }
     }

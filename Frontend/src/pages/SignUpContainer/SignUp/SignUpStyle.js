@@ -4,12 +4,9 @@ import { Alert, Button, List } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 export const ButtonStyled = styled(Button)(() => ({
-  padding: '8px 15px !important',
-  borderRadius: '5px !important',
-  color: '#000',
-  '&:hover': {
-    color: '#fff',
-  },
+  padding: '8px 15px',
+  borderRadius: '5px',
+  color: '#fff',
 }));
 
 export const SignUpWrapper = styled('div')({

@@ -13,7 +13,7 @@ const createUser = (id, email, password, name) => {
       status: "",
       avatar: null,
       about: {},
-      friends_requstions: []
+      friends_requisitions: []
     }
   }
 }
